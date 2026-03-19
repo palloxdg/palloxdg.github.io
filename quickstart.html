@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxee — Quick Start</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:       #111116;
+            --surface:  #18181f;
+            --card:     #1c1c24;
+            --border:   rgba(255,255,255,0.07);
+            --accent:   #00d4e8;
+            --accent2:  #00b8ca;
+            --text:     #e0e0e8;
+            --muted:    #6a6a7c;
+            --green:    #00c853;
+            --amber:    #f5a623;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ── Top bar ── */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(17,17,22,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .topbar-brand img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .topbar-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .topbar-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.15s;
+        }
+
+        .topbar-links a:hover { color: var(--text); }
+
+        .topbar-cta {
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.82rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .topbar-cta:hover { background: var(--accent2); color: #000 !important; }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 80px 24px 60px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--accent);
+            background: rgba(0,212,232,0.08);
+            border: 1px solid rgba(0,212,232,0.2);
+            border-radius: 20px;
+            padding: 5px 14px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        /* ── Steps container ── */
+        .steps {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        /* ── Step card ── */
+        .step {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: stepIn 0.45s ease forwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.1s; }
+        .step:nth-child(2) { animation-delay: 0.2s; }
+        .step:nth-child(3) { animation-delay: 0.3s; }
+        .step:nth-child(4) { animation-delay: 0.4s; }
+        .step:nth-child(5) { animation-delay: 0.5s; }
+        .step:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes stepIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Step spine ── */
+        .step-spine {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'DM Mono', monospace;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-num.done {
+            background: var(--green);
+            border-color: var(--green);
+            color: #000;
+        }
+
+        .step-line {
+            width: 2px;
+            flex: 1;
+            background: var(--border);
+            margin: 6px 0;
+            min-height: 20px;
+        }
+
+        .step:last-child .step-line { display: none; }
+
+        /* ── Step body ── */
+        .step-body {
+            flex: 1;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-bottom: 6px;
+            transition: border-color 0.2s;
+        }
+
+        .step-body:hover { border-color: rgba(0,212,232,0.2); }
+
+        .step-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-icon { font-size: 1.1rem; }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: #a0a0b0;
+            line-height: 1.65;
+            margin-bottom: 0;
+        }
+
+        .step-desc strong { color: var(--text); }
+        .step-desc code {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.82rem;
+            background: rgba(255,255,255,0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent);
+        }
+
+        /* ── CTA button inside step ── */
+        .step-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 11px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: background 0.15s, transform 0.15s;
+        }
+
+        .step-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+
+        .step-btn.outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid rgba(0,212,232,0.35);
+        }
+
+        .step-btn.outline:hover {
+            background: rgba(0,212,232,0.08);
+            transform: translateY(-1px);
+        }
+
+        /* ── LED indicator illustration ── */
+        .led-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: #0d0d12;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 18px;
+            margin-top: 14px;
+            font-size: 0.82rem;
+            font-family: 'DM Mono', monospace;
+        }
+
+        .led {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .led-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .led-dot.green  { background: var(--green);  box-shadow: 0 0 6px rgba(0,200,83,0.7); }
+        .led-dot.grey   { background: #444; }
+        .led-dot.amber  { background: var(--amber); box-shadow: 0 0 6px rgba(245,166,35,0.7); }
+
+        .led span { color: var(--muted); font-size: 0.78rem; }
+
+        /* ── Suite callout ── */
+        .suite-note {
+            background: rgba(0,212,232,0.05);
+            border: 1px solid rgba(0,212,232,0.15);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            font-size: 0.85rem;
+            color: #8888aa;
+            line-height: 1.6;
+        }
+
+        .suite-note strong { color: var(--accent); }
+
+        /* ── Done banner ── */
+        .done-banner {
+            text-align: center;
+            padding: 48px 24px;
+            opacity: 0;
+            animation: stepIn 0.45s ease 0.7s forwards;
+        }
+
+        .done-banner .done-emoji { font-size: 2.5rem; margin-bottom: 12px; }
+
+        .done-banner h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .done-banner p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        .done-links {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 540px) {
+            .topbar-links { display: none; }
+            .hero h1 { font-size: 1.8rem; }
+            .step { gap: 14px; }
+            .step-body { padding: 18px 16px; }
+            .step-num { width: 34px; height: 34px; font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Top bar ── -->
+<nav class="topbar">
+    <a href="index.html" class="topbar-brand">
+        <img src="icon_grey.png" alt="Fluxee">
+        Fluxee
+    </a>
+    <div class="topbar-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Full Guide</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="https://chrome.google.com/webstore/detail/EXTENSION_ID" target="_blank" class="topbar-cta">Install Free</a>
+    </div>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="hero">
+    <div class="hero-label">Quick Start</div>
+    <h1>Up and running<br>in 5 minutes</h1>
+    <p>Everything you need to get Fluxee posting your tip menu and thanking your fans — from zero to live.</p>
+</div>
+
+<!-- ── Steps ── -->
+<div class="steps">
+
+    <!-- Step 1 — Install -->
+    <div class="step">
+        <div class="step-spine">
+            <div class="step-num">1</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+            <div class="step-title">
+                <span class="step-icon">🧩</span>
+                Install Fluxee from the Chrome Web Store
+            </div>
+            <p class="step-desc">
+                Fluxee is a Chrome extension — no separate app to install, no account to create.
+                Click the button below, then click <strong>Add to Chrome</strong>.
+            </p>
+            <a href="https://chrome.google.com/webstore/detail/EXTENSION_ID" target="_blank" class="step-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.27 2 2 6.27 2 12s4.27 10 10 10 10-4.27 10-10S17.73 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14a6 6 0 100 12A6 6 0 0012 6zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
+                Install Fluxee — Free
+            </a>
+
+            <div class="suite-note">
+                <strong>Suite tier only:</strong> also download and run
+                <a href="https://github.com/palloxdg/fluxee/releases/download/v5.1.0/FluxeeBridge_v5.1.0_windows.zip"
+                   style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(0,212,232,0.3);"
+                   target="_blank">FluxeeBridge</a>
+                — the local relay app that powers OBS overlays. Extract the ZIP and run
+                <code>FluxeeBridge.exe</code> once. If Windows shows a security warning click
+                <strong>More info → Run anyway</strong>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2 — Open -->
+    <div class="step">
+        <div class="step-spine">
+            <div class="step-num">2</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+            <div class="step-title">
+                <span class="step-icon">📌</span>
+                Pin and open Fluxee
+            </div>
+            <p class="step-desc">
+                Click the puzzle icon <strong>🧩</strong> in the Chrome toolbar, find Fluxee, and click
+                the pin icon to keep it visible. Then click the Fluxee icon to open the sidepanel.
+            </p>
+        </div>
+    </div>
+
+    <!-- Step 3 — License (Pro/Suite mention) -->
+    <div class="step">
+        <div class="step-spine">
+            <div class="step-num">3</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+            <div class="step-title">
+                <span class="step-icon">🔑</span>
+                Activate your license <span style="font-size:0.75rem; font-weight:400; color:var(--muted); margin-left:4px;">Pro &amp; Suite only</span>
+            </div>
+            <p class="step-desc">
+                Lite is free — skip this step. If you purchased Pro or Suite, click the
+                <strong>License</strong> indicator in the status bar at the top of the sidepanel,
+                enter the license key from your confirmation email, and click <strong>Activate</strong>.
+                The indicator turns <strong style="color:var(--green);">green</strong> when active.
+            </p>
+            <img src="Sidepanel_Indicator.png" alt="License indicator"
+                 style="width:100%; max-width:300px; display:block; margin-top:14px; border-radius:6px; opacity:0.9;">
+        </div>
+    </div>
+
+    <!-- Step 4 — Check API LED -->
+    <div class="step">
+        <div class="step-spine">
+            <div class="step-num">4</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+            <div class="step-title">
+                <span class="step-icon">🟢</span>
+                Check the API indicator
+            </div>
+            <p class="step-desc">
+                Open your Fansly stream page in Chrome, then open the Fluxee sidepanel.
+                The <strong>API</strong> indicator should turn green — this confirms Fluxee
+                can see your stream and is ready to work.
+            </p>
+            <div class="led-row">
+                <div class="led">
+                    <div class="led-dot green"></div>
+                    <span>API</span>
+                </div>
+                <div class="led">
+                    <div class="led-dot grey"></div>
+                    <span>RELAY</span>
+                </div>
+                <div class="led">
+                    <div class="led-dot grey"></div>
+                    <span>LITE</span>
+                </div>
+            </div>
+            <p class="step-desc" style="margin-top:12px;">
+                If API stays grey, make sure you are on your Fansly stream page —
+                not the dashboard or another tab.
+            </p>
+        </div>
+    </div>
+
+    <!-- Step 5 — Add menu -->
+    <div class="step">
+        <div class="step-spine">
+            <div class="step-num">5</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+            <div class="step-title">
+                <span class="step-icon">📋</span>
+                Create your first tip menu
+            </div>
+            <p class="step-desc">
+                In the sidepanel, type or paste your tip menu into the
+                <strong>Tip Menu Content</strong> field. One item per line, for example:
+            </p>
+            <div style="background:#0d0d12; border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-top:12px; font-family:'DM Mono',monospace; font-size:0.82rem; color:#a0c8cc; line-height:1.8;">
+                Dance — $10<br>
+                Sing a Song — $20<br>
+                Full Show — $50
+            </div>
+            <p class="step-desc" style="margin-top:12px;">
+                Then click <strong>Save Menu</strong>. Give it a name when prompted.
+                You can create multiple menus and switch between them at any time.
+            </p>
+        </div>
+    </div>
+
+    <!-- Step 6 — Start bot -->
+    <div class="step">
+        <div class="step-spine">
+            <div class="step-num">6</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+            <div class="step-title">
+                <span class="step-icon">🚀</span>
+                Start the bot
+            </div>
+            <p class="step-desc">
+                Click <strong>Start Bot</strong>. Fluxee will post your active menu to chat
+                on the interval you set, and automatically thank every tipper by name and item.
+                The button turns red — that means it's live.
+            </p>
+            <p class="step-desc" style="margin-top:10px;">
+                That's it. Your stream is now running on autopilot. 🎉
+            </p>
+        </div>
+    </div>
+
+    <!-- Done banner -->
+    <div class="done-banner">
+        <div class="done-emoji">✅</div>
+        <h2>You're all set</h2>
+        <p>Fluxee is live. Explore the full guide whenever you're ready to unlock everything else.</p>
+        <div class="done-links">
+            <a href="guide.html" class="step-btn outline">
+                Read the full guide
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="index.html#pricing" class="step-btn outline">
+                Explore Pro &amp; Suite
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

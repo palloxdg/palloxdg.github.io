@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxee v5.1 by Pallox — Guide</title>
+    <style>
+        ::-webkit-scrollbar { width:12px; height:12px; }
+        ::-webkit-scrollbar-track { background:#22222A; }
+        ::-webkit-scrollbar-thumb { background:#959595; background-clip:content-box; border:4px solid transparent; border-radius:10px; }
+        ::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active { background:#959595; border:2px solid transparent; }
+        ::-webkit-scrollbar-button { display:none; height:0; width:0; }
+        :hover::-webkit-scrollbar-button { display:block; height:12px; width:12px; background-color:#22222A; background-repeat:no-repeat; background-position:center; background-size:8px; }
+        :hover::-webkit-scrollbar-button:single-button:vertical:decrement { background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23959595'><path d='M12 8l6 8H6z'/></svg>"); }
+        :hover::-webkit-scrollbar-button:single-button:vertical:increment { background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23959595'><path d='M12 16l-6-8h12z'/></svg>"); }
+
+        html { font-size:16px; }
+        body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; margin:0; padding:0; display:flex; justify-content:center; height:100vh; color:#ccc; background-color:#1e1e24; overflow:hidden; font-size:1rem; }
+        .layout { display:flex; width:100%; max-width:1200px; height:100vh; }
+
+        nav { width:260px; background-color:#2a2a35; padding:24px 16px 30px; border-right:1px solid #444; flex-shrink:0; overflow-y:auto; }
+        nav h3 { color:#fff; margin-top:0; margin-bottom:20px; font-size:1.1em; border-bottom:2px solid #00e5ff; padding-bottom:10px; }
+
+        nav .nav-group { margin-bottom:6px; }
+        nav .nav-group-label { display:block; color:#888; font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:10px 8px 4px; }
+        nav a { display:block; color:#aaa; text-decoration:none; padding:5px 8px 5px 14px; border-radius:5px; font-size:0.85em; transition:background 0.15s,color 0.15s; line-height:1.4; }
+        .content-container a:not([class]) { color:#7ecfda; text-decoration:none; border-bottom:1px solid rgba(126,207,218,0.3); transition:color 0.15s, border-color 0.15s; font-family:inherit; font-size:inherit; }
+        .content-container a:not([class]):hover { color:#b0e8ef; border-bottom-color:rgba(176,232,239,0.5); }
+        nav a:hover { background:rgba(255,255,255,0.06); color:#fff; }
+        nav a.active { background:rgba(0,229,255,0.12); color:#00e5ff; border-left:2px solid #00e5ff; padding-left:12px; }
+        nav a.sub { padding-left:24px; font-size:0.8em; color:#888; }
+        nav a.sub:hover { color:#ccc; }
+        nav a.sub.active { color:#00e5ff; padding-left:22px; }
+
+        main { flex:1; overflow-y:auto; padding:0; }
+        .content-container { max-width:820px; margin:0 auto; padding:40px 40px 80px; }
+
+        h1 { font-size:2em; color:#fff; margin-bottom:8px; }
+        h2 { font-size:1.4em; color:#00e5ff; margin-top:0; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid #333; }
+        h3 { font-size:1.05em; color:#f0f0f0; margin-bottom:8px; margin-top:20px; }
+        h4 { font-size:0.95em; color:#ccc; margin-bottom:6px; margin-top:16px; font-weight:600; }
+        p { line-height:1.7; margin-bottom:12px; }
+        li { line-height:1.7; margin-bottom:6px; }
+        ol,ul { padding-left:20px; margin-bottom:16px; }
+        code { background:#2a2a35; color:#f472b6; padding:2px 6px; border-radius:4px; font-size:0.88em; }
+        strong { color:#fff; }
+
+        section { padding-top:12px; margin-bottom:50px; }
+        .section-intro { color:#aaa; font-size:0.95em; margin-bottom:20px; font-style:italic; border-left:3px solid #333; padding-left:12px; }
+
+        .highlight-box { background:#2a2a35; border-left:4px solid #00e5ff; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .highlight-box p { margin:0; color:#fff; }
+        .tip-box { background:rgba(0,200,83,0.08); border-left:4px solid #00c853; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .tip-box p { margin:0; color:#b9f6ca; }
+        .danger-box { background:rgba(220,53,69,0.1); border-left:4px solid #dc3545; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .danger-box p { margin:0; color:#ffb3b3; font-weight:bold; }
+        .new-badge { display:inline-block; background:#00e5ff; color:#000; font-size:0.65em; font-weight:800; padding:1px 6px; border-radius:4px; vertical-align:middle; margin-left:6px; text-transform:uppercase; letter-spacing:0.5px; }
+
+        .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0; }
+        .feature-card { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:14px; }
+        .feature-card h4 { margin:0 0 6px; color:#00e5ff; font-size:0.9em; }
+        .feature-card p { margin:0; font-size:0.88em; color:#aaa; }
+
+        .step-list { counter-reset:step-counter; list-style:none; padding-left:0; }
+        .step-list li { counter-increment:step-counter; padding-left:36px; position:relative; margin-bottom:12px; }
+        .step-list li::before { content:counter(step-counter); position:absolute; left:0; top:1px; width:24px; height:24px; background:#00e5ff; color:#000; font-weight:800; font-size:0.78em; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+
+        .archive-item { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:18px 20px; margin-bottom:16px; }
+        .archive-item h3 { margin:0 0 12px; color:#f5a623; font-size:1em; }
+
+        .lang-selector { margin-top:24px; padding-top:16px; border-top:1px solid #444; display:flex; justify-content:center; gap:14px; }
+        .lang-flag { width:30px; height:30px; border-radius:50%; cursor:pointer; transition:transform 0.2s,filter 0.2s; border:2px solid transparent; object-fit:cover; }
+        .lang-flag:hover { transform:scale(1.1); filter:brightness(1.2); }
+        .lang-flag.active { border-color:#00e5ff; }
+        .link-icon { width:16px; height:16px; vertical-align:middle; margin-left:5px; opacity:0.8; filter:grayscale(1) brightness(1.5); }
+
+        @media(max-width:900px) { .feature-grid { grid-template-columns:1fr; } }
+
+        .disclaimer {
+            margin-top: 60px;
+            padding: 16px 20px;
+            border-top: 1px solid #333;
+            color: #555;
+            font-size: 0.78em;
+            line-height: 1.6;
+        }
+        .disclaimer p { margin: 0; color: #555; }
+        .disclaimer strong { color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+<nav>
+    <h3><img src="icon_grey.png" style="width:20px;height:20px;vertical-align:middle;margin-right:7px;opacity:0.85;">Fluxee v5.1</h3>
+
+    <div class="lang-selector" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:16px;">
+        <a href="guide.html" title="English"><img src="https://flagcdn.com/w80/gb.png" class="lang-flag active" alt="EN"></a>
+        <a href="guidePL.html" title="Polski"><img src="https://flagcdn.com/w80/pl.png" class="lang-flag" alt="PL"></a>
+        <a href="guideDE.html" title="Deutsch"><img src="https://flagcdn.com/w80/de.png" class="lang-flag" alt="DE"></a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Getting Started</span>
+        <a href="#intro" id="nav-intro" class="active">Introduction</a>
+        <a href="#installation" id="nav-installation">🛠️ Installation</a>
+        <a href="#permissions" id="nav-permissions">🔐 Permissions</a>
+        <a href="#first-launch" id="nav-first-launch">🚀 First Launch</a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Side Panel</span>
+        <a href="#running-bot" id="nav-running-bot">🟢 Running the Bot</a>
+        <a href="#active-menu" id="nav-active-menu">📋 Active Menu</a>
+        <a href="#autopost" id="nav-autopost">📢 Auto-Post</a>
+        <a href="#send-selection" id="nav-send-selection">💬 Send Selection</a>
+        <a href="#responder" id="nav-responder">🤖 Auto-Responder</a>
+        <a href="#custom-commands" id="nav-custom-commands" class="sub">↳ Custom Commands</a>
+        <a href="#saved-messages" id="nav-saved-messages" class="sub">↳ Saved Messages</a>
+        <a href="#auto-thank" id="nav-auto-thank">✨ Auto-Thank</a>
+        <a href="#guest-list" id="nav-guest-list">📋 Guest List</a>
+        <a href="#backup-restore" id="nav-backup-restore">💾 Backup & Restore</a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Tip Menu Designer</span>
+        <a href="#designer-design" id="nav-designer-design">✏️ Design Tab</a>
+        <a href="#structural-presets" id="nav-structural-presets" class="sub">↳ Structural Presets</a>
+        <a href="#style-assets" id="nav-style-assets" class="sub">↳ Style Assets</a>
+        <a href="#menu-templates" id="nav-menu-templates" class="sub">↳ Menu Templates</a>
+        <a href="#live-preview" id="nav-live-preview" class="sub">↳ Live Preview</a>
+        <a href="#saving-menus" id="nav-saving-menus" class="sub">↳ Saving Menus</a>
+        <a href="#designer-schedule" id="nav-designer-schedule">🗓️ Schedule Tab</a>
+        <a href="#schedule-slots" id="nav-schedule-slots" class="sub">↳ Schedule Slots</a>
+        <a href="#timeline" id="nav-timeline" class="sub">↳ Weekly Timeline</a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Analytics & Management</span>
+        <a href="#revenue-tab" id="nav-revenue-tab">💰 Revenue Tab</a>
+        <a href="#tips-overview" id="nav-tips-overview" class="sub">↳ Tips Overview</a>
+        <a href="#rot" id="nav-rot" class="sub">↳ Revenue Over Time</a>
+        <a href="#heatmap" id="nav-heatmap" class="sub">↳ Tip Heatmap</a>
+        <a href="#target-calculator" id="nav-target-calculator" class="sub">↳ Target Calculator</a>
+        <a href="#private-goal" id="nav-private-goal" class="sub">↳ Private Goal</a>
+        <a href="#export-csv" id="nav-export-csv" class="sub">↳ Export to CSV</a>
+        <a href="#goals-tab" id="nav-goals-tab">🎯 Goals Tab</a>
+        <a href="#live-goal-sync" id="nav-live-goal-sync" class="sub">↳ Live Goal Sync</a>
+        <a href="#goals-bank" id="nav-goals-bank" class="sub">↳ Saved Goals Bank</a>
+        <a href="#goals-archive" id="nav-goals-archive" class="sub">↳ Goals Archive</a>
+        <a href="#viewers-tab" id="nav-viewers-tab">👥 Viewers Tab</a>
+        <a href="#viewer-retention" id="nav-viewer-retention" class="sub">↳ Viewer Retention</a>
+        <a href="#top-tippers" id="nav-top-tippers" class="sub">↳ Top Tippers</a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Triggers & Overlays</span>
+        <a href="#triggers-tab" id="nav-triggers-tab">🎬 Triggers Tab</a>
+        <a href="#trigger-rules" id="nav-trigger-rules" class="sub">↳ Rule Types</a>
+        <a href="#trigger-options" id="nav-trigger-options" class="sub">↳ Cooldown & Fire Once</a>
+        <a href="#hype-train" id="nav-hype-train">🚂 Hype Train</a>
+        <a href="#ht-settings" id="nav-ht-settings" class="sub">↳ Settings</a>
+        <a href="#ht-visuals" id="nav-ht-visuals" class="sub">↳ Visuals & Themes</a>
+        <a href="#overlays-tab" id="nav-overlays-tab">📺 Overlays Tab</a>
+        <a href="#obs-setup" id="nav-obs-setup" class="sub">↳ OBS Setup</a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Auto-Moderator</span>
+        <a href="#automod-filters" id="nav-automod-filters">🛡️ Filters</a>
+        <a href="#automod-exclusions" id="nav-automod-exclusions" class="sub">↳ Exclusion Groups</a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Reference</span>
+        <a href="#archive" id="nav-archive">📜 Changes Archive</a>
+    </div>
+
+</nav>
+
+<main id="main-scroll">
+<div class="content-container">
+
+<!-- ═══════════════════════════════════════════════════════ GETTING STARTED -->
+
+<section id="intro">
+    <h1><img src="icon_grey.png" style="width:36px;height:36px;vertical-align:middle;margin-right:10px;opacity:0.9;">Fluxee v5.1 by Pallox</h1>
+    <p>Fluxee is a complete stream management suite for Fansly creators. It runs directly in your browser as a Chrome extension — no separate account, no third-party bot, no external login required. Everything posts as <strong>you</strong>.</p>
+    <p>Fluxee is built with <strong>account safety as a core priority</strong>. All automated actions include built-in safeguards to protect your Fansly account. Reliability is equally central — Fluxee is designed to keep running smoothly through long streams, page reloads, and Fansly's single-page navigation without dropping a beat.</p>
+
+    <h3>What's New in v5.1</h3>
+    <div class="feature-grid">
+        <div class="feature-card"><h4>🗓️ Menu Scheduler</h4><p>Rotate menus automatically on a time-based schedule with per-slot intervals and a visual weekly timeline.</p></div>
+        <div class="feature-card"><h4>📺 Stream Overlays</h4><p>OBS browser source overlays for live leaderboard, stream goal, and end-of-stream summary card.</p></div>
+        <div class="feature-card"><h4>🚂 Hype Train</h4><p>Animated OBS overlay that celebrates tip storms with levels, themes, custom icons and visual effects.</p></div>
+        <div class="feature-card"><h4>🎬 Trigger Engine</h4><p>Fire custom overlay animations and chat messages automatically based on tips, goals, and rapid events.</p></div>
+        <div class="feature-card"><h4>📈 Expanded Analytics</h4><p>Viewer Retention, Target Calculator, Revenue Share per item, Tip Heatmap tooltips, and CSV export.</p></div>
+        <div class="feature-card"><h4>🎨 Enhanced Designer</h4><p>Menu Templates library, color tagging, default menu, schedule integration, and delete/copy tools.</p></div>
+    </div>
+</section>
+
+<section id="installation">
+    <h2>🛠️ Installation</h2>
+    <ol class="step-list">
+        <li>Go to <a href="chrome://extensions/"><code>chrome://extensions/</code></a><img src="link_icon.png" class="link-icon" alt="link"> in your Chrome browser.</li>
+        <li>Enable <strong>Developer Mode</strong> using the toggle in the top-right corner.</li>
+        <li>Click <strong>"Load Unpacked"</strong> and select the <code>Fluxee_v5.1</code> folder.</li>
+        <li>Click the <strong>Puzzle Piece</strong> (🧩) icon in your Chrome toolbar, find <strong>Fluxee v5.1 by Pallox</strong>, and click the <strong>Pin</strong> (📌) icon to keep it accessible.</li>
+        <li>If you are using the Stream Overlays or Hype Train, also download and run <strong>FluxeeBridge.exe</strong> from the <a href="https://github.com/palloxdg/fluxee/releases/download/v5.1.0/FluxeeBridge_v5.1.0_windows.zip" target="_blank">GitHub Releases page</a>. This starts the local relay server that powers the OBS overlays. If Windows shows a security warning, click <strong>More info → Run anyway</strong> — this is normal for new software.</li>
+    </ol>
+    <div class="danger-box"><p>⚠️ Always refresh the Fansly page after installing or updating the extension.</p></div>
+</section>
+
+<section id="permissions">
+    <h2>🔐 One-Time Permission Setup</h2>
+    <ol class="step-list">
+        <li>Navigate to <a href="https://fansly.com/creator/streaming"><code>https://fansly.com/creator/streaming</code></a><img src="link_icon.png" class="link-icon" alt="link">.</li>
+        <li>Right-click the Fluxee icon in your Chrome toolbar.</li>
+        <li>Select <strong>"This can read and change site data"</strong>.</li>
+        <li>Choose <strong>"On fansly.com"</strong> to allow access on all Fansly pages.</li>
+    </ol>
+    <p><em>This is required only once. The extension will remember the permission across sessions.</em></p>
+</section>
+
+<section id="first-launch">
+    <h2>🚀 First Launch</h2>
+    <p>Click the pinned Fluxee icon in your Chrome toolbar to open the <strong>Side Panel</strong>. Fluxee will automatically resolve your Fansly identity and chat room in the background — this takes a few seconds on first load.</p>
+    <p>The connection indicator in the header will turn <strong>green</strong> once the relay server is detected (required for overlays). If you are not using overlays, you can ignore this indicator.</p>
+    <div class="highlight-box"><p>💡 Keep the Fansly creator streaming page open at all times while using Fluxee. The extension reads from and writes to that page directly.</p></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ SIDE PANEL -->
+
+<section id="running-bot">
+    <h2>🟢 Running the Bot</h2>
+    <p>The <strong>Start Bot</strong> button in the Side Panel activates all automated features. When running, the Fluxee icon in your Chrome toolbar turns <strong>red</strong> (🔴) as a visual indicator.</p>
+    <ul>
+        <li>Most settings fields become <strong>read-only</strong> while the bot is running to prevent accidental changes mid-stream. Stop the bot to edit them.</li>
+        <li>The <strong>Tip Menu Content</strong> field remains selectable while the bot runs so you can highlight and send individual lines — see <a href="#send-selection">Send Selection</a>.</li>
+        <li>Use the <strong>🚀 Post Menu Now</strong> button to instantly send your active menu to chat at any time, regardless of the auto-post timer.</li>
+    </ul>
+</section>
+
+<section id="active-menu">
+    <h2>📋 Active Menu</h2>
+    <p>The <strong>Active Menu</strong> dropdown at the top of the Side Panel determines which menu the bot posts during auto-post intervals. All menus are created and managed in the <a href="#designer-design">Tip Menu Designer</a>.</p>
+    <ul>
+        <li>Changing the active menu takes effect immediately — the next auto-post will use the newly selected menu.</li>
+        <li>If you have a <strong>Schedule</strong> configured, the scheduler automatically switches the active menu according to the slot times. When a slot ends, the bot falls back to the menu that was active before the schedule started.</li>
+        <li>You can mark any menu as the <strong>Default Menu</strong> in the Designer. The scheduler uses this as the fallback when a slot ends, if set.</li>
+    </ul>
+</section>
+
+<section id="autopost">
+    <h2>📢 Auto-Post</h2>
+    <p>The auto-post system keeps your tip menu visible in chat without manual effort.</p>
+    <h3>Trigger Modes</h3>
+    <ul>
+        <li><strong>Minutes:</strong> Posts your active menu at a fixed time interval (e.g., every 10 minutes). A small random jitter is added to each interval to keep timing natural.</li>
+        <li><strong>Messages:</strong> Counts incoming chat messages and posts the menu once the threshold is reached (e.g., every 20 messages). Ideal for active streams where time-based posting might be too infrequent or too aggressive.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Switch to Messages mode during high-traffic streams for better visibility without flooding the chat.</p></div>
+</section>
+
+<section id="send-selection">
+    <h2>💬 Send Selection to Chat <span class="new-badge">New</span></h2>
+    <p>While the bot is running, you can highlight any text in the <strong>Tip Menu Content</strong> field and send it directly to Fansly chat with one click.</p>
+    <ol class="step-list">
+        <li>Start the bot.</li>
+        <li>Click and drag to highlight any text in the Tip Menu Content textarea — a single line, a price, or any portion of the menu.</li>
+        <li>Click the <strong>💬</strong> button that appears next to the "Tip Menu Content:" label. It activates only when text is selected and the bot is running.</li>
+        <li>The selected text is sent to chat immediately.</li>
+    </ol>
+    <div class="highlight-box"><p>💡 Use this to answer a viewer's question mid-stream by sending just the relevant menu line, without triggering a full menu post.</p></div>
+</section>
+
+<section id="responder">
+    <h2>🤖 Auto-Responder</h2>
+    <p>The Auto-Responder automatically replies to chat commands. Enable it using the toggle on the main Side Panel.</p>
+    <ul>
+        <li><strong>!menu command:</strong> Any viewer typing <code>!menu</code> in chat triggers an immediate posting of your active menu.</li>
+        <li><strong>Cooldown:</strong> A global cooldown (in minutes) prevents the responder from firing too frequently. The same cooldown applies to all commands.</li>
+    </ul>
+</section>
+
+<section id="custom-commands">
+    <h2>🤖 Custom Commands</h2>
+    <p>Create your own chat commands by clicking the <strong>Custom Commands</strong> button to open the command manager.</p>
+    <ol class="step-list">
+        <li>Enter a <strong>Trigger Name</strong> (without the <code>!</code> prefix — e.g., <code>socials</code> becomes <code>!socials</code>).</li>
+        <li>Enter the <strong>Bot Response</strong> — the full text the bot will post when that command is used.</li>
+        <li>Click <strong>💾 Save Command</strong>. The command appears in the <strong>Saved Commands</strong> list below.</li>
+        <li>Use the toggle on each command row to enable or disable it individually.</li>
+        <li>Click the <strong>✏️</strong> icon to edit, or the <strong>🗑</strong> icon to delete.</li>
+    </ol>
+    <div class="tip-box"><p>💡 Useful commands: <code>!socials</code> (your social links), <code>!rules</code> (chat rules), <code>!schedule</code> (your streaming schedule).</p></div>
+</section>
+
+<section id="saved-messages">
+    <h2>💾 Saved Auto-Thank Messages <span class="new-badge">New</span></h2>
+    <p>Build a library of Auto-Thank message templates directly in the Custom Commands page.</p>
+    <ol class="step-list">
+        <li>Type your thank-you message in the <strong>Auto-Thank Message</strong> field using <code>{user}</code> and <code>{item}</code> placeholders.</li>
+        <li>Click <strong>💾 Save Message</strong> to add it to your library.</li>
+        <li>Click <strong>↩ Load</strong> on any saved message to load it into the active field and set it immediately.</li>
+        <li>Editing the field after loading a message deactivates the highlight — click Save to update the saved version or create a new one.</li>
+        <li>Click <strong>🗑</strong> to delete a saved message with confirmation.</li>
+    </ol>
+</section>
+
+<section id="auto-thank">
+    <h2>✨ Auto-Thank for Tips</h2>
+    <p>Automatically post a public thank-you message whenever a viewer tips for a menu item.</p>
+    <ul>
+        <li>Enable the <strong>Auto-Thank for Tips</strong> toggle on the main Side Panel.</li>
+        <li>Customize the message using <code>{user}</code> (fan's username) and <code>{item}</code> (the menu item tipped).</li>
+        <li><em>Example: "✨ {user} just tipped for: {item}! Thank you so much! ✨"</em></li>
+        <li>Edit and manage your thank-you templates in the <a href="#saved-messages">Saved Messages</a> library.</li>
+    </ul>
+</section>
+
+<section id="guest-list">
+    <h2>📋 Guest List</h2>
+    <p>Every tipper is automatically added to the Guest List — a running record of everyone who has tipped during the session.</p>
+    <ul>
+        <li>Click <strong>📋 Copy Names</strong> to copy a comma-separated list of all tippers to your clipboard for a shoutout post.</li>
+        <li>Click <strong>🗑️ Reset List</strong> at the start of each stream to clear previous entries.</li>
+    </ul>
+</section>
+
+<section id="backup-restore">
+    <h2>💾 Backup & Restore</h2>
+    <p>Protect your menus, commands, and analytics data by exporting regular backups.</p>
+    <ul>
+        <li><strong>Export Backup:</strong> Click <strong>💾 Export Backup</strong> to download a <code>.txt</code> file containing all your menus, commands, and analytics history.</li>
+        <li><strong>Import Backup:</strong> Click <strong>📂 Import Backup</strong> and select a previously exported file to restore your full configuration.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Export a backup at least once a week to ensure your analytics history is never lost after a browser update or reinstall.</p></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ TIP MENU DESIGNER -->
+
+<section id="designer-design">
+    <h2>✏️ Tip Menu Designer — Design Tab</h2>
+    <p class="section-intro">The Designer is a dedicated page accessible from the top navigation bar. It gives you a visual workspace to build, preview, and save professional tip menus.</p>
+    <p>Open the Designer by clicking <strong>🎨 Tip Menu Designer</strong> in the top navigation. Use the <strong>✏️ Design</strong> and <strong>🗓️ Schedule</strong> tabs to switch between the two workspaces.</p>
+</section>
+
+<section id="structural-presets">
+    <h2>📐 Structural Presets</h2>
+    <p>The five structural presets define the overall layout of your menu lines. Click any preset button to instantly reformat all items in the preview.</p>
+    <ul>
+        <li><strong>📜 Classic List:</strong> One item per line, clean and readable. Best for most menus.</li>
+        <li><strong>📏 Vertical Pipeline:</strong> Items separated by vertical pipe characters for a modern look.</li>
+        <li><strong>🏷️ Tagged Bracket:</strong> Prices displayed in square brackets before each item.</li>
+        <li><strong>🎀 Horizontal Ribbon:</strong> All items on a single scrolling line with separators — ideal for short menus.</li>
+        <li><strong>🔳 Smart Grid:</strong> Items arranged in a 2-column grid layout.</li>
+    </ul>
+    <p>Combine structural presets with the <strong>Layout Style</strong> buttons (Default, Pipe, Bracket) to further refine how individual items are formatted.</p>
+</section>
+
+<section id="style-assets">
+    <h2>🎨 Style Assets</h2>
+    <p>The Style Assets panel in column 2 gives you a library of visual building blocks organised into four tabs:</p>
+    <h4>Emojis</h4>
+    <p>Click any emoji to insert it at your cursor position in the Source List. Save your own custom emojis using the input at the bottom of the tab.</p>
+    <h4>Decorations</h4>
+    <p>Text dividers and separators. Click to insert at cursor. Save your own custom decorations for repeated use.</p>
+    <h4>Fonts</h4>
+    <p>Select text in the Source List, then click a font style to convert it to Unicode characters (Bold, Italic, Script, etc.). Click without a selection to insert a sample.</p>
+    <h4>My Presets</h4>
+    <p>Save custom line formatting templates using the placeholders <code>{icon}</code>, <code>{label}</code>, and <code>{price}</code>. Click a saved preset to apply it to all items in the preview.</p>
+    <p><em>Example template: <code>{icon} **{label}** — {price}</code></em></p>
+</section>
+
+<section id="menu-templates">
+    <h2>📄 Menu Templates <span class="new-badge">New</span></h2>
+    <p>The <strong>Menu Templates</strong> tab provides a curated library of ready-to-use starting points and lets you save your own templates for reuse.</p>
+    <h4>Using a Built-in Template</h4>
+    <ol class="step-list">
+        <li>Click the <strong>Menu Templates</strong> tab in the Style Assets panel.</li>
+        <li>Filter by category using the pill buttons at the top, or browse all templates.</li>
+        <li>Click <strong>▶ Apply</strong> on any template. If your Source List already has content, a confirmation prompt will appear before overwriting.</li>
+        <li>The template content loads into the Source List with <code>$XX</code> price placeholders — replace <code>XX</code> with your actual prices.</li>
+    </ol>
+    <h4>Saving Your Own Templates</h4>
+    <ol class="step-list">
+        <li>Build your menu in the Source List.</li>
+        <li>Scroll to the <strong>New Template</strong> form at the bottom of the Menu Templates tab.</li>
+        <li>Enter a name, optional category (type a new one to create it), and description.</li>
+        <li>Click <strong>💾 Save Template</strong>. Your template appears in the grid immediately.</li>
+    </ol>
+    <div class="highlight-box"><p>💡 Categories are created automatically when you type a new name and saved with the template. They disappear automatically when all templates in that category are deleted.</p></div>
+</section>
+
+<section id="live-preview">
+    <h2>👁️ Live Fansly Preview</h2>
+    <p>The preview in column 3 updates in real-time as you build your menu, showing exactly how the post will appear in Fansly chat — including line wrapping at Fansly's character limit.</p>
+    <ul>
+        <li>The preview respects the currently selected structural preset, layout style, and any My Preset formatting.</li>
+        <li>Use the <strong>📋</strong> copy button next to the "Source List" label to copy the raw source content to your clipboard.</li>
+    </ul>
+</section>
+
+<section id="saving-menus">
+    <h2>💾 Saving & Managing Menus</h2>
+    <p>Once your menu is ready, save it to your master menu list using the Apply section below the preview.</p>
+    <ol class="step-list">
+        <li>Enter a <strong>Menu Name</strong> in column 1.</li>
+        <li>Select a <strong>Menu Color</strong> using the color swatches — this color is used on the Schedule timeline.</li>
+        <li>Optionally toggle <strong>Default Menu</strong> to mark this menu as the scheduler's fallback.</li>
+        <li>Click <strong>✨ Apply to Menu List ✨</strong> to save. The menu is immediately available in the Side Panel dropdown.</li>
+    </ol>
+    <p>To <strong>delete</strong> a saved menu, select it in the dropdown and click the <strong>🗑</strong> button that appears to its right. A confirmation prompt will appear.</p>
+    <div class="danger-box"><p>⚠️ Deleting a menu is permanent. Export a backup first if you want to preserve it.</p></div>
+</section>
+
+<section id="designer-schedule">
+    <h2>🗓️ Tip Menu Designer — Schedule Tab <span class="new-badge">New</span></h2>
+    <p class="section-intro">The Schedule tab lets you automate menu rotation throughout your stream. Instead of manually switching menus, you define time windows and Fluxee handles the rest.</p>
+    <p>Click the <strong>🗓️ Schedule</strong> tab in the Designer to access the scheduler.</p>
+</section>
+
+<section id="schedule-slots">
+    <h2>🗓️ Schedule Slots</h2>
+    <p>Up to <strong>8 schedule slots</strong> are available. Each slot defines a time window during which a specific menu is active.</p>
+    <h4>Configuring a Slot</h4>
+    <ol class="step-list">
+        <li>Click a slot header to <strong>expand</strong> it (slots are collapsed by default).</li>
+        <li>Enable the slot using the toggle on the right of the header.</li>
+        <li>Select a <strong>Menu</strong> from the dropdown — this is what the bot will post during the slot.</li>
+        <li>Set the <strong>Start</strong> and <strong>End</strong> time using the time pickers.</li>
+        <li>Set the <strong>Post every</strong> interval (minutes or messages) — this overrides the Side Panel auto-post setting while the slot is active.</li>
+        <li>Check the <strong>Days of the week</strong> this slot should apply to.</li>
+    </ol>
+    <h4>Overlap Prevention</h4>
+    <p>Fluxee prevents two enabled slots from having overlapping times on the same day. If a time change would cause an overlap, the change is automatically reverted with a warning.</p>
+    <h4>Fallback Behaviour</h4>
+    <p>When no slot is active, use the radio buttons at the bottom to choose:</p>
+    <ul>
+        <li><strong>Use default menu & manual interval:</strong> The bot continues posting using the Side Panel settings and the Default Menu (or the menu that was active before the schedule started).</li>
+        <li><strong>Pause auto-post:</strong> The bot stops posting until the next slot activates.</li>
+    </ul>
+    <div class="tip-box"><p>💡 The scheduler uses your system clock and timezone automatically — no manual timezone selection needed.</p></div>
+</section>
+
+<section id="timeline">
+    <h2>📅 Weekly Timeline</h2>
+    <p>The <strong>Weekly Timeline</strong> in the right column visualises all configured slots for a selected day.</p>
+    <ul>
+        <li>Click any <strong>day pill</strong> (Mon–Sun) to view that day's schedule.</li>
+        <li>Each slot appears as a coloured block matching the slot's assigned colour. <strong>Enabled</strong> slots are fully opaque; <strong>disabled</strong> slots appear dimmed with a dashed border.</li>
+        <li>A <strong>white needle</strong> marks the current time on the current day.</li>
+        <li>Hover over any block to see the menu name and time range.</li>
+        <li>The timeline updates every 60 seconds automatically.</li>
+    </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ ANALYTICS -->
+
+<section id="revenue-tab">
+    <h2>💰 Analytics — Revenue Tab</h2>
+    <p class="section-intro">The Analytics page is accessed via the top navigation bar. Use the <strong>Revenue</strong>, <strong>Goals</strong>, and <strong>Viewers</strong> tabs to switch between views. All tabs share a common timeframe selector at the top.</p>
+    <p>The <strong>Revenue Statistics</strong> banner at the top of the Revenue tab shows four key metrics at a glance: <strong>Total Tips</strong>, <strong>Gross Revenue</strong>, <strong>Average Tip</strong>, and <strong>After Fansly</strong> (net after the 20% platform fee).</p>
+    <p>Use the timeframe pills — <strong>24h / 7 Days / 30 Days / All Time</strong> — to filter all Revenue tab data.</p>
+</section>
+
+<section id="tips-overview">
+    <h2>📊 Tips Overview</h2>
+    <p>The Tips Overview table shows every menu item that has been tipped, with four sortable columns:</p>
+    <ul>
+        <li><strong>Item:</strong> The menu item name.</li>
+        <li><strong>Count:</strong> Number of times this item was tipped.</li>
+        <li><strong>Revenue:</strong> Total gross revenue from this item.</li>
+        <li><strong>Share <span class="new-badge">New</span>:</strong> This item's revenue as a percentage of total revenue — instantly shows your highest-earning items.</li>
+    </ul>
+    <p>Click any column header to sort by that column. Click again to reverse the sort order. The default sort is by Revenue descending.</p>
+    <p>The <strong>Untipped Items</strong> card below the table shows menu items that have never been tipped in the selected timeframe — useful for identifying underperforming items to reprice or remove.</p>
+</section>
+
+<section id="rot">
+    <h2>📈 Revenue Over Time</h2>
+    <p>The Revenue Over Time card visualises when your tips happen.</p>
+    <ul>
+        <li><strong>By Hour:</strong> A bar chart showing gross revenue broken down by hour of the day. Use the From/To selectors to zoom into a time window.</li>
+        <li><strong>By Day of Week:</strong> Revenue broken down by day — useful for identifying your most profitable streaming days.</li>
+    </ul>
+</section>
+
+<section id="heatmap">
+    <h2>🌡️ Tip Heatmap</h2>
+    <p>The Tip Heatmap shows revenue intensity across all 24 hours and 7 days of the week simultaneously. Darker cyan cells indicate higher tip activity in that time slot.</p>
+    <p>Hover over any cell to see a detailed tooltip showing the total revenue, number of tips, and average tip amount for that hour and day combination.</p>
+    <div class="tip-box"><p>💡 Use the heatmap to identify your peak tipping windows and schedule your most valuable stream content for those times.</p></div>
+</section>
+
+<section id="target-calculator">
+    <h2>🎯 Target Calculator <span class="new-badge">New</span></h2>
+    <p>The Target Calculator helps you plan a stream by estimating how long you need to stream to reach a revenue target, based on your historical performance.</p>
+    <ol class="step-list">
+        <li>Enter your target revenue amount in the <strong>$</strong> input field.</li>
+        <li>The calculator instantly shows: estimated hours needed, a likely range based on your session variance, estimated number of tips needed, and your average hourly rate.</li>
+    </ol>
+    <p>The estimate is based on all recorded sessions in your tip history. The session count used for the calculation is shown at the bottom of the card — the more sessions you have, the more accurate the estimate.</p>
+    <div class="highlight-box"><p>💡 The "likely range" reflects natural session variation. On a good night you may hit the target faster; on a slower night it may take longer.</p></div>
+</section>
+
+<section id="private-goal">
+    <h2>🏆 Private Goal & Storage Usage</h2>
+    <p>The <strong>Private Goal</strong> card tracks a personal revenue milestone that is separate from the Fansly goal system. Set a name and target amount, and the progress bar fills as tips are recorded.</p>
+    <p>The <strong>Storage Usage</strong> card shows how much of Chrome's local storage Fluxee is using for your analytics data. Use the <strong>Trim Now</strong> button to remove older data beyond a selected retention window (3, 6, 12, or 24 months).</p>
+</section>
+
+<section id="export-csv">
+    <h2>⬇️ Export to CSV <span class="new-badge">New</span></h2>
+    <p>Export your complete tip history as a CSV file for external analysis or sharing with a manager.</p>
+    <p>Click the <strong>⬇ Export CSV</strong> button at the far right of the timeframe toolbar. The file is saved directly to your Downloads folder named <code>fluxee_tips_YYYY-MM-DD.csv</code>.</p>
+    <p>The CSV includes: Timestamp, Date, Time, Username, Amount, Item, and Subscriber status for every recorded tip.</p>
+</section>
+
+<section id="goals-tab">
+    <h2>🎯 Analytics — Goals Tab</h2>
+    <p class="section-intro">The Goals tab manages your integration with Fansly's live goal system — syncing, tracking, archiving, and queuing goals for automated posting.</p>
+</section>
+
+<section id="live-goal-sync">
+    <h2>🔄 Live Goal Sync</h2>
+    <p>Fluxee connects directly to the Fansly API to track your active goals in real time.</p>
+    <ul>
+        <li>Fansly supports <strong>3 goal slots</strong> (Top, Middle, Bottom). All three are tracked simultaneously.</li>
+        <li>Progress bars update automatically. Slot buttons glow when a goal is actively running.</li>
+        <li>To sync a saved goal to Fansly, select it from the <strong>Saved Goals Bank</strong> and click a slot button.</li>
+    </ul>
+    <h4>Goal Queue</h4>
+    <p>If all 3 goal slots are occupied, you can queue additional goals. When a slot opens up, Fluxee automatically syncs the next queued goal without any manual action.</p>
+</section>
+
+<section id="goals-bank">
+    <h2>🏦 Saved Goals Bank</h2>
+    <p>Build a library of reusable goals that you can push to Fansly at any time.</p>
+    <ol class="step-list">
+        <li>Enter a goal <strong>name</strong>, <strong>target amount</strong> (in dollars), and optional <strong>description</strong>.</li>
+        <li>Click <strong>💾 Save Goal</strong>. The goal appears in the bank below.</li>
+        <li>Click the <strong>☆</strong> icon on any goal to mark it as <strong>Popular</strong> — it moves to the top of the list with a gold star for quick access.</li>
+        <li>Click a goal to expand it and use the <strong>Slot</strong> buttons to push it live to Fansly.</li>
+    </ol>
+</section>
+
+<section id="goals-archive">
+    <h2>📜 Goals Archive</h2>
+    <p>Completed and expired goals are automatically moved to the Goals Archive. The last 50 goals are stored.</p>
+    <ul>
+        <li>Goals marked <strong>Reached</strong> (cyan) met their target. Goals marked <strong>Failed</strong> (red) were stopped before completion.</li>
+        <li>Click <strong>🗑️</strong> next to any archive entry to delete it permanently.</li>
+        <li>Use the <strong>Tag</strong> system to categorise goals for performance analysis — see which content types reach their targets most often.</li>
+    </ul>
+</section>
+
+<section id="viewers-tab">
+    <h2>👥 Analytics — Viewers Tab</h2>
+    <p class="section-intro">The Viewers tab provides audience intelligence — understanding who your tippers are, how loyal they are, and how they engage over time.</p>
+    <p>Use the timeframe pills — <strong>Today / This Week / This Month / All Time</strong> — to filter all Viewers tab data simultaneously.</p>
+    <h4>Row 1 — Summary Cards</h4>
+    <ul>
+        <li><strong>Tip Frequency:</strong> How many fans tipped once, a few times, or regularly — a quick engagement distribution.</li>
+        <li><strong>New vs Returning:</strong> Donut chart showing first-time tippers vs fans who have tipped before in the selected period.</li>
+        <li><strong>Average Tip per Viewer:</strong> Total revenue divided by unique tippers. This can exceed the biggest single tip if viewers tip multiple times.</li>
+    </ul>
+</section>
+
+<section id="viewer-retention">
+    <h2>🔄 Viewer Retention <span class="new-badge">New</span></h2>
+    <p>The Viewer Retention card shows audience loyalty metrics derived from your tip history — no extra tracking required.</p>
+    <ul>
+        <li><strong>Return Rate:</strong> Percentage of tippers who have come back for at least a second session.</li>
+        <li><strong>Avg Sessions:</strong> Average number of distinct streaming days per tipper.</li>
+        <li><strong>Split bar:</strong> Visual breakdown of one-time vs returning tippers.</li>
+        <li><strong>Top Returning Tippers:</strong> The 5 most loyal fans ranked by number of sessions they have tipped in.</li>
+    </ul>
+</section>
+
+<section id="top-tippers">
+    <h2>🏆 Top Tippers & Biggest Single Tip</h2>
+    <p>The <strong>Top Tippers</strong> leaderboard ranks all tippers by total revenue in the selected timeframe. Each row shows tip count, total amount, biggest single tip, and a ⭐ indicator for subscribers.</p>
+    <p>The <strong>Biggest Single Tip</strong> card highlights your all-time (or period) record tip with the fan name, item, and date.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════ TRIGGERS & OVERLAYS -->
+
+<section id="triggers-tab">
+    <h2>🎬 Triggers & Overlays — Triggers Tab</h2>
+    <p class="section-intro">The Triggers & Overlays page is accessed from the top navigation. It has three tabs: Triggers, Uploads, and Overlays.</p>
+    <p>Triggers let you fire overlay animations and optional chat messages automatically when specific events happen in your stream.</p>
+</section>
+
+<section id="trigger-rules">
+    <h2>📋 Trigger Rule Types</h2>
+    <p>Create a new rule using the <strong>New Trigger Rule</strong> form. Each rule has a name, a type, an animation to play, and an optional chat message.</p>
+    <h4>Text Match</h4>
+    <p>Fires when a tip's matched menu item contains a specific keyword. Example: trigger an animation whenever someone tips for "Full Show".</p>
+    <h4>Combo</h4>
+    <p>Fires when tips arrive in a specific dollar sequence within a time window. Example: $10 followed by $20 within 60 seconds.</p>
+    <h4>Rapid Fire</h4>
+    <p>Fires when a certain number of tips arrive within a short time window. Example: 5 tips within 30 seconds — ideal for hype moments.</p>
+    <h4>Goal Events</h4>
+    <p>Fires when a Fansly goal starts (<strong>Goal Started</strong>) or is completed (<strong>Goal Completed</strong>).</p>
+    <h4>Hype Train Events</h4>
+    <p>Fires on Hype Train events: <strong>Train Start</strong>, <strong>Level Up</strong>, <strong>Danger Zone</strong>, and <strong>Train End</strong>.</p>
+    <h4>Custom Types</h4>
+    <p>Advanced rules based on session metrics — session total, unique tippers, personal records, and more. Create custom type definitions in the <strong>Uploads</strong> tab.</p>
+</section>
+
+<section id="trigger-options">
+    <h2>⏱️ Cooldown & Fire Once <span class="new-badge">New</span></h2>
+    <p>Each trigger rule can be configured with two additional controls:</p>
+    <ul>
+        <li><strong>Cooldown (seconds):</strong> The minimum time that must pass before the same rule can fire again. Set to 0 for no cooldown. Useful for preventing the same animation from playing on every single tip.</li>
+        <li><strong>Fire Once per Session:</strong> When enabled, the rule fires exactly once per session and will not fire again until the bot is restarted. Ideal for milestone events like reaching $100 total.</li>
+    </ul>
+    <p>Active cooldowns and fire-once status are shown as badges on each rule card in the Saved Rules list.</p>
+</section>
+
+<section id="hype-train">
+    <h2>🚂 Hype Train Configuration</h2>
+    <p class="section-intro">The Hype Train is an animated OBS overlay that celebrates multiple tips in a short period with a visual train that grows in intensity as contributions increase.</p>
+</section>
+
+<section id="ht-settings">
+    <h2>⚙️ Hype Train — Settings</h2>
+    <ul>
+        <li><strong>Mode:</strong> <em>Multi-Level</em> (train grows through levels up to a configurable maximum) or <em>Single Goal</em> (one fixed target amount).</li>
+        <li><strong>Levels / Base Goal / Difficulty:</strong> In Multi-Level mode, configure how many levels exist and how quickly the goal scales per level.</li>
+        <li><strong>Duration:</strong> How long the Hype Train lasts after the last tip before it expires.</li>
+        <li><strong>Auto-Start Threshold:</strong> The minimum single tip amount that automatically starts the Hype Train.</li>
+        <li><strong>Enabled:</strong> The Hype Train is disabled by default. Toggle it on to activate.</li>
+    </ul>
+</section>
+
+<section id="ht-visuals">
+    <h2>🎨 Hype Train — Visuals & Themes</h2>
+    <p>The Visuals tab lets you customise every aspect of the Hype Train's appearance.</p>
+    <ul>
+        <li><strong>Font, Primary & Secondary Colors:</strong> Text and accent colours used throughout the overlay.</li>
+        <li><strong>Background:</strong> Choose Transparent, a Preset theme background, a Solid colour, or upload a Custom image.</li>
+        <li><strong>Bar Color & Bar Frame:</strong> The progress bar fill colour and decorative frame style (None, Glow, Pulse, Segmented).</li>
+        <li><strong>Train Icon:</strong> None, the Default icon, or a custom uploaded image.</li>
+        <li><strong>Animations:</strong> Assign animation effects to Train Start, Level Up, Danger Zone, and Train End events.</li>
+    </ul>
+    <h4>My Themes</h4>
+    <p>Save your visual configuration as a named theme using the <strong>💾 Save Theme</strong> button. Saved themes appear in the <strong>My Themes</strong> panel and in the preset dropdown for quick loading. Click <strong>Update</strong> to overwrite a previously saved theme with your current settings.</p>
+</section>
+
+<section id="overlays-tab">
+    <h2>📺 Overlays Tab</h2>
+    <p>The Overlays tab configures three OBS browser source overlays. Each overlay has a <strong>Settings</strong> tab and a <strong>Visuals</strong> tab.</p>
+    <h4>Leaderboard Overlay</h4>
+    <p>Displays a live top-tipper leaderboard that updates in real time as tips arrive. Configure the number of entries, title, reset behaviour, and whether to show dollar amounts.</p>
+    <h4>Stream Goal Overlay</h4>
+    <p>Shows a progress bar tracking cumulative session tips toward a target. Configure the description, target amount, reward message, and bar fill style.</p>
+    <h4>End Card Overlay</h4>
+    <p>Appears at the end of your stream with a summary. Configure duration, thank-you message, and which stats to display (tip count, gross amount, top tipper, Hype Train recap).</p>
+</section>
+
+<section id="obs-setup">
+    <h2>📺 OBS Setup</h2>
+    <p>Each overlay has a dedicated browser source URL listed in the <strong>Preview</strong> column on the right side of the Overlays tab.</p>
+    <ol class="step-list">
+        <li>Make sure <strong>FluxeeBridge.exe</strong> is running.</li>
+        <li>In OBS, add a new <strong>Browser Source</strong>.</li>
+        <li>Paste the overlay URL (e.g., <code>http://localhost:3745/leaderboard</code>) into the URL field.</li>
+        <li>Set the width to <strong>1920</strong> and height to <strong>1080</strong>.</li>
+        <li>Check <strong>"Shutdown source when not visible"</strong> to save resources when the overlay scene is not active.</li>
+    </ol>
+    <div class="highlight-box"><p>💡 Position and scale each overlay using the Settings tab in Fluxee — no need to manually resize in OBS.</p></div>
+    <div class="danger-box"><p>⚠️ FluxeeBridge.exe must be running for all overlays to receive live data. Keep it open throughout your stream.</p></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ AUTO-MODERATOR -->
+
+<section id="automod-filters">
+    <h2>🛡️ Auto-Moderator — Filters</h2>
+    <p class="section-intro">The Auto-Moderator is configured in the <strong>Auto-Mod</strong> tab accessible from the top navigation. Each filter operates independently and can be enabled or disabled individually.</p>
+
+    <h4>1. Caps Filter</h4>
+    <p>Prevents excessive use of capital letters. Configure a <strong>minimum message length</strong> (to ignore short messages) and a <strong>threshold percentage</strong> (e.g., 70% caps triggers a warning).</p>
+
+    <h4>2. Links Filter</h4>
+    <p>Automatically warns users who post unauthorized links. Add trusted domains to the <strong>Whitelisted Domains</strong> list to allow them. Fansly.com is always whitelisted.</p>
+
+    <h4>3. Word Filter</h4>
+    <p>Blocks specific banned words or phrases. Add words as interactive tags — click the × on any tag to remove it.</p>
+
+    <h4>4. Paragraphs Filter</h4>
+    <p>Limits message density by setting a maximum <strong>character count</strong> and a maximum number of <strong>line breaks</strong> per message.</p>
+
+    <h4>5. Symbols Filter</h4>
+    <p>Detects spam patterns using Unicode-aware symbol density analysis. Configure a minimum message length and a threshold percentage.</p>
+
+    <div class="highlight-box">
+        <p>💡 Each filter has a fully customizable warning message. Use the <code>{user}</code> placeholder to address the user by name in the warning.</p>
+    </div>
+</section>
+
+<section id="automod-exclusions">
+    <h2>🛡️ Exclusion Groups</h2>
+    <p>The Exclusion Groups panel controls who is exempt from all moderation filters.</p>
+    <ul>
+        <li><strong>Streamer:</strong> Always excluded (cannot be changed).</li>
+        <li><strong>Moderators:</strong> Always excluded (cannot be changed).</li>
+        <li><strong>Subscribers:</strong> Optional. Exclude your subscribers from moderation to give them more freedom in chat.</li>
+        <li><strong>Other Creators:</strong> Optional. Exclude verified creator accounts from moderation.</li>
+    </ul>
+    <p>Additionally, each user that receives a warning is subject to a <strong>30-second per-user cooldown</strong> — the same user will not receive a second warning within 30 seconds, preventing moderation spam on repeat offenders.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ ARCHIVE -->
+
+<section id="archive">
+    <h2>📜 Changes Archive</h2>
+
+    <div class="archive-item">
+        <h3>Version 5.1</h3>
+        <ul>
+            <li><strong>Menu Scheduler:</strong> Time-based menu rotation with up to 8 slots, per-slot intervals, day-of-week selection, overlap prevention, weekly timeline visualisation, and configurable fallback.</li>
+            <li><strong>Stream Overlays:</strong> Three OBS browser source overlays — Live Leaderboard, Stream Goal, and End Card — with full visual customisation.</li>
+            <li><strong>Hype Train:</strong> Animated OBS overlay with multi-level support, custom themes, visual effects, and My Themes library.</li>
+            <li><strong>Trigger Engine:</strong> Rule-based automation for overlay animations and chat messages, with per-rule cooldown and fire-once options.</li>
+            <li><strong>Expanded Analytics:</strong> Viewer Retention card, Revenue Share column, Tip Heatmap hover tooltips, Target Calculator, and CSV export.</li>
+            <li><strong>Menu Templates:</strong> Curated library of 8 built-in templates plus user-created templates with category filtering.</li>
+            <li><strong>Send Selection:</strong> Highlight any text in the menu content area and send it directly to chat with one click.</li>
+            <li><strong>Saved Messages:</strong> Library of reusable Auto-Thank message templates with load and delete.</li>
+            <li><strong>Menu Color & Default:</strong> Assign a colour to each menu for timeline display; mark one as the default fallback.</li>
+            <li><strong>Safety & Reliability:</strong> Comprehensive under-the-hood improvements to anti-spam, ghost-reply prevention, race condition fixes, and connection stability.</li>
+        </ul>
+    </div>
+
+    <div class="archive-item">
+        <h3>Version 5.0</h3>
+        <ul>
+            <li><strong>Project Rebrand:</strong> Officially transitioned to <strong>Fluxee</strong> with updated UI.</li>
+            <li><strong>3-Column Layout:</strong> New optimized workspace for panoramic monitors (1400px+).</li>
+            <li><strong>Visual Tip Menu Designer:</strong> Real-time preview, curated asset library, and one-click menu application.</li>
+            <li><strong>Auto-Moderator Suite:</strong> 5 smart filters (Caps, Links, Words, Paragraphs, Symbols) with exclusion groups.</li>
+        </ul>
+    </div>
+
+    <div class="archive-item">
+        <h3>Version 4.7</h3>
+        <ul>
+            <li><strong>Live Goal Sync:</strong> Automatic tracking of all 3 Fansly goal slots via API.</li>
+            <li><strong>Popular Goals:</strong> One-click starring for priority bank items.</li>
+            <li><strong>Collapsible Bank:</strong> Accordion-style UI for saved goal management.</li>
+            <li><strong>Archive Control:</strong> Delete individual entries from goal history.</li>
+            <li><strong>Multi-Tag Analytics:</strong> Categorize goals to analyze win rates by content type.</li>
+        </ul>
+    </div>
+
+    <div class="archive-item">
+        <h3>Version 4.6</h3>
+        <ul>
+            <li><strong>3-Slot Manual Sync:</strong> Initial support for Fansly's goal system.</li>
+            <li><strong>Active Slot Highlighting:</strong> Buttons glow when a goal is detected in a slot.</li>
+            <li><strong>Modernized UI:</strong> Toggle switches and gradient styling.</li>
+        </ul>
+    </div>
+</section>
+
+<div class="disclaimer">
+    <p><strong>Disclaimer:</strong> Fluxee is an independent third-party tool and is not affiliated with, endorsed by, or in any way officially connected to Fansly or its parent company. All product names, trademarks, and brand names mentioned are the property of their respective owners. Use of Fluxee is at your own discretion and risk.</p>
+</div>
+
+</div>
+</main>
+</div>
+
+<script src="guide.js"></script>
+</body>
+</html>
