@@ -223,7 +223,7 @@
             color: var(--muted);
         }
 
-        /* ── Screenshot placeholder ── */
+        /* ── Screenshot slideshow ── */
         .screenshot-wrap {
             max-width: 900px;
             margin: 80px auto 0;
@@ -240,7 +240,7 @@
 
         .screenshot-bar {
             background: var(--surface);
-            padding: 12px 16px;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -252,19 +252,68 @@
         .dot-y { background: #febc2e; }
         .dot-g { background: #28c840; }
 
-        .screenshot-placeholder {
-            height: 420px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+        .slide-label {
+            margin-left: auto;
+            font-size: 0.72rem;
             color: var(--muted);
-            font-size: 0.9rem;
-            background: linear-gradient(135deg, var(--card) 0%, rgba(0,212,232,0.03) 100%);
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
-        .screenshot-placeholder svg { opacity: 0.3; }
+        .slideshow {
+            position: relative;
+            height: 520px;
+            overflow: hidden;
+            background: #0d0d12;
+            cursor: pointer;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .slide.active { opacity: 1; }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .slide-dots {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            padding: 14px 16px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+
+        .slide-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            border: none;
+            padding: 0;
+        }
+
+        .slide-dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .slide-dot:hover { background: #666; }
 
         /* ── Sections ── */
         section { padding: 96px 24px; }
@@ -652,12 +701,51 @@
             <div class="dot dot-r"></div>
             <div class="dot dot-y"></div>
             <div class="dot dot-g"></div>
+            <span class="slide-label" id="slideLabel">Sidepanel — bot core</span>
         </div>
-        <div class="screenshot-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
-            </svg>
-            <span>Screenshots coming soon</span>
+        <div class="slideshow" id="slideshow">
+        <div class="slide  active" data-label="Sidepanel — bot core">
+            <img src="Sidepanel.png" alt="Sidepanel — bot core" loading="eager">
+        </div>
+        <div class="slide" data-label="Analytics — Revenue">
+            <img src="Analytics_Revenue_1.png" alt="Analytics — Revenue" loading="lazy">
+        </div>
+        <div class="slide" data-label="Analytics — Session Comparison & Heatmap">
+            <img src="Analytics_Revenue_2.png" alt="Analytics — Session Comparison & Heatmap" loading="lazy">
+        </div>
+        <div class="slide" data-label="Analytics — Viewers">
+            <img src="Analytics_Viewers.png" alt="Analytics — Viewers" loading="lazy">
+        </div>
+        <div class="slide" data-label="Analytics — Goals">
+            <img src="Analytics_Goals.png" alt="Analytics — Goals" loading="lazy">
+        </div>
+        <div class="slide" data-label="Tip Menu Designer">
+            <img src="TipMenuDesigner.png" alt="Tip Menu Designer" loading="lazy">
+        </div>
+        <div class="slide" data-label="Tip Menu Designer — Schedule">
+            <img src="TipMenuDesigner_Schedule.png" alt="Tip Menu Designer — Schedule" loading="lazy">
+        </div>
+        <div class="slide" data-label="Auto-Moderator">
+            <img src="Auto-Mod.png" alt="Auto-Moderator" loading="lazy">
+        </div>
+        <div class="slide" data-label="Triggers & Hype Train">
+            <img src="Overlay_Triggers.png" alt="Triggers & Hype Train" loading="lazy">
+        </div>
+        <div class="slide" data-label="OBS Overlays">
+            <img src="Overlay_Overlays.png" alt="OBS Overlays" loading="lazy">
+        </div>
+        </div>
+        <div class="slide-dots" id="slideDots">
+            <button class="slide-dot  active" data-index="0" aria-label="Sidepanel — bot core"></button>
+            <button class="slide-dot" data-index="1" aria-label="Analytics — Revenue"></button>
+            <button class="slide-dot" data-index="2" aria-label="Analytics — Session Comparison & Heatmap"></button>
+            <button class="slide-dot" data-index="3" aria-label="Analytics — Viewers"></button>
+            <button class="slide-dot" data-index="4" aria-label="Analytics — Goals"></button>
+            <button class="slide-dot" data-index="5" aria-label="Tip Menu Designer"></button>
+            <button class="slide-dot" data-index="6" aria-label="Tip Menu Designer — Schedule"></button>
+            <button class="slide-dot" data-index="7" aria-label="Auto-Moderator"></button>
+            <button class="slide-dot" data-index="8" aria-label="Triggers & Hype Train"></button>
+            <button class="slide-dot" data-index="9" aria-label="OBS Overlays"></button>
         </div>
     </div>
 </div>
@@ -784,7 +872,7 @@
 
         </div>
 
-        <p class="trial-note"><strong>14-day money-back guarantee</strong> after purchase</p>
+        <p class="trial-note"><strong>30-day free trial</strong> on Pro and Suite · <strong>14-day money-back guarantee</strong> after purchase</p>
     </div>
 </section>
 
@@ -810,6 +898,14 @@
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 <div class="faq-answer">No. Everything Fluxee sends comes from your own Fansly account, not from a separate bot account. Your viewers see your username on every message.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does the 30-day trial work?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer">When you purchase Pro or Suite, you have 30 days to try all features. If you're not satisfied, you can request a full refund within 14 days of purchase. Your license key is deactivated automatically on refund.</div>
             </div>
 
             <div class="faq-item">
@@ -889,6 +985,45 @@
 </footer>
 
 <script>
+    // ── Slideshow ──
+    (function() {
+        const slides    = document.querySelectorAll('.slide');
+        const dots      = document.querySelectorAll('.slide-dot');
+        const label     = document.getElementById('slideLabel');
+        const slideshow = document.getElementById('slideshow');
+        if (!slides.length) return;
+
+        let current  = 0;
+        let timer    = null;
+        const DELAY  = 4500;
+
+        function goTo(n) {
+            slides[current].classList.remove('active');
+            dots[current].classList.remove('active');
+            current = (n + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            dots[current].classList.add('active');
+            if (label) label.textContent = slides[current].dataset.label || '';
+        }
+
+        function start() {
+            clearInterval(timer);
+            timer = setInterval(() => goTo(current + 1), DELAY);
+        }
+
+        // Dot clicks
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => { goTo(i); start(); });
+        });
+
+        // Click slideshow to advance
+        if (slideshow) {
+            slideshow.addEventListener('click', () => { goTo(current + 1); start(); });
+        }
+
+        start();
+    })();
+
     // ── FAQ accordion ──
     document.querySelectorAll('.faq-question').forEach(btn => {
         btn.addEventListener('click', () => {
