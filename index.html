@@ -660,6 +660,27 @@
         }
     </style>
     <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+    <style>
+        /* Modal button hover effects */
+        #purchaseSuccessOverlay a,
+        #purchaseSuccessOverlaySuite a {
+            transition: opacity 0.15s ease, transform 0.15s ease !important;
+        }
+        #purchaseSuccessOverlay a:hover,
+        #purchaseSuccessOverlaySuite a:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+        #purchaseSuccessOverlay button,
+        #purchaseSuccessOverlaySuite button {
+            transition: border-color 0.15s ease, color 0.15s ease !important;
+        }
+        #purchaseSuccessOverlay button:hover,
+        #purchaseSuccessOverlaySuite button:hover {
+            border-color: rgba(255,255,255,0.25) !important;
+            color: #aaa !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -1101,7 +1122,7 @@
             <a href="https://github.com/palloxdg/fluxee/releases/latest" target="_blank"
                style="display:flex; align-items:center; justify-content:center; gap:10px; background:#00d4e8; color:#000; font-weight:700; font-size:1rem; padding:16px 24px; border-radius:12px; text-decoration:none; margin-bottom:8px;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Download FluxeeBridge — GitHub Releases
+                Download FluxeeBridge
             </a>
             <p style="font-size:0.72rem; color:#555; margin-bottom:12px;">Windows · ZIP file · Extract and run FluxeeBridge.exe once</p>
             <a href="https://chrome.google.com/webstore/detail/EXTENSION_ID" target="_blank"
