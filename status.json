@@ -1,7 +1,7 @@
 {
-  "version": "5.1.0",
+  "version": "5.2.0",
   "status": "ok",
-  "message": "",
+  "message": "Test notification from Fluxee status system",
   "minVersion": "5.0.0",
   "updateUrl": "https://palloxdg.github.io/#download",
   "updatedAt": "2026-03-19"
