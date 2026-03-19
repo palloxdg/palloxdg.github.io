@@ -1,0 +1,22 @@
+{
+  "name": "Fluxee Monitor",
+  "short_name": "Fluxee",
+  "description": "Fansly & Fluxee health monitor",
+  "start_url": "/monitor",
+  "display": "standalone",
+  "background_color": "#111116",
+  "theme_color": "#111116",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon_grey.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_grey.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

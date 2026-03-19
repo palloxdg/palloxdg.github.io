@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#111116">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Fluxee Monitor">
+    <title>Fluxee Monitor</title>
+    <link rel="manifest" href="monitor-manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:      #111116;
+            --surface: #18181f;
+            --card:    #1e1e27;
+            --border:  rgba(255,255,255,0.07);
+            --accent:  #00d4e8;
+            --text:    #e0e0e8;
+            --muted:   #6a6a7c;
+            --green:   #00c853;
+            --red:     #f87171;
+            --amber:   #f5a623;
+        }
+
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        /* ── Header ── */
+        header {
+            padding: 24px 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.2px;
+        }
+
+        .brand-sub {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .refresh-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--muted);
+            padding: 8px 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: border-color 0.15s, color 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .refresh-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+        .refresh-btn:active { transform: scale(0.97); }
+
+        .refresh-icon {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.4s ease;
+        }
+
+        .refresh-btn.spinning .refresh-icon {
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Main ── */
+        main {
+            flex: 1;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ── Overall status card ── */
+        .status-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .status-card.ok     { border-color: rgba(0, 200, 83, 0.25); }
+        .status-card.error  { border-color: rgba(248, 113, 113, 0.25); }
+        .status-card.stale  { border-color: rgba(245, 166, 35, 0.25); }
+
+        .status-orb {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .status-orb.ok    { background: rgba(0,200,83,0.15);    box-shadow: 0 0 20px rgba(0,200,83,0.2); }
+        .status-orb.error { background: rgba(248,113,113,0.15); box-shadow: 0 0 20px rgba(248,113,113,0.2); }
+        .status-orb.stale { background: rgba(245,166,35,0.15);  box-shadow: 0 0 20px rgba(245,166,35,0.2); }
+        .status-orb.loading { background: rgba(255,255,255,0.05); }
+
+        .status-info { flex: 1; }
+
+        .status-headline {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .status-meta {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── Info row ── */
+        .info-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .info-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
+            flex: 1;
+        }
+
+        .info-chip-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-chip-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            font-family: 'DM Mono', monospace;
+        }
+
+        /* ── Checks list ── */
+        .checks-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--muted);
+            padding: 0 2px;
+        }
+
+        .checks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .check-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .check-item.ok    { border-left: 3px solid var(--green); }
+        .check-item.error { border-left: 3px solid var(--red); }
+
+        .check-led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .check-led.ok    { background: var(--green); box-shadow: 0 0 6px rgba(0,200,83,0.6); }
+        .check-led.error { background: var(--red);   box-shadow: 0 0 6px rgba(248,113,113,0.6); }
+        .check-led.loading { background: #444; }
+
+        .check-name {
+            flex: 1;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .check-meta {
+            text-align: right;
+        }
+
+        .check-code {
+            font-size: 0.78rem;
+            font-family: 'DM Mono', monospace;
+            color: var(--muted);
+            display: block;
+        }
+
+        .check-ms {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        /* ── Empty / error state ── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 16px 24px 24px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--muted);
+            max-width: 480px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        footer a { color: var(--muted); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+
+        /* ── Fade in ── */
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand">
+        <div class="brand-dot"></div>
+        <div>
+            <div class="brand-name">Fluxee Monitor</div>
+            <div class="brand-sub">palloxdg.github.io</div>
+        </div>
+    </div>
+    <button class="refresh-btn" id="refreshBtn" onclick="load()">
+        <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+        </svg>
+        Refresh
+    </button>
+</header>
+
+<main id="main">
+    <div class="empty-state">
+        <span class="empty-icon">⏳</span>
+        Loading status...
+    </div>
+</main>
+
+<footer>
+    <a href="https://palloxdg.github.io" target="_blank">palloxdg.github.io</a>
+    &nbsp;·&nbsp;
+    Checks run twice daily via GitHub Actions
+</footer>
+
+<script>
+const STATUS_URL = 'https://palloxdg.github.io/monitor-status.json';
+
+function statusEmoji(overall) {
+    if (overall === 'ok')    return '✅';
+    if (overall === 'error') return '❌';
+    return '⚠️';
+}
+
+function statusHeadline(overall) {
+    if (overall === 'ok')    return 'All Systems OK';
+    if (overall === 'error') return 'Issue Detected';
+    return 'Status Unknown';
+}
+
+function isStale(checkedAt) {
+    if (!checkedAt) return true;
+    const age = Date.now() - new Date(checkedAt).getTime();
+    return age > 24 * 3600 * 1000; // older than 24h = stale
+}
+
+function formatAge(checkedAt) {
+    if (!checkedAt) return 'Never';
+    const age = Date.now() - new Date(checkedAt).getTime();
+    const mins  = Math.floor(age / 60000);
+    const hours = Math.floor(age / 3600000);
+    const days  = Math.floor(age / 86400000);
+    if (mins < 1)   return 'Just now';
+    if (mins < 60)  return `${mins}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+}
+
+function render(data) {
+    const main = document.getElementById('main');
+    const stale = isStale(data.checkedAt);
+    const cardClass = stale ? 'stale' : (data.overall === 'ok' ? 'ok' : 'error');
+    const orbClass  = stale ? 'stale' : (data.overall === 'ok' ? 'ok' : 'error');
+
+    const checksHtml = (data.checks || []).map(c => `
+        <div class="check-item ${c.status}">
+            <div class="check-led ${c.status}"></div>
+            <div class="check-name">${c.name}</div>
+            <div class="check-meta">
+                <span class="check-code">HTTP ${c.code || '—'}</span>
+                <span class="check-ms">${c.ms ? c.ms + 'ms' : '—'}</span>
+            </div>
+        </div>
+    `).join('');
+
+    main.innerHTML = `
+        <div class="status-card ${cardClass} fade-in">
+            <div class="status-orb ${orbClass}">${statusEmoji(stale ? 'stale' : data.overall)}</div>
+            <div class="status-info">
+                <div class="status-headline">${stale ? 'Data may be stale' : statusHeadline(data.overall)}</div>
+                <div class="status-meta">
+                    Last checked ${formatAge(data.checkedAt)}<br>
+                    ${data.checkedAtHuman || '—'}
+                </div>
+            </div>
+        </div>
+
+        <div class="info-row fade-in">
+            <div class="info-chip">
+                <div class="info-chip-label">Fluxee</div>
+                <div class="info-chip-value">v${data.fluxeeVersion || '—'}</div>
+            </div>
+            <div class="info-chip">
+                <div class="info-chip-label">Status</div>
+                <div class="info-chip-value" style="color: ${data.fluxeeStatus === 'ok' ? 'var(--green)' : 'var(--amber)'}">
+                    ${data.fluxeeStatus || '—'}
+                </div>
+            </div>
+        </div>
+
+        <div class="checks-label fade-in">Checks</div>
+        <div class="checks-list fade-in">
+            ${checksHtml}
+        </div>
+    `;
+}
+
+function renderError(msg) {
+    document.getElementById('main').innerHTML = `
+        <div class="empty-state fade-in">
+            <span class="empty-icon">⚠️</span>
+            ${msg}
+        </div>
+    `;
+}
+
+async function load() {
+    const btn = document.getElementById('refreshBtn');
+    btn.classList.add('spinning');
+
+    try {
+        const res  = await fetch(STATUS_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        render(data);
+    } catch (e) {
+        renderError('Could not load status.<br>Check your connection or try again.');
+    } finally {
+        btn.classList.remove('spinning');
+    }
+}
+
+// Load on startup
+load();
+</script>
+
+</body>
+</html>
