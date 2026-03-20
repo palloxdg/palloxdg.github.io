@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxee v5.1 by Pallox — Instrukcja</title>
+    <style>
+        ::-webkit-scrollbar { width:12px; height:12px; }
+        ::-webkit-scrollbar-track { background:#22222A; }
+        ::-webkit-scrollbar-thumb { background:#959595; background-clip:content-box; border:4px solid transparent; border-radius:10px; }
+        ::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active { background:#959595; border:2px solid transparent; }
+        ::-webkit-scrollbar-button { display:none; height:0; width:0; }
+        :hover::-webkit-scrollbar-button { display:block; height:12px; width:12px; background-color:#22222A; background-repeat:no-repeat; background-position:center; background-size:8px; }
+        :hover::-webkit-scrollbar-button:single-button:vertical:decrement { background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23959595'><path d='M12 8l6 8H6z'/></svg>"); }
+        :hover::-webkit-scrollbar-button:single-button:vertical:increment { background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23959595'><path d='M12 16l-6-8h12z'/></svg>"); }
+        html { font-size:16px; }
+        body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; margin:0; padding:0; display:flex; justify-content:center; height:100vh; color:#ccc; background-color:#1e1e24; overflow:hidden; font-size:1rem; }
+        .layout { display:flex; width:100%; max-width:1200px; height:100vh; }
+        nav { width:260px; background-color:#2a2a35; padding:24px 16px 30px; border-right:1px solid #444; flex-shrink:0; overflow-y:auto; }
+        nav h3 { color:#fff; margin-top:0; margin-bottom:20px; font-size:1.1em; border-bottom:2px solid #00e5ff; padding-bottom:10px; }
+        nav .nav-group { margin-bottom:6px; }
+        nav .nav-group-label { display:block; color:#888; font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:10px 8px 4px; }
+        nav a { display:block; color:#aaa; text-decoration:none; padding:5px 8px 5px 14px; border-radius:5px; font-size:0.85em; transition:background 0.15s,color 0.15s; line-height:1.4; }
+        .content-container a:not([class]) { color:#7ecfda; text-decoration:none; border-bottom:1px solid rgba(126,207,218,0.3); transition:color 0.15s, border-color 0.15s; font-family:inherit; font-size:inherit; }
+        .content-container a:not([class]):hover { color:#b0e8ef; border-bottom-color:rgba(176,232,239,0.5); }
+        nav a:hover { background:rgba(255,255,255,0.06); color:#fff; }
+        nav a.active { background:rgba(0,229,255,0.12); color:#00e5ff; border-left:2px solid #00e5ff; padding-left:12px; }
+        nav a.sub { padding-left:24px; font-size:0.8em; color:#888; }
+        nav a.sub:hover { color:#ccc; }
+        nav a.sub.active { color:#00e5ff; padding-left:22px; }
+        main { flex:1; overflow-y:auto; padding:0; }
+        .content-container { max-width:820px; margin:0 auto; padding:40px 40px 80px; }
+        h1 { font-size:2em; color:#fff; margin-bottom:8px; }
+        h2 { font-size:1.4em; color:#00e5ff; margin-top:0; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid #333; }
+        h3 { font-size:1.05em; color:#f0f0f0; margin-bottom:8px; margin-top:20px; }
+        h4 { font-size:0.95em; color:#ccc; margin-bottom:6px; margin-top:16px; font-weight:600; }
+        p { line-height:1.7; margin-bottom:12px; }
+        li { line-height:1.7; margin-bottom:6px; }
+        ol,ul { padding-left:20px; margin-bottom:16px; }
+        code { background:#2a2a35; color:#f472b6; padding:2px 6px; border-radius:4px; font-size:0.88em; }
+        strong { color:#fff; }
+        section { padding-top:12px; margin-bottom:50px; }
+        .section-intro { color:#aaa; font-size:0.95em; margin-bottom:20px; font-style:italic; border-left:3px solid #333; padding-left:12px; }
+        .highlight-box { background:#2a2a35; border-left:4px solid #00e5ff; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .highlight-box p { margin:0; color:#fff; }
+        .tip-box { background:rgba(0,200,83,0.08); border-left:4px solid #00c853; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .tip-box p { margin:0; color:#b9f6ca; }
+        .danger-box { background:rgba(220,53,69,0.1); border-left:4px solid #dc3545; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .danger-box p { margin:0; color:#ffb3b3; font-weight:bold; }
+        .new-badge { display:inline-block; background:#00e5ff; color:#000; font-size:0.65em; font-weight:800; padding:1px 6px; border-radius:4px; vertical-align:middle; margin-left:6px; text-transform:uppercase; letter-spacing:0.5px; }
+        .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0; }
+        .feature-card { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:14px; }
+        .feature-card h4 { margin:0 0 6px; color:#00e5ff; font-size:0.9em; }
+        .feature-card p { margin:0; font-size:0.88em; color:#aaa; }
+        .step-list { counter-reset:step-counter; list-style:none; padding-left:0; }
+        .step-list li { counter-increment:step-counter; padding-left:36px; position:relative; margin-bottom:12px; }
+        .step-list li::before { content:counter(step-counter); position:absolute; left:0; top:1px; width:24px; height:24px; background:#00e5ff; color:#000; font-weight:800; font-size:0.78em; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .archive-item { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:18px 20px; margin-bottom:16px; }
+        .archive-item h3 { margin:0 0 12px; color:#f5a623; font-size:1em; }
+        .lang-selector { margin-top:24px; padding-top:16px; border-top:1px solid #444; display:flex; justify-content:center; gap:14px; }
+        .lang-flag { width:30px; height:30px; border-radius:50%; cursor:pointer; transition:transform 0.2s,filter 0.2s; border:2px solid transparent; object-fit:cover; }
+        .lang-flag:hover { transform:scale(1.1); filter:brightness(1.2); }
+        .lang-flag.active { border-color:#00e5ff; }
+        .link-icon { width:16px; height:16px; vertical-align:middle; margin-left:5px; opacity:0.8; filter:grayscale(1) brightness(1.5); }
+        @media(max-width:900px) { .feature-grid { grid-template-columns:1fr; } }
+
+        .disclaimer {
+            margin-top: 60px;
+            padding: 16px 20px;
+            border-top: 1px solid #333;
+            color: #555;
+            font-size: 0.78em;
+            line-height: 1.6;
+        }
+        .disclaimer p { margin: 0; color: #555; }
+        .disclaimer strong { color: #666; }
+    </style>
+</head>
+<body>
+<div class="layout">
+<nav>
+    <h3><img src="icon_grey.png" style="width:20px;height:20px;vertical-align:middle;margin-right:7px;opacity:0.85;">Fluxee v5.1</h3>
+
+    <div class="lang-selector" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:16px;">
+        <a href="guide.html" title="English"><img src="https://flagcdn.com/w80/gb.png" class="lang-flag" alt="EN"></a>
+        <a href="guidePL.html" title="Polski"><img src="https://flagcdn.com/w80/pl.png" class="lang-flag  active" alt="PL"></a>
+        <a href="guideDE.html" title="Deutsch"><img src="https://flagcdn.com/w80/de.png" class="lang-flag  active" alt="DE"></a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Pierwsze kroki</span>
+        <a href="#intro" id="nav-intro" class="active">Wprowadzenie</a>
+        <a href="#installation" id="nav-installation">🛠️ Instalacja</a>
+        <a href="#permissions" id="nav-permissions">🔐 Uprawnienia</a>
+        <a href="#first-launch" id="nav-first-launch">🚀 Pierwsze uruchomienie</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Panel boczny</span>
+        <a href="#running-bot" id="nav-running-bot">🟢 Uruchamianie bota</a>
+        <a href="#active-menu" id="nav-active-menu">📋 Aktywne menu</a>
+        <a href="#autopost" id="nav-autopost">📢 Auto-Post</a>
+        <a href="#send-selection" id="nav-send-selection">💬 Wyślij zaznaczenie</a>
+        <a href="#responder" id="nav-responder">🤖 Auto-Responder</a>
+        <a href="#custom-commands" id="nav-custom-commands" class="sub">↳ Własne komendy</a>
+        <a href="#saved-messages" id="nav-saved-messages" class="sub">↳ Zapisane wiadomości</a>
+        <a href="#auto-thank" id="nav-auto-thank">✨ Auto-Podziękowanie</a>
+        <a href="#guest-list" id="nav-guest-list">📋 Lista gości</a>
+        <a href="#backup-restore" id="nav-backup-restore">💾 Kopia zapasowa</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Projektant menu</span>
+        <a href="#designer-design" id="nav-designer-design">✏️ Zakładka Projekt</a>
+        <a href="#structural-presets" id="nav-structural-presets" class="sub">↳ Presety strukturalne</a>
+        <a href="#style-assets" id="nav-style-assets" class="sub">↳ Zasoby stylu</a>
+        <a href="#menu-templates" id="nav-menu-templates" class="sub">↳ Szablony menu</a>
+        <a href="#live-preview" id="nav-live-preview" class="sub">↳ Podgląd na żywo</a>
+        <a href="#saving-menus" id="nav-saving-menus" class="sub">↳ Zapisywanie menu</a>
+        <a href="#designer-schedule" id="nav-designer-schedule">🗓️ Zakładka Harmonogram</a>
+        <a href="#schedule-slots" id="nav-schedule-slots" class="sub">↳ Sloty harmonogramu</a>
+        <a href="#timeline" id="nav-timeline" class="sub">↳ Tygodniowy harmonogram</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Statystyki</span>
+        <a href="#revenue-tab" id="nav-revenue-tab">💰 Zakładka Przychody</a>
+        <a href="#tips-overview" id="nav-tips-overview" class="sub">↳ Przegląd napiwków</a>
+        <a href="#rot" id="nav-rot" class="sub">↳ Przychody w czasie</a>
+        <a href="#heatmap" id="nav-heatmap" class="sub">↳ Mapa cieplna</a>
+        <a href="#target-calculator" id="nav-target-calculator" class="sub">↳ Kalkulator celu</a>
+        <a href="#private-goal" id="nav-private-goal" class="sub">↳ Prywatny cel</a>
+        <a href="#export-csv" id="nav-export-csv" class="sub">↳ Eksport do CSV</a>
+        <a href="#goals-tab" id="nav-goals-tab">🎯 Zakładka Cele</a>
+        <a href="#live-goal-sync" id="nav-live-goal-sync" class="sub">↳ Synchronizacja na żywo</a>
+        <a href="#goals-bank" id="nav-goals-bank" class="sub">↳ Bank celów</a>
+        <a href="#goals-archive" id="nav-goals-archive" class="sub">↳ Archiwum celów</a>
+        <a href="#viewers-tab" id="nav-viewers-tab">👥 Zakładka Widzowie</a>
+        <a href="#viewer-retention" id="nav-viewer-retention" class="sub">↳ Retencja widzów</a>
+        <a href="#top-tippers" id="nav-top-tippers" class="sub">↳ Najlepsi napiwkodawcy</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Wyzwalacze i nakładki</span>
+        <a href="#triggers-tab" id="nav-triggers-tab">🎬 Zakładka Wyzwalacze</a>
+        <a href="#trigger-rules" id="nav-trigger-rules" class="sub">↳ Typy reguł</a>
+        <a href="#trigger-options" id="nav-trigger-options" class="sub">↳ Cooldown i jednorazowe</a>
+        <a href="#hype-train" id="nav-hype-train">🚂 Hype Train</a>
+        <a href="#ht-settings" id="nav-ht-settings" class="sub">↳ Ustawienia</a>
+        <a href="#ht-visuals" id="nav-ht-visuals" class="sub">↳ Wygląd i motywy</a>
+        <a href="#overlays-tab" id="nav-overlays-tab">📺 Zakładka Nakładki</a>
+        <a href="#obs-setup" id="nav-obs-setup" class="sub">↳ Konfiguracja OBS</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Auto-Moderator</span>
+        <a href="#automod-filters" id="nav-automod-filters">🛡️ Filtry</a>
+        <a href="#automod-exclusions" id="nav-automod-exclusions" class="sub">↳ Grupy wykluczeń</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Odniesienie</span>
+        <a href="#archive" id="nav-archive">📜 Archiwum zmian</a>
+    </div>
+</nav>
+<main id="main-scroll">
+<div class="content-container">
+
+<section id="intro">
+    <h1><img src="icon_grey.png" style="width:36px;height:36px;vertical-align:middle;margin-right:10px;opacity:0.9;">Fluxee v5.1 by Pallox</h1>
+    <p>Fluxee to kompleksowy zestaw narzędzi do zarządzania streamem dla twórców Fansly. Działa bezpośrednio w przeglądarce jako rozszerzenie Chrome — bez osobnego konta, bez zewnętrznego bota, bez dodatkowego logowania. Wszystkie wiadomości są wysyłane <strong>przez Ciebie</strong>.</p>
+    <p>Fluxee zostało zbudowane z <strong>bezpieczeństwem konta jako priorytetem</strong>. Wszystkie zautomatyzowane działania zawierają wbudowane zabezpieczenia chroniące Twoje konto Fansly. Niezawodność jest równie ważna — Fluxee zostało zaprojektowane tak, aby działać sprawnie przez długie streamy, przeładowania strony i nawigację SPA Fansly.</p>
+    <h3>Nowości w wersji 5.1</h3>
+    <div class="feature-grid">
+        <div class="feature-card"><h4>🗓️ Harmonogram menu</h4><p>Automatyczna rotacja menu według harmonogramu czasowego z wizualnym podglądem tygodniowym.</p></div>
+        <div class="feature-card"><h4>📺 Nakładki streamowe</h4><p>Nakładki OBS: live ranking, cel streamowy i karta końcowa.</p></div>
+        <div class="feature-card"><h4>🚂 Hype Train</h4><p>Animowana nakładka OBS celebrująca serie napiwków z poziomami i efektami wizualnymi.</p></div>
+        <div class="feature-card"><h4>🎬 Silnik wyzwalaczy</h4><p>Automatyczne animacje i wiadomości na podstawie napiwków, celów i innych zdarzeń.</p></div>
+        <div class="feature-card"><h4>📈 Rozbudowane statystyki</h4><p>Retencja widzów, kalkulator celu, udział w przychodach, podpowiedzi mapy cieplnej i eksport CSV.</p></div>
+        <div class="feature-card"><h4>🎨 Ulepszony projektant</h4><p>Biblioteka szablonów menu, kolorowanie, domyślne menu i narzędzia do usuwania i kopiowania.</p></div>
+    </div>
+</section>
+
+<section id="installation">
+    <h2>🛠️ Instalacja</h2>
+    <ol class="step-list">
+        <li>Przejdź do <a href="chrome://extensions/"><code>chrome://extensions/</code></a><img src="link_icon.png" class="link-icon" alt="link"> w przeglądarce Chrome.</li>
+        <li>Włącz <strong>Tryb dewelopera</strong> przełącznikiem w prawym górnym rogu.</li>
+        <li>Kliknij <strong>„Wczytaj rozpakowane"</strong> i wybierz folder <code>Fluxee_v5.1</code>.</li>
+        <li>Kliknij ikonę <strong>Puzzli</strong> (🧩) na pasku narzędzi Chrome, znajdź <strong>Fluxee v5.1 by Pallox</strong> i kliknij ikonę <strong>Przypnij</strong> (📌).</li>
+        <li>Jeśli używasz nakładek streamowych lub Hype Train, pobierz i uruchom <strong>FluxeeBridge.exe</strong> ze strony <a href="https://github.com/palloxdg/fluxee/releases/download/v5.1.0/FluxeeBridge_v5.1.0_windows.zip" target="_blank">GitHub Releases</a>. Jeśli Windows wyświetli ostrzeżenie bezpieczeństwa, kliknij <strong>Więcej informacji → Uruchom mimo to</strong> — to normalne dla nowego oprogramowania.</li>
+    </ol>
+    <div class="danger-box"><p>⚠️ Zawsze odśwież stronę Fansly po zainstalowaniu lub aktualizacji rozszerzenia.</p></div>
+</section>
+
+<section id="permissions">
+    <h2>🔐 Jednorazowa konfiguracja uprawnień</h2>
+    <ol class="step-list">
+        <li>Przejdź do <a href="https://fansly.com/creator/streaming"><code>https://fansly.com/creator/streaming</code></a><img src="link_icon.png" class="link-icon" alt="link">.</li>
+        <li>Kliknij prawym przyciskiem myszy ikonę Fluxee na pasku narzędzi Chrome.</li>
+        <li>Wybierz <strong>„Ta strona może odczytywać i zmieniać dane"</strong>.</li>
+        <li>Wybierz <strong>„Na fansly.com"</strong>.</li>
+    </ol>
+    <p><em>Jest to wymagane tylko raz. Rozszerzenie zapamięta uprawnienie między sesjami.</em></p>
+</section>
+
+<section id="first-launch">
+    <h2>🚀 Pierwsze uruchomienie</h2>
+    <p>Kliknij przypiętą ikonę Fluxee na pasku narzędzi Chrome, aby otworzyć <strong>Panel boczny</strong>. Fluxee automatycznie rozpozna Twoją tożsamość Fansly i chatroom w tle — zajmuje to kilka sekund przy pierwszym uruchomieniu.</p>
+    <div class="highlight-box"><p>💡 Przez cały czas korzystania z Fluxee trzymaj otwartą stronę <code>fansly.com/creator/streaming</code>.</p></div>
+</section>
+
+<section id="running-bot">
+    <h2>🟢 Uruchamianie bota</h2>
+    <p>Przycisk <strong>Start Bot</strong> w Panelu bocznym aktywuje wszystkie funkcje automatyczne. Gdy bot działa, ikona Fluxee na pasku narzędzi Chrome zmienia kolor na <strong>czerwony</strong> (🔴).</p>
+    <ul>
+        <li>Większość pól ustawień jest <strong>tylko do odczytu</strong> podczas działania bota. Zatrzymaj bota, aby je edytować.</li>
+        <li>Pole <strong>Zawartość menu</strong> pozostaje zaznaczalne podczas działania bota — możesz zaznaczyć i wysłać pojedyncze linie.</li>
+        <li>Użyj przycisku <strong>🚀 Wyślij menu teraz</strong>, aby natychmiast opublikować aktywne menu w chacie.</li>
+    </ul>
+</section>
+
+<section id="active-menu">
+    <h2>📋 Aktywne menu</h2>
+    <p>Lista rozwijana <strong>Aktywne menu</strong> na górze Panelu bocznego określa, które menu bot publikuje podczas automatycznego postowania.</p>
+    <ul>
+        <li>Zmiana aktywnego menu obowiązuje natychmiast.</li>
+        <li>Jeśli masz skonfigurowany <strong>Harmonogram</strong>, automatycznie przełącza menu zgodnie z ustawionymi slotami czasowymi.</li>
+        <li>Możesz oznaczyć dowolne menu jako <strong>Domyślne menu</strong> w Projektancie — harmonogram używa go jako punktu powrotu po zakończeniu slotu.</li>
+    </ul>
+</section>
+
+<section id="autopost">
+    <h2>📢 Auto-Post</h2>
+    <p>System Auto-Post utrzymuje widoczność Twojego menu tipów bez ręcznego wysiłku.</p>
+    <h3>Tryby wyzwalacza</h3>
+    <ul>
+        <li><strong>Minuty:</strong> Bot publikuje menu w stałych odstępach czasowych (np. co 10 minut) z losowym opóźnieniem.</li>
+        <li><strong>Wiadomości:</strong> Bot liczy przychodzące wiadomości i publikuje menu po osiągnięciu progu (np. co 20 wiadomości).</li>
+    </ul>
+    <div class="tip-box"><p>💡 Przełącz na tryb Wiadomości podczas aktywnych streamów, aby menu pojawiało się częściej bez zalewania chatu.</p></div>
+</section>
+
+<section id="send-selection">
+    <h2>💬 Wyślij zaznaczenie do chatu <span class="new-badge">Nowość</span></h2>
+    <p>Podczas działania bota możesz zaznaczyć dowolny tekst w polu <strong>Zawartość menu</strong> i wysłać go bezpośrednio do chatu Fansly jednym kliknięciem.</p>
+    <ol class="step-list">
+        <li>Uruchom bota.</li>
+        <li>Kliknij i przeciągnij, aby zaznaczyć dowolny tekst w polu Zawartość menu.</li>
+        <li>Kliknij przycisk <strong>💬</strong> obok etykiety „Zawartość menu". Aktywuje się tylko gdy tekst jest zaznaczony i bot działa.</li>
+        <li>Zaznaczony tekst zostaje natychmiast wysłany do chatu.</li>
+    </ol>
+    <div class="highlight-box"><p>💡 Użyj tego, aby odpowiedzieć na pytanie widza, wysyłając tylko odpowiednią linię menu bez publikowania całego menu.</p></div>
+</section>
+
+<section id="responder">
+    <h2>🤖 Auto-Responder</h2>
+    <p>Auto-Responder automatycznie odpowiada na komendy w chacie.</p>
+    <ul>
+        <li><strong>Komenda !menu:</strong> Wpisanie przez widza <code>!menu</code> w chacie natychmiast publikuje Twoje aktywne menu.</li>
+        <li><strong>Cooldown !menu:</strong> Używa interwału auto-postu (w minutach) — zapobiega spamowaniu menu na żądanie.</li>
+        <li><strong>Cooldown własnych poleceń:</strong> Każde własne polecenie (np. <code>!socials</code>) ma niezależny 60-sekundowy cooldown. Różne polecenia można używać bez wzajemnego wpływu.</li>
+        <li><strong>Możesz używać własnych poleceń:</strong> Jako streamer możesz wpisywać <code>!menu</code> lub własne polecenia w chacie — bot odpowie tak samo jak na polecenie widza.</li>
+    </ul>
+</section>
+
+<section id="custom-commands">
+    <h2>🤖 Własne komendy</h2>
+    <p>Twórz własne komendy chatowe klikając przycisk <strong>Własne komendy</strong>.</p>
+    <ol class="step-list">
+        <li>Wprowadź <strong>nazwę wyzwalacza</strong> (bez prefiksu <code>!</code> — np. <code>social</code> staje się <code>!social</code>).</li>
+        <li>Wprowadź <strong>odpowiedź bota</strong> — pełny tekst, który bot opublikuje.</li>
+        <li>Kliknij <strong>💾 Zapisz komendę</strong>.</li>
+        <li>Użyj przełącznika na każdym wierszu, aby włączyć lub wyłączyć komendę indywidualnie.</li>
+    </ol>
+</section>
+
+<section id="saved-messages">
+    <h2>💾 Zapisane wiadomości auto-podziękowania <span class="new-badge">Nowość</span></h2>
+    <p>Buduj bibliotekę szablonów wiadomości auto-podziękowania bezpośrednio na stronie Własnych komend.</p>
+    <ol class="step-list">
+        <li>Wpisz wiadomość w polu <strong>Wiadomość auto-podziękowania</strong> używając <code>{user}</code> i <code>{item}</code>.</li>
+        <li>Kliknij <strong>💾 Zapisz wiadomość</strong>, aby dodać ją do biblioteki.</li>
+        <li>Kliknij <strong>↩ Wczytaj</strong> przy dowolnej zapisanej wiadomości, aby ją aktywować.</li>
+        <li>Kliknij <strong>🗑</strong>, aby usunąć zapisaną wiadomość.</li>
+    </ol>
+</section>
+
+<section id="auto-thank">
+    <h2>✨ Auto-Podziękowanie za napiwki</h2>
+    <p>Automatycznie publikuj publiczne podziękowanie za każdy napiwek za pozycję z menu.</p>
+    <ul>
+        <li>Włącz przełącznik <strong>Auto-Podziękowanie za napiwki</strong> w Panelu bocznym.</li>
+        <li>Dostosuj wiadomość używając <code>{user}</code> (nazwa fana) i <code>{item}</code> (pozycja menu).</li>
+        <li><em>Przykład: „✨ {user} właśnie dał napiwek za: {item}! Dziękuję bardzo! ✨"</em></li>
+    </ul>
+</section>
+
+<section id="guest-list">
+    <h2>📋 Lista gości</h2>
+    <p>Każdy napiwkodawca jest automatycznie dodawany do Listy gości — bieżącego rejestru wszystkich osób, które dały napiwek podczas sesji.</p>
+    <ul>
+        <li>Kliknij <strong>📋 Kopiuj nazwy</strong>, aby skopiować listę napiwkodawców do schowka.</li>
+        <li>Kliknij <strong>🗑️ Resetuj listę</strong> na początku każdego streamu.</li>
+    </ul>
+</section>
+
+<section id="backup-restore">
+    <h2>💾 Kopia zapasowa i przywracanie</h2>
+    <ul>
+        <li><strong>Eksport kopii zapasowej:</strong> Kliknij <strong>💾 Eksportuj kopię zapasową</strong>, aby pobrać plik <code>.txt</code> z wszystkimi menu, komendami i historią analityk.</li>
+        <li><strong>Import kopii zapasowej:</strong> Kliknij <strong>📂 Importuj kopię zapasową</strong> i wybierz wcześniej wyeksportowany plik.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Eksportuj kopię zapasową przynajmniej raz w tygodniu, aby chronić historię statystyk.</p></div>
+</section>
+
+<section id="designer-design">
+    <h2>✏️ Projektant menu tipów — Zakładka Projekt</h2>
+    <p class="section-intro">Projektant to dedykowana strona dostępna z górnego paska nawigacji. Zapewnia wizualny obszar roboczy do tworzenia, podglądu i zapisywania profesjonalnych menu tipów.</p>
+    <p>Otwórz Projektanta klikając <strong>🎨 Projektant menu tipów</strong> w górnej nawigacji. Użyj zakładek <strong>✏️ Projekt</strong> i <strong>🗓️ Harmonogram</strong>, aby przełączać się między obszarami roboczymi.</p>
+</section>
+
+<section id="structural-presets">
+    <h2>📐 Presety strukturalne</h2>
+    <p>Pięć presetów strukturalnych definiuje ogólny układ linii menu. Kliknij dowolny przycisk presetu, aby natychmiast przeformatować wszystkie pozycje w podglądzie.</p>
+    <ul>
+        <li><strong>📜 Lista klasyczna:</strong> Jedna pozycja na linię — czytelna i prosta.</li>
+        <li><strong>📏 Pionowy pipeline:</strong> Pozycje oddzielone pionowymi kreskami.</li>
+        <li><strong>🏷️ Oznaczone nawiasy:</strong> Ceny wyświetlane w nawiasach kwadratowych przed każdą pozycją.</li>
+        <li><strong>🎀 Pozioma wstążka:</strong> Wszystkie pozycje w jednej linii z separatorami.</li>
+        <li><strong>🔳 Inteligentna siatka:</strong> Pozycje ułożone w układzie 2 kolumn.</li>
+    </ul>
+</section>
+
+<section id="style-assets">
+    <h2>🎨 Zasoby stylu</h2>
+    <p>Panel Zasobów stylu w kolumnie 2 zawiera bibliotekę wizualnych elementów zorganizowanych w cztery zakładki:</p>
+    <h4>Emoji</h4><p>Kliknij dowolne emoji, aby wstawić je w miejscu kursora. Zapisz własne emoji za pomocą pola na dole zakładki.</p>
+    <h4>Dekoracje</h4><p>Separatory tekstowe. Kliknij, aby wstawić w miejscu kursora. Zapisz własne dekoracje do wielokrotnego użycia.</p>
+    <h4>Czcionki</h4><p>Zaznacz tekst na Liście źródłowej, a następnie kliknij styl czcionki, aby przekonwertować go na znaki Unicode. Kliknij bez zaznaczenia, aby wstawić przykład.</p>
+    <h4>Moje presety</h4><p>Zapisz własne szablony formatowania linii używając zmiennych <code>{icon}</code>, <code>{label}</code> i <code>{price}</code>.</p>
+</section>
+
+<section id="menu-templates">
+    <h2>📄 Szablony menu <span class="new-badge">Nowość</span></h2>
+    <p>Zakładka <strong>Szablony menu</strong> zawiera wyselekcjonowaną bibliotekę gotowych punktów startowych i pozwala zapisywać własne szablony do ponownego użycia.</p>
+    <h4>Używanie wbudowanego szablonu</h4>
+    <ol class="step-list">
+        <li>Kliknij zakładkę <strong>Szablony menu</strong> w panelu Zasobów stylu.</li>
+        <li>Filtruj według kategorii za pomocą przycisków pill lub przeglądaj wszystkie szablony.</li>
+        <li>Kliknij <strong>▶ Zastosuj</strong> przy dowolnym szablonie. Jeśli Lista źródłowa już zawiera treść, pojawi się prośba o potwierdzenie przed nadpisaniem.</li>
+        <li>Treść szablonu ładuje się na Listę źródłową z symbolami zastępczymi cen <code>$XX</code> — zastąp <code>XX</code> rzeczywistymi cenami.</li>
+    </ol>
+    <h4>Zapisywanie własnych szablonów</h4>
+    <ol class="step-list">
+        <li>Zbuduj menu na Liście źródłowej.</li>
+        <li>Przewiń do formularza <strong>Nowy szablon</strong> na dole zakładki Szablony menu.</li>
+        <li>Wprowadź nazwę, opcjonalną kategorię i opis.</li>
+        <li>Kliknij <strong>💾 Zapisz szablon</strong>.</li>
+    </ol>
+</section>
+
+<section id="live-preview">
+    <h2>👁️ Podgląd na żywo Fansly</h2>
+    <p>Podgląd w kolumnie 3 aktualizuje się w czasie rzeczywistym, pokazując dokładnie jak post będzie wyglądał w chacie Fansly — włącznie z zawijaniem linii zgodnie z limitem znaków Fansly.</p>
+    <ul>
+        <li>Użyj przycisku <strong>📋</strong> obok etykiety „Lista źródłowa", aby skopiować surową zawartość do schowka.</li>
+    </ul>
+</section>
+
+<section id="saving-menus">
+    <h2>💾 Zapisywanie i zarządzanie menu</h2>
+    <ol class="step-list">
+        <li>Wprowadź <strong>Nazwę menu</strong> w kolumnie 1.</li>
+        <li>Wybierz <strong>Kolor menu</strong> za pomocą próbek kolorów — ten kolor jest używany na osi czasu harmonogramu.</li>
+        <li>Opcjonalnie włącz przełącznik <strong>Domyślne menu</strong>.</li>
+        <li>Kliknij <strong>✨ Zastosuj do listy menu ✨</strong>, aby zapisać.</li>
+    </ol>
+    <p>Aby <strong>usunąć</strong> zapisane menu, wybierz je z listy i kliknij przycisk <strong>🗑</strong>, który pojawi się po prawej stronie.</p>
+    <div class="danger-box"><p>⚠️ Usunięcie menu jest nieodwracalne. Najpierw wyeksportuj kopię zapasową.</p></div>
+</section>
+
+<section id="designer-schedule">
+    <h2>🗓️ Projektant menu tipów — Zakładka Harmonogram <span class="new-badge">Nowość</span></h2>
+    <p class="section-intro">Zakładka Harmonogram pozwala zautomatyzować rotację menu podczas streamu. Zamiast ręcznie przełączać menu, definiujesz okna czasowe, a Fluxee robi resztę.</p>
+</section>
+
+<section id="schedule-slots">
+    <h2>🗓️ Sloty harmonogramu</h2>
+    <p>Dostępnych jest do <strong>8 slotów harmonogramu</strong>. Każdy slot definiuje okno czasowe, podczas którego aktywne jest określone menu.</p>
+    <h4>Konfiguracja slotu</h4>
+    <ol class="step-list">
+        <li>Kliknij nagłówek slotu, aby go <strong>rozwinąć</strong>.</li>
+        <li>Włącz slot za pomocą przełącznika po prawej stronie nagłówka.</li>
+        <li>Wybierz <strong>Menu</strong> z listy rozwijanej.</li>
+        <li>Ustaw czas <strong>Rozpoczęcia</strong> i <strong>Zakończenia</strong>.</li>
+        <li>Ustaw interwał <strong>Publikuj co</strong> (minuty lub wiadomości).</li>
+        <li>Zaznacz <strong>dni tygodnia</strong>, w których slot ma obowiązywać.</li>
+    </ol>
+    <h4>Zapobieganie nakładaniu się</h4>
+    <p>Fluxee zapobiega nakładaniu się czasów dwóch włączonych slotów w tym samym dniu. Jeśli zmiana czasu spowodowałaby nakładanie się, zmiana jest automatycznie cofana.</p>
+    <h4>Zachowanie awaryjne</h4>
+    <ul>
+        <li><strong>Używaj domyślnego menu i ręcznego interwału:</strong> Bot kontynuuje publikowanie z ustawieniami Panelu bocznego.</li>
+        <li><strong>Wstrzymaj auto-post:</strong> Bot zatrzymuje publikowanie do czasu aktywacji następnego slotu.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Harmonogram używa zegara systemowego i strefy czasowej automatycznie.</p></div>
+</section>
+
+<section id="timeline">
+    <h2>📅 Tygodniowy harmonogram</h2>
+    <p>Tygodniowy harmonogram w prawej kolumnie wizualizuje wszystkie skonfigurowane sloty dla wybranego dnia.</p>
+    <ul>
+        <li>Kliknij dowolny <strong>przycisk dnia</strong> (Pon–Nd), aby zobaczyć harmonogram na ten dzień.</li>
+        <li>Każdy slot pojawia się jako kolorowy blok. <strong>Włączone</strong> sloty są w pełni widoczne; <strong>wyłączone</strong> są przyciemnione.</li>
+        <li><strong>Biała igła</strong> wskazuje bieżący czas w bieżącym dniu.</li>
+    </ul>
+</section>
+
+<section id="revenue-tab">
+    <h2>💰 Statystyki — Zakładka Przychody</h2>
+    <p class="section-intro">Strona Statystyk jest dostępna z górnego paska nawigacji. Użyj zakładek <strong>Przychody</strong>, <strong>Cele</strong> i <strong>Widzowie</strong>, aby przełączać się między widokami.</p>
+    <p>Baner <strong>Statystyki przychodów</strong> na górze zakładki Przychody pokazuje cztery kluczowe wskaźniki: <strong>Łączne napiwki</strong>, <strong>Przychód brutto</strong>, <strong>Średni napiwek</strong> i <strong>Po potrąceniu Fansly</strong>.</p>
+    <p>Użyj przycisków filtra — <strong>24h / 7 dni / 30 dni / Cały czas</strong> — aby filtrować wszystkie dane zakładki Przychody.</p>
+</section>
+
+<section id="tips-overview">
+    <h2>📊 Przegląd napiwków</h2>
+    <p>Tabela Przeglądu napiwków pokazuje każdą pozycję menu, która otrzymała napiwek, z czterema sortowalnymi kolumnami:</p>
+    <ul>
+        <li><strong>Pozycja:</strong> Nazwa pozycji menu.</li>
+        <li><strong>Liczba:</strong> Ile razy ta pozycja otrzymała napiwek.</li>
+        <li><strong>Przychód:</strong> Łączny przychód brutto z tej pozycji.</li>
+        <li><strong>Udział <span class="new-badge">Nowość</span>:</strong> Przychód tej pozycji jako procent łącznego przychodu.</li>
+    </ul>
+    <p>Kliknij nagłówek dowolnej kolumny, aby posortować. Domyślne sortowanie jest według Przychodu malejąco.</p>
+</section>
+
+<section id="rot">
+    <h2>📈 Przychody w czasie</h2>
+    <ul>
+        <li><strong>Według godziny:</strong> Wykres słupkowy pokazujący przychód brutto według godzin dnia.</li>
+        <li><strong>Według dnia tygodnia:</strong> Przychód według dnia — przydatne do identyfikacji najbardziej dochodowych dni streamowania.</li>
+    </ul>
+</section>
+
+<section id="heatmap">
+    <h2>🌡️ Mapa cieplna napiwków</h2>
+    <p>Mapa cieplna pokazuje intensywność napiwków we wszystkich 24 godzinach i 7 dniach tygodnia jednocześnie. Ciemniejsze komórki wskazują wyższą aktywność napiwkową.</p>
+    <p>Najedź kursorem na dowolną komórkę, aby zobaczyć szczegółowe informacje: łączny przychód, liczbę napiwków i średni napiwek dla tej godziny i dnia.</p>
+</section>
+
+<section id="target-calculator">
+    <h2>🎯 Kalkulator celu <span class="new-badge">Nowość</span></h2>
+    <p>Kalkulator celu pomaga zaplanować stream, szacując jak długo musisz streamować, aby osiągnąć cel przychodowy na podstawie historycznych wyników.</p>
+    <ol class="step-list">
+        <li>Wprowadź docelową kwotę przychodów w polu <strong>$</strong>.</li>
+        <li>Kalkulator natychmiast pokazuje: szacowaną liczbę godzin, prawdopodobny zakres, szacowaną liczbę napiwków i średnią stawkę godzinową.</li>
+    </ol>
+</section>
+
+<section id="private-goal">
+    <h2>🏆 Prywatny cel i użycie pamięci</h2>
+    <p>Karta <strong>Prywatny cel</strong> śledzi osobisty cel przychodowy niezależny od systemu celów Fansly. Ustaw nazwę i kwotę docelową, a pasek postępu wypełnia się w miarę rejestrowania napiwków.</p>
+    <p>Karta <strong>Użycie pamięci</strong> pokazuje, ile pamięci lokalnej Chrome używa Fluxee. Użyj przycisku <strong>Przytnij teraz</strong>, aby usunąć starsze dane.</p>
+</section>
+
+<section id="export-csv">
+    <h2>⬇️ Eksport do CSV <span class="new-badge">Nowość</span></h2>
+    <p>Eksportuj kompletną historię napiwków jako plik CSV do zewnętrznej analizy.</p>
+    <p>Kliknij przycisk <strong>⬇ Eksportuj CSV</strong> po prawej stronie paska filtra czasu. Plik jest zapisywany w folderze Pobrane jako <code>fluxee_tips_YYYY-MM-DD.csv</code>.</p>
+</section>
+
+<section id="goals-tab">
+    <h2>🎯 Statystyki — Zakładka Cele</h2>
+    <p class="section-intro">Zakładka Cele zarządza integracją z systemem celów Fansly — synchronizacją, śledzeniem, archiwizacją i kolejkowaniem celów.</p>
+</section>
+
+<section id="live-goal-sync">
+    <h2>🔄 Synchronizacja celów na żywo</h2>
+    <p>Fluxee łączy się bezpośrednio z API Fansly, aby śledzić aktywne cele w czasie rzeczywistym.</p>
+    <ul>
+        <li>Fansly obsługuje <strong>3 sloty celów</strong> (Górny, Środkowy, Dolny). Wszystkie trzy są śledzone jednocześnie.</li>
+        <li>Paski postępu aktualizują się automatycznie.</li>
+        <li>Jeśli wszystkie 3 sloty są zajęte, możesz ustawić dodatkowe cele w kolejce. Gdy slot się zwolni, Fluxee automatycznie synchronizuje następny cel z kolejki.</li>
+    </ul>
+</section>
+
+<section id="goals-bank">
+    <h2>🏦 Bank zapisanych celów</h2>
+    <ol class="step-list">
+        <li>Wprowadź <strong>nazwę</strong>, <strong>kwotę docelową</strong> (w dolarach) i opcjonalny <strong>opis</strong>.</li>
+        <li>Kliknij <strong>💾 Zapisz cel</strong>.</li>
+        <li>Kliknij ikonę <strong>☆</strong>, aby oznaczyć cel jako <strong>Popularny</strong> — przenosi się na górę listy.</li>
+        <li>Kliknij cel, aby go rozwinąć i użyć przycisków <strong>Slot</strong> do opublikowania go na Fansly.</li>
+    </ol>
+</section>
+
+<section id="goals-archive">
+    <h2>📜 Archiwum celów</h2>
+    <p>Zakończone i wygasłe cele są automatycznie przenoszone do Archiwum celów. Przechowywanych jest ostatnie 50 celów.</p>
+    <ul>
+        <li>Cele oznaczone jako <strong>Osiągnięte</strong> (cyjan) osiągnęły cel. Cele oznaczone jako <strong>Nieudane</strong> (czerwony) zostały zatrzymane przed ukończeniem.</li>
+        <li>Użyj systemu <strong>Tagów</strong>, aby kategoryzować cele do analizy wydajności.</li>
+    </ul>
+</section>
+
+<section id="viewers-tab">
+    <h2>👥 Statystyki — Zakładka Widzowie</h2>
+    <p class="section-intro">Zakładka Widzowie dostarcza informacji o odbiorcach — kim są napiwkodawcy, jak lojalni są i jak angażują się w czasie.</p>
+    <p>Użyj przycisków filtra — <strong>Dzisiaj / Ten tydzień / Ten miesiąc / Cały czas</strong>.</p>
+    <h4>Wiersz 1 — Karty podsumowania</h4>
+    <ul>
+        <li><strong>Częstotliwość napiwków:</strong> Ilu fanów dało napiwek raz, kilka razy lub regularnie.</li>
+        <li><strong>Nowi vs powracający:</strong> Wykres kołowy pokazujący napiwkodawców po raz pierwszy vs fanów, którzy dali napiwek wcześniej.</li>
+        <li><strong>Średni napiwek na widza:</strong> Łączny przychód podzielony przez unikalnych napiwkodawców.</li>
+    </ul>
+</section>
+
+<section id="viewer-retention">
+    <h2>🔄 Retencja widzów <span class="new-badge">Nowość</span></h2>
+    <p>Karta Retencji widzów pokazuje wskaźniki lojalności odbiorców na podstawie historii napiwków.</p>
+    <ul>
+        <li><strong>Wskaźnik powrotów:</strong> Procent napiwkodawców, którzy wrócili na co najmniej drugą sesję.</li>
+        <li><strong>Śr. sesji:</strong> Średnia liczba odrębnych dni streamowania na napiwkodawcę.</li>
+        <li><strong>Pasek podziału:</strong> Wizualny podział jednorazowych vs powracających napiwkodawców.</li>
+        <li><strong>Najlepsi powracający napiwkodawcy:</strong> 5 najbardziej lojalnych fanów według liczby sesji.</li>
+    </ul>
+</section>
+
+<section id="top-tippers">
+    <h2>🏆 Najlepsi napiwkodawcy i Największy jednorazowy napiwek</h2>
+    <p>Ranking <strong>Najlepszych napiwkodawców</strong> szereguje wszystkich napiwkodawców według łącznego przychodu. Każdy wiersz pokazuje liczbę napiwków, łączną kwotę, największy jednorazowy napiwek i wskaźnik ⭐ dla subskrybentów.</p>
+    <p>Karta <strong>Największy jednorazowy napiwek</strong> wyróżnia rekordowy napiwek z nazwą fana, pozycją i datą.</p>
+</section>
+
+<section id="triggers-tab">
+    <h2>🎬 Wyzwalacze i nakładki — Zakładka Wyzwalacze</h2>
+    <p class="section-intro">Strona Wyzwalaczy i nakładek jest dostępna z górnego paska nawigacji. Ma trzy zakładki: Wyzwalacze, Przesyłanie i Nakładki.</p>
+    <p>Wyzwalacze pozwalają automatycznie uruchamiać animacje nakładek i opcjonalne wiadomości chatowe, gdy w streamie wystąpią określone zdarzenia.</p>
+</section>
+
+<section id="trigger-rules">
+    <h2>📋 Typy reguł wyzwalaczy</h2>
+    <h4>Dopasowanie tekstu</h4><p>Uruchamia się, gdy pozycja menu napiwku zawiera określone słowo kluczowe.</p>
+    <h4>Kombinacja</h4><p>Uruchamia się, gdy napiwki przychodzą w określonej sekwencji kwot w oknie czasowym.</p>
+    <h4>Szybki ogień</h4><p>Uruchamia się, gdy określona liczba napiwków przybywa w krótkim oknie czasowym.</p>
+    <h4>Zdarzenia celu</h4><p>Uruchamia się po <strong>Rozpoczęciu celu</strong> lub <strong>Ukończeniu celu</strong>.</p>
+    <h4>Zdarzenia Hype Train</h4><p>Uruchamia się przy: <strong>Start pociągu</strong>, <strong>Awans poziomu</strong>, <strong>Strefa niebezpieczna</strong> i <strong>Koniec pociągu</strong>.</p>
+</section>
+
+<section id="trigger-options">
+    <h2>⏱️ Cooldown i jednorazowe uruchomienie <span class="new-badge">Nowość</span></h2>
+    <ul>
+        <li><strong>Cooldown (sekundy):</strong> Minimalny czas, który musi upłynąć, zanim ta sama reguła może się ponownie uruchomić. Ustaw 0, aby nie było cooldownu.</li>
+        <li><strong>Uruchom raz na sesję:</strong> Gdy włączone, reguła uruchamia się dokładnie raz na sesję. Idealne dla kamieni milowych.</li>
+    </ul>
+</section>
+
+<section id="hype-train">
+    <h2>🚂 Konfiguracja Hype Train</h2>
+    <p class="section-intro">Hype Train to animowana nakładka OBS, która celebruje wiele napiwków w krótkim czasie wizualnym pociągiem rosnącym w intensywności.</p>
+</section>
+
+<section id="ht-settings">
+    <h2>⚙️ Hype Train — Ustawienia</h2>
+    <ul>
+        <li><strong>Tryb:</strong> <em>Wielopoziomowy</em> lub <em>Jeden cel</em>.</li>
+        <li><strong>Czas trwania:</strong> Jak długo Hype Train trwa po ostatnim napiwku.</li>
+        <li><strong>Próg automatycznego startu:</strong> Minimalna kwota jednorazowego napiwku, która automatycznie uruchamia Hype Train.</li>
+        <li><strong>Włączony:</strong> Hype Train jest domyślnie wyłączony. Przełącz, aby aktywować.</li>
+    </ul>
+</section>
+
+<section id="ht-visuals">
+    <h2>🎨 Hype Train — Wygląd i motywy</h2>
+    <ul>
+        <li><strong>Czcionka, kolory podstawowe i pomocnicze:</strong> Kolory tekstu i akcentów.</li>
+        <li><strong>Tło:</strong> Przezroczyste, Preset, Jednolity kolor lub Niestandardowy obraz.</li>
+        <li><strong>Kolor paska i ramka paska:</strong> Kolor wypełnienia paska postępu i styl dekoracyjnej ramki.</li>
+        <li><strong>Ikona pociągu:</strong> Brak, domyślna ikona lub niestandardowy obraz.</li>
+        <li><strong>Animacje:</strong> Przypisz efekty animacji do zdarzeń Hype Train.</li>
+    </ul>
+    <h4>Moje motywy</h4>
+    <p>Zapisz konfigurację wizualną jako nazwany motyw używając przycisku <strong>💾 Zapisz motyw</strong>.</p>
+</section>
+
+<section id="overlays-tab">
+    <h2>📺 Zakładka Nakładki</h2>
+    <h4>Nakładka rankingu</h4><p>Wyświetla live ranking napiwkodawców aktualizowany w czasie rzeczywistym.</p>
+    <h4>Nakładka celu streamowego</h4><p>Pokazuje pasek postępu śledzący skumulowane napiwki w sesji w kierunku celu.</p>
+    <h4>Nakładka karty końcowej</h4><p>Pojawia się na końcu streamu z podsumowaniem sesji.</p>
+</section>
+
+<section id="obs-setup">
+    <h2>📺 Konfiguracja OBS</h2>
+    <ol class="step-list">
+        <li>Upewnij się, że <strong>FluxeeBridge.exe</strong> działa.</li>
+        <li>W OBS dodaj nowe <strong>Źródło przeglądarki</strong>.</li>
+        <li>Wklej adres URL nakładki (np. <code>http://localhost:3745/leaderboard</code>) w polu URL.</li>
+        <li>Ustaw szerokość na <strong>1920</strong> i wysokość na <strong>1080</strong>.</li>
+        <li>Zaznacz <strong>„Wyłącz źródło gdy niewidoczne"</strong>.</li>
+    </ol>
+    <div class="danger-box"><p>⚠️ FluxeeBridge.exe musi działać przez cały stream, aby nakładki odbierały dane na żywo.</p></div>
+</section>
+
+<section id="automod-filters">
+    <h2>🛡️ Auto-Moderator — Filtry</h2>
+    <p class="section-intro">Auto-Moderator jest konfigurowany w zakładce <strong>Auto-Mod</strong>. Każdy filtr działa niezależnie.</p>
+    <h4>1. Filtr wielkich liter</h4><p>Zapobiega nadmiernemu używaniu wielkich liter. Skonfiguruj minimalną długość wiadomości i próg procentowy.</p>
+    <h4>2. Filtr linków</h4><p>Automatycznie ostrzega użytkowników, którzy publikują nieautoryzowane linki. Dodaj zaufane domeny do listy dozwolonych.</p>
+    <h4>3. Filtr słów</h4><p>Blokuje określone zakazane słowa lub frazy.</p>
+    <h4>4. Filtr akapitów</h4><p>Ogranicza gęstość wiadomości ustawiając maksymalną liczbę znaków i podziałów linii.</p>
+    <h4>5. Filtr symboli</h4><p>Wykrywa wzorce spamu za pomocą analizy gęstości symboli.</p>
+    <div class="highlight-box"><p>💡 Każdy filtr ma w pełni konfigurowalną wiadomość ostrzegawczą. Użyj <code>{user}</code>, aby zwrócić się do użytkownika po nazwie.</p></div>
+</section>
+
+<section id="automod-exclusions">
+    <h2>🛡️ Grupy wykluczeń</h2>
+    <ul>
+        <li><strong>Streamer:</strong> Zawsze wykluczony (nie można zmienić).</li>
+        <li><strong>Moderatorzy:</strong> Zawsze wykluczeni (nie można zmienić).</li>
+        <li><strong>Subskrybenci:</strong> Opcjonalnie wykluczeni.</li>
+        <li><strong>Inni twórcy:</strong> Opcjonalnie wykluczeni.</li>
+    </ul>
+    <p>Każdy użytkownik, który otrzyma ostrzeżenie, podlega <strong>30-sekundowemu cooldownowi na użytkownika</strong> — ten sam użytkownik nie otrzyma drugiego ostrzeżenia w ciągu 30 sekund.</p>
+</section>
+
+<section id="archive">
+    <h2>📜 Archiwum zmian</h2>
+    <div class="archive-item">
+        <h3>Wersja 5.1</h3>
+        <ul>
+            <li><strong>Harmonogram menu:</strong> Czasowa rotacja menu z do 8 slotami i wizualną osią czasu.</li>
+            <li><strong>Nakładki streamowe:</strong> Trzy nakładki OBS — Live Ranking, Cel streamowy i Karta końcowa.</li>
+            <li><strong>Hype Train:</strong> Animowana nakładka OBS z wielopoziomową obsługą i biblioteką motywów.</li>
+            <li><strong>Silnik wyzwalaczy:</strong> Automatyzacja oparta na regułach z cooldownem i opcją jednorazowego uruchomienia.</li>
+            <li><strong>Rozbudowane statystyki:</strong> Retencja widzów, udział w przychodach, kalkulator celu i eksport CSV.</li>
+            <li><strong>Szablony menu:</strong> Wyselekcjonowana biblioteka 8 wbudowanych szablonów plus szablony użytkownika.</li>
+            <li><strong>Wyślij zaznaczenie:</strong> Zaznacz dowolny tekst w zawartości menu i wyślij go bezpośrednio do chatu.</li>
+            <li><strong>Zapisane wiadomości:</strong> Biblioteka wielokrotnego użytku szablonów auto-podziękowania.</li>
+            <li><strong>Bezpieczeństwo i niezawodność:</strong> Kompleksowe ulepszenia pod maską.</li>
+        </ul>
+    </div>
+    <div class="archive-item">
+        <h3>Wersja 5.0</h3>
+        <ul>
+            <li><strong>Rebrand projektu:</strong> Oficjalne przejście na <strong>Fluxee</strong>.</li>
+            <li><strong>Układ 3 kolumn:</strong> Nowy zoptymalizowany obszar roboczy dla panoramicznych monitorów.</li>
+            <li><strong>Wizualny projektant menu tipów:</strong> Podgląd w czasie rzeczywistym i wyselekcjonowana biblioteka zasobów.</li>
+            <li><strong>Pakiet Auto-Moderatora:</strong> 5 inteligentnych filtrów z grupami wykluczeń.</li>
+        </ul>
+    </div>
+    <div class="archive-item">
+        <h3>Wersja 4.7</h3>
+        <ul>
+            <li><strong>Synchronizacja celów na żywo:</strong> Automatyczne śledzenie wszystkich 3 slotów celów Fansly.</li>
+            <li><strong>Popularne cele:</strong> Oznaczanie gwiazdką dla priorytetowych pozycji w banku.</li>
+            <li><strong>Wielotagowe statystyki:</strong> Kategoryzacja celów do analizy wskaźników sukcesu.</li>
+        </ul>
+    </div>
+</section>
+
+<div class="disclaimer">
+    <p><strong>Zastrzeżenie prawne:</strong> Fluxee jest niezależnym narzędziem strony trzeciej i nie jest powiązane z Fansly ani jego spółką macierzystą, nie jest przez nie wspierane ani w żaden sposób oficjalnie z nimi połączone. Wszystkie nazwy produktów, znaki towarowe i nazwy marek są własnością ich odpowiednich właścicieli. Korzystanie z Fluxee odbywa się na własne uznanie i ryzyko użytkownika.</p>
+</div>
+
+</div>
+</main>
+<script src="guide.js"></script>
+</body>
+</html>

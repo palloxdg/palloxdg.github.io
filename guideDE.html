@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxee v5.1 by Pallox — Anleitung</title>
+    <style>
+        ::-webkit-scrollbar { width:12px; height:12px; }
+        ::-webkit-scrollbar-track { background:#22222A; }
+        ::-webkit-scrollbar-thumb { background:#959595; background-clip:content-box; border:4px solid transparent; border-radius:10px; }
+        ::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active { background:#959595; border:2px solid transparent; }
+        ::-webkit-scrollbar-button { display:none; height:0; width:0; }
+        :hover::-webkit-scrollbar-button { display:block; height:12px; width:12px; background-color:#22222A; background-repeat:no-repeat; background-position:center; background-size:8px; }
+        :hover::-webkit-scrollbar-button:single-button:vertical:decrement { background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23959595'><path d='M12 8l6 8H6z'/></svg>"); }
+        :hover::-webkit-scrollbar-button:single-button:vertical:increment { background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23959595'><path d='M12 16l-6-8h12z'/></svg>"); }
+        html { font-size:16px; }
+        body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; margin:0; padding:0; display:flex; justify-content:center; height:100vh; color:#ccc; background-color:#1e1e24; overflow:hidden; font-size:1rem; }
+        .layout { display:flex; width:100%; max-width:1200px; height:100vh; }
+        nav { width:260px; background-color:#2a2a35; padding:24px 16px 30px; border-right:1px solid #444; flex-shrink:0; overflow-y:auto; }
+        nav h3 { color:#fff; margin-top:0; margin-bottom:20px; font-size:1.1em; border-bottom:2px solid #00e5ff; padding-bottom:10px; }
+        nav .nav-group { margin-bottom:6px; }
+        nav .nav-group-label { display:block; color:#888; font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:10px 8px 4px; }
+        nav a { display:block; color:#aaa; text-decoration:none; padding:5px 8px 5px 14px; border-radius:5px; font-size:0.85em; transition:background 0.15s,color 0.15s; line-height:1.4; }
+        .content-container a:not([class]) { color:#7ecfda; text-decoration:none; border-bottom:1px solid rgba(126,207,218,0.3); transition:color 0.15s, border-color 0.15s; font-family:inherit; font-size:inherit; }
+        .content-container a:not([class]):hover { color:#b0e8ef; border-bottom-color:rgba(176,232,239,0.5); }
+        nav a:hover { background:rgba(255,255,255,0.06); color:#fff; }
+        nav a.active { background:rgba(0,229,255,0.12); color:#00e5ff; border-left:2px solid #00e5ff; padding-left:12px; }
+        nav a.sub { padding-left:24px; font-size:0.8em; color:#888; }
+        nav a.sub:hover { color:#ccc; }
+        nav a.sub.active { color:#00e5ff; padding-left:22px; }
+        main { flex:1; overflow-y:auto; padding:0; }
+        .content-container { max-width:820px; margin:0 auto; padding:40px 40px 80px; }
+        h1 { font-size:2em; color:#fff; margin-bottom:8px; }
+        h2 { font-size:1.4em; color:#00e5ff; margin-top:0; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid #333; }
+        h3 { font-size:1.05em; color:#f0f0f0; margin-bottom:8px; margin-top:20px; }
+        h4 { font-size:0.95em; color:#ccc; margin-bottom:6px; margin-top:16px; font-weight:600; }
+        p { line-height:1.7; margin-bottom:12px; }
+        li { line-height:1.7; margin-bottom:6px; }
+        ol,ul { padding-left:20px; margin-bottom:16px; }
+        code { background:#2a2a35; color:#f472b6; padding:2px 6px; border-radius:4px; font-size:0.88em; }
+        strong { color:#fff; }
+        section { padding-top:12px; margin-bottom:50px; }
+        .section-intro { color:#aaa; font-size:0.95em; margin-bottom:20px; font-style:italic; border-left:3px solid #333; padding-left:12px; }
+        .highlight-box { background:#2a2a35; border-left:4px solid #00e5ff; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .highlight-box p { margin:0; color:#fff; }
+        .tip-box { background:rgba(0,200,83,0.08); border-left:4px solid #00c853; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .tip-box p { margin:0; color:#b9f6ca; }
+        .danger-box { background:rgba(220,53,69,0.1); border-left:4px solid #dc3545; padding:14px 18px; margin:20px 0; border-radius:0 6px 6px 0; }
+        .danger-box p { margin:0; color:#ffb3b3; font-weight:bold; }
+        .new-badge { display:inline-block; background:#00e5ff; color:#000; font-size:0.65em; font-weight:800; padding:1px 6px; border-radius:4px; vertical-align:middle; margin-left:6px; text-transform:uppercase; letter-spacing:0.5px; }
+        .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0; }
+        .feature-card { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:14px; }
+        .feature-card h4 { margin:0 0 6px; color:#00e5ff; font-size:0.9em; }
+        .feature-card p { margin:0; font-size:0.88em; color:#aaa; }
+        .step-list { counter-reset:step-counter; list-style:none; padding-left:0; }
+        .step-list li { counter-increment:step-counter; padding-left:36px; position:relative; margin-bottom:12px; }
+        .step-list li::before { content:counter(step-counter); position:absolute; left:0; top:1px; width:24px; height:24px; background:#00e5ff; color:#000; font-weight:800; font-size:0.78em; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .archive-item { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:18px 20px; margin-bottom:16px; }
+        .archive-item h3 { margin:0 0 12px; color:#f5a623; font-size:1em; }
+        .lang-selector { margin-top:24px; padding-top:16px; border-top:1px solid #444; display:flex; justify-content:center; gap:14px; }
+        .lang-flag { width:30px; height:30px; border-radius:50%; cursor:pointer; transition:transform 0.2s,filter 0.2s; border:2px solid transparent; object-fit:cover; }
+        .lang-flag:hover { transform:scale(1.1); filter:brightness(1.2); }
+        .lang-flag.active { border-color:#00e5ff; }
+        .link-icon { width:16px; height:16px; vertical-align:middle; margin-left:5px; opacity:0.8; filter:grayscale(1) brightness(1.5); }
+        @media(max-width:900px) { .feature-grid { grid-template-columns:1fr; } }
+
+        .disclaimer {
+            margin-top: 60px;
+            padding: 16px 20px;
+            border-top: 1px solid #333;
+            color: #555;
+            font-size: 0.78em;
+            line-height: 1.6;
+        }
+        .disclaimer p { margin: 0; color: #555; }
+        .disclaimer strong { color: #666; }
+    </style>
+</head>
+<body>
+<div class="layout">
+<nav>
+    <h3><img src="icon_grey.png" style="width:20px;height:20px;vertical-align:middle;margin-right:7px;opacity:0.85;">Fluxee v5.1</h3>
+
+    <div class="lang-selector" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:16px;">
+        <a href="guide.html" title="English"><img src="https://flagcdn.com/w80/gb.png" class="lang-flag" alt="EN"></a>
+        <a href="guidePL.html" title="Polski"><img src="https://flagcdn.com/w80/pl.png" class="lang-flag" alt="PL"></a>
+        <a href="guideDE.html" title="Deutsch"><img src="https://flagcdn.com/w80/de.png" class="lang-flag  active" alt="DE"></a>
+    </div>
+
+    <div class="nav-group">
+        <span class="nav-group-label">Erste Schritte</span>
+        <a href="#intro" id="nav-intro" class="active">Einführung</a>
+        <a href="#installation" id="nav-installation">🛠️ Installation</a>
+        <a href="#permissions" id="nav-permissions">🔐 Berechtigungen</a>
+        <a href="#first-launch" id="nav-first-launch">🚀 Erster Start</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Seitenleiste</span>
+        <a href="#running-bot" id="nav-running-bot">🟢 Bot starten</a>
+        <a href="#active-menu" id="nav-active-menu">📋 Aktives Menü</a>
+        <a href="#autopost" id="nav-autopost">📢 Auto-Post</a>
+        <a href="#send-selection" id="nav-send-selection">💬 Auswahl senden</a>
+        <a href="#responder" id="nav-responder">🤖 Auto-Responder</a>
+        <a href="#custom-commands" id="nav-custom-commands" class="sub">↳ Eigene Befehle</a>
+        <a href="#saved-messages" id="nav-saved-messages" class="sub">↳ Gespeicherte Nachrichten</a>
+        <a href="#auto-thank" id="nav-auto-thank">✨ Auto-Dankeschön</a>
+        <a href="#guest-list" id="nav-guest-list">📋 Gästeliste</a>
+        <a href="#backup-restore" id="nav-backup-restore">💾 Sicherung</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Menü-Designer</span>
+        <a href="#designer-design" id="nav-designer-design">✏️ Design-Tab</a>
+        <a href="#structural-presets" id="nav-structural-presets" class="sub">↳ Strukturvorlagen</a>
+        <a href="#style-assets" id="nav-style-assets" class="sub">↳ Style-Assets</a>
+        <a href="#menu-templates" id="nav-menu-templates" class="sub">↳ Menüvorlagen</a>
+        <a href="#live-preview" id="nav-live-preview" class="sub">↳ Live-Vorschau</a>
+        <a href="#saving-menus" id="nav-saving-menus" class="sub">↳ Menüs speichern</a>
+        <a href="#designer-schedule" id="nav-designer-schedule">🗓️ Zeitplan-Tab</a>
+        <a href="#schedule-slots" id="nav-schedule-slots" class="sub">↳ Zeitplanslots</a>
+        <a href="#timeline" id="nav-timeline" class="sub">↳ Wochenzeitplan</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Statistiken</span>
+        <a href="#revenue-tab" id="nav-revenue-tab">💰 Einnahmen-Tab</a>
+        <a href="#tips-overview" id="nav-tips-overview" class="sub">↳ Trinkgeld-Übersicht</a>
+        <a href="#rot" id="nav-rot" class="sub">↳ Einnahmen im Zeitverlauf</a>
+        <a href="#heatmap" id="nav-heatmap" class="sub">↳ Heatmap</a>
+        <a href="#target-calculator" id="nav-target-calculator" class="sub">↳ Zielrechner</a>
+        <a href="#private-goal" id="nav-private-goal" class="sub">↳ Privates Ziel</a>
+        <a href="#export-csv" id="nav-export-csv" class="sub">↳ CSV-Export</a>
+        <a href="#goals-tab" id="nav-goals-tab">🎯 Ziele-Tab</a>
+        <a href="#live-goal-sync" id="nav-live-goal-sync" class="sub">↳ Live-Synchronisation</a>
+        <a href="#goals-bank" id="nav-goals-bank" class="sub">↳ Zielbank</a>
+        <a href="#goals-archive" id="nav-goals-archive" class="sub">↳ Zielarchiv</a>
+        <a href="#viewers-tab" id="nav-viewers-tab">👥 Zuschauer-Tab</a>
+        <a href="#viewer-retention" id="nav-viewer-retention" class="sub">↳ Zuschauerbindung</a>
+        <a href="#top-tippers" id="nav-top-tippers" class="sub">↳ Top-Tipper</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Trigger & Overlays</span>
+        <a href="#triggers-tab" id="nav-triggers-tab">🎬 Trigger-Tab</a>
+        <a href="#trigger-rules" id="nav-trigger-rules" class="sub">↳ Regeltypen</a>
+        <a href="#trigger-options" id="nav-trigger-options" class="sub">↳ Cooldown & Einmalig</a>
+        <a href="#hype-train" id="nav-hype-train">🚂 Hype Train</a>
+        <a href="#ht-settings" id="nav-ht-settings" class="sub">↳ Einstellungen</a>
+        <a href="#ht-visuals" id="nav-ht-visuals" class="sub">↳ Design & Themes</a>
+        <a href="#overlays-tab" id="nav-overlays-tab">📺 Overlays-Tab</a>
+        <a href="#obs-setup" id="nav-obs-setup" class="sub">↳ OBS-Einrichtung</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Auto-Moderator</span>
+        <a href="#automod-filters" id="nav-automod-filters">🛡️ Filter</a>
+        <a href="#automod-exclusions" id="nav-automod-exclusions" class="sub">↳ Ausnahmegruppen</a>
+    </div>
+    <div class="nav-group">
+        <span class="nav-group-label">Referenz</span>
+        <a href="#archive" id="nav-archive">📜 Änderungsprotokoll</a>
+    </div>
+</nav>
+<main id="main-scroll">
+<div class="content-container">
+
+<section id="intro">
+    <h1><img src="icon_grey.png" style="width:36px;height:36px;vertical-align:middle;margin-right:10px;opacity:0.9;">Fluxee v5.1 by Pallox</h1>
+    <p>Fluxee ist eine vollständige Stream-Management-Suite für Fansly-Creator. Sie läuft direkt im Browser als Chrome-Erweiterung — kein separates Konto, kein externer Bot, keine zusätzliche Anmeldung. Alle Nachrichten werden <strong>als du</strong> gepostet.</p>
+    <p>Fluxee wurde mit <strong>Kontosicherheit als Kernpriorität</strong> entwickelt. Alle automatisierten Aktionen enthalten integrierte Schutzmaßnahmen für dein Fansly-Konto. Zuverlässigkeit ist ebenso zentral — Fluxee ist darauf ausgelegt, bei langen Streams, Seitenneuladen und Fansly-Navigation reibungslos zu laufen.</p>
+    <h3>Neu in Version 5.1</h3>
+    <div class="feature-grid">
+        <div class="feature-card"><h4>🗓️ Menü-Zeitplan</h4><p>Automatische Menürotation nach Zeitplan mit visueller Wochenübersicht.</p></div>
+        <div class="feature-card"><h4>📺 Stream-Overlays</h4><p>OBS-Overlays: Live-Bestenliste, Stream-Ziel und Endkarte.</p></div>
+        <div class="feature-card"><h4>🚂 Hype Train</h4><p>Animiertes OBS-Overlay, das Trinkgeld-Serien mit Leveln und visuellen Effekten feiert.</p></div>
+        <div class="feature-card"><h4>🎬 Trigger-Engine</h4><p>Automatische Animationen und Chat-Nachrichten basierend auf Trinkgeldern und Zielen.</p></div>
+        <div class="feature-card"><h4>📈 Erweiterte Statistiken</h4><p>Zuschauerbindung, Zielrechner, Einnahmenanteil, Heatmap-Tooltips und CSV-Export.</p></div>
+        <div class="feature-card"><h4>🎨 Verbesserter Designer</h4><p>Menüvorlagen-Bibliothek, Farbkennzeichnung, Standardmenü und Lösch-/Kopierwerkzeuge.</p></div>
+    </div>
+</section>
+
+<section id="installation">
+    <h2>🛠️ Installation</h2>
+    <ol class="step-list">
+        <li>Gehe zu <a href="chrome://extensions/"><code>chrome://extensions/</code></a><img src="link_icon.png" class="link-icon" alt="link"> in Chrome.</li>
+        <li>Aktiviere den <strong>Entwicklermodus</strong> mit dem Schalter oben rechts.</li>
+        <li>Klicke <strong>„Entpackte Erweiterung laden"</strong> und wähle den Ordner <code>Fluxee_v5.1</code>.</li>
+        <li>Klicke auf das <strong>Puzzle-Symbol</strong> (🧩) in der Chrome-Symbolleiste, finde <strong>Fluxee v5.1 by Pallox</strong> und klicke auf das <strong>Pin-Symbol</strong> (📌).</li>
+        <li>Wenn du Stream-Overlays oder Hype Train verwendest, lade <strong>FluxeeBridge.exe</strong> von der <a href="https://github.com/palloxdg/fluxee/releases/download/v5.1.0/FluxeeBridge_v5.1.0_windows.zip" target="_blank">GitHub Releases-Seite</a> herunter und starte sie. Falls Windows eine Sicherheitswarnung anzeigt, klicke auf <strong>Weitere Informationen → Trotzdem ausführen</strong> — das ist bei neuer Software normal.</li>
+    </ol>
+    <div class="danger-box"><p>⚠️ Lade die Fansly-Seite immer neu, nachdem du die Erweiterung installiert oder aktualisiert hast.</p></div>
+</section>
+
+<section id="permissions">
+    <h2>🔐 Einmalige Berechtigungseinrichtung</h2>
+    <ol class="step-list">
+        <li>Navigiere zu <a href="https://fansly.com/creator/streaming"><code>https://fansly.com/creator/streaming</code></a><img src="link_icon.png" class="link-icon" alt="link">.</li>
+        <li>Rechtsklicke auf das Fluxee-Symbol in der Chrome-Symbolleiste.</li>
+        <li>Wähle <strong>„Diese Seite kann Daten lesen und ändern"</strong>.</li>
+        <li>Wähle <strong>„Auf fansly.com"</strong>.</li>
+    </ol>
+    <p><em>Dies ist nur einmal erforderlich. Die Erweiterung merkt sich die Berechtigung zwischen Sitzungen.</em></p>
+</section>
+
+<section id="first-launch">
+    <h2>🚀 Erster Start</h2>
+    <p>Klicke auf das angeheftete Fluxee-Symbol in der Chrome-Symbolleiste, um die <strong>Seitenleiste</strong> zu öffnen. Fluxee löst deine Fansly-Identität und den Chat-Raum automatisch im Hintergrund auf — dies dauert beim ersten Laden einige Sekunden.</p>
+    <div class="highlight-box"><p>💡 Halte die Fansly-Creator-Streaming-Seite während der Verwendung von Fluxee immer geöffnet.</p></div>
+</section>
+
+<section id="running-bot">
+    <h2>🟢 Bot starten</h2>
+    <p>Der <strong>Bot starten</strong>-Button in der Seitenleiste aktiviert alle automatisierten Funktionen. Das Fluxee-Symbol in der Chrome-Symbolleiste wird <strong>rot</strong> (🔴), wenn der Bot läuft.</p>
+    <ul>
+        <li>Die meisten Einstellungsfelder sind <strong>schreibgeschützt</strong>, während der Bot läuft. Stoppe den Bot, um sie zu bearbeiten.</li>
+        <li>Das Feld <strong>Menüinhalt</strong> bleibt beim Laufen des Bots auswählbar — du kannst einzelne Zeilen markieren und senden.</li>
+        <li>Verwende den Button <strong>🚀 Menü jetzt posten</strong>, um dein aktives Menü sofort in den Chat zu senden.</li>
+    </ul>
+</section>
+
+<section id="active-menu">
+    <h2>📋 Aktives Menü</h2>
+    <p>Das Dropdown <strong>Aktives Menü</strong> oben in der Seitenleiste bestimmt, welches Menü der Bot beim Auto-Post veröffentlicht.</p>
+    <ul>
+        <li>Das Ändern des aktiven Menüs gilt sofort.</li>
+        <li>Wenn du einen <strong>Zeitplan</strong> konfiguriert hast, wechselt der Scheduler das Menü automatisch entsprechend den Slot-Zeiten.</li>
+        <li>Du kannst jedes Menü im Designer als <strong>Standardmenü</strong> markieren — der Scheduler verwendet es als Fallback, wenn ein Slot endet.</li>
+    </ul>
+</section>
+
+<section id="autopost">
+    <h2>📢 Auto-Post</h2>
+    <p>Das Auto-Post-System hält dein Trinkgeldmenü im Chat sichtbar, ohne manuellen Aufwand.</p>
+    <h3>Auslösemodi</h3>
+    <ul>
+        <li><strong>Minuten:</strong> Der Bot postet dein aktives Menü in festen Zeitabständen mit einem zufälligen Versatz.</li>
+        <li><strong>Nachrichten:</strong> Der Bot zählt eingehende Chat-Nachrichten und postet das Menü, sobald der Schwellenwert erreicht ist.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Wechsle bei aktiven Streams in den Nachrichten-Modus für bessere Sichtbarkeit ohne Chat-Spam.</p></div>
+</section>
+
+<section id="send-selection">
+    <h2>💬 Auswahl in den Chat senden <span class="new-badge">Neu</span></h2>
+    <p>Während der Bot läuft, kannst du beliebigen Text im Feld <strong>Menüinhalt</strong> markieren und ihn mit einem Klick direkt in den Fansly-Chat senden.</p>
+    <ol class="step-list">
+        <li>Starte den Bot.</li>
+        <li>Klicke und ziehe, um beliebigen Text im Menüinhalt-Feld zu markieren.</li>
+        <li>Klicke auf den <strong>💬</strong>-Button neben der Beschriftung „Menüinhalt". Er aktiviert sich nur, wenn Text ausgewählt ist und der Bot läuft.</li>
+        <li>Der ausgewählte Text wird sofort in den Chat gesendet.</li>
+    </ol>
+    <div class="highlight-box"><p>💡 Nutze dies, um die Frage eines Zuschauers zu beantworten, indem du nur die relevante Menüzeile sendest, ohne das gesamte Menü zu posten.</p></div>
+</section>
+
+<section id="responder">
+    <h2>🤖 Auto-Responder</h2>
+    <p>Der Auto-Responder antwortet automatisch auf Chat-Befehle.</p>
+    <ul>
+        <li><strong>!menu-Befehl:</strong> Wenn ein Zuschauer <code>!menu</code> im Chat eingibt, wird dein aktives Menü sofort gepostet.</li>
+        <li><strong>Cooldown !menu:</strong> Verwendet das Auto-Post-Intervall (in Minuten) — verhindert Spam des Menüs auf Abruf.</li>
+        <li><strong>Cooldown eigener Befehle:</strong> Jeder eigene Befehl (z.B. <code>!socials</code>) hat einen unabhängigen 60-Sekunden-Cooldown. Verschiedene Befehle können nacheinander verwendet werden, ohne sich gegenseitig zu beeinflussen.</li>
+        <li><strong>Du kannst deine eigenen Befehle verwenden:</strong> Als Streamer kannst du <code>!menu</code> oder eigene Befehle im Chat eingeben — der Bot antwortet genauso wie bei einem Zuschauer.</li>
+    </ul>
+</section>
+
+<section id="custom-commands">
+    <h2>🤖 Eigene Befehle</h2>
+    <p>Erstelle eigene Chat-Befehle durch Klicken auf den Button <strong>Eigene Befehle</strong>.</p>
+    <ol class="step-list">
+        <li>Gib einen <strong>Auslösernamen</strong> ein (ohne das <code>!</code>-Präfix — z.B. wird <code>socials</code> zu <code>!socials</code>).</li>
+        <li>Gib die <strong>Bot-Antwort</strong> ein — den vollständigen Text, den der Bot postet.</li>
+        <li>Klicke <strong>💾 Befehl speichern</strong>.</li>
+        <li>Verwende den Schalter in jeder Zeile, um Befehle individuell zu aktivieren oder deaktivieren.</li>
+    </ol>
+</section>
+
+<section id="saved-messages">
+    <h2>💾 Gespeicherte Auto-Dankeschön-Nachrichten <span class="new-badge">Neu</span></h2>
+    <p>Erstelle eine Bibliothek wiederverwendbarer Dankeschön-Vorlagen direkt auf der Seite „Eigene Befehle".</p>
+    <ol class="step-list">
+        <li>Gib deine Dankesnachricht im Feld <strong>Auto-Dankeschön-Nachricht</strong> mit <code>{user}</code> und <code>{item}</code> ein.</li>
+        <li>Klicke <strong>💾 Nachricht speichern</strong>, um sie zur Bibliothek hinzuzufügen.</li>
+        <li>Klicke <strong>↩ Laden</strong> bei einer gespeicherten Nachricht, um sie zu aktivieren.</li>
+        <li>Klicke <strong>🗑</strong>, um eine gespeicherte Nachricht zu löschen.</li>
+    </ol>
+</section>
+
+<section id="auto-thank">
+    <h2>✨ Auto-Dankeschön für Trinkgelder</h2>
+    <p>Veröffentliche automatisch eine öffentliche Danksagung, wenn ein Zuschauer für einen Menüpunkt tippt.</p>
+    <ul>
+        <li>Aktiviere den Schalter <strong>Auto-Dankeschön für Trinkgelder</strong> in der Seitenleiste.</li>
+        <li>Passe die Nachricht mit <code>{user}</code> (Benutzername des Fans) und <code>{item}</code> (getippter Menüpunkt) an.</li>
+        <li><em>Beispiel: „✨ {user} hat gerade für {item} getippt! Vielen Dank! ✨"</em></li>
+    </ul>
+</section>
+
+<section id="guest-list">
+    <h2>📋 Gästeliste</h2>
+    <p>Jeder Tipper wird automatisch zur Gästeliste hinzugefügt.</p>
+    <ul>
+        <li>Klicke <strong>📋 Namen kopieren</strong>, um eine kommagetrennte Liste aller Tipper in die Zwischenablage zu kopieren.</li>
+        <li>Klicke <strong>🗑️ Liste zurücksetzen</strong> zu Beginn jedes Streams.</li>
+    </ul>
+</section>
+
+<section id="backup-restore">
+    <h2>💾 Datensicherung und Wiederherstellung</h2>
+    <ul>
+        <li><strong>Sicherung exportieren:</strong> Klicke <strong>💾 Backup exportieren</strong>, um eine <code>.txt</code>-Datei mit allen Menüs, Befehlen und Analysen herunterzuladen.</li>
+        <li><strong>Sicherung importieren:</strong> Klicke <strong>📂 Backup importieren</strong> und wähle eine zuvor exportierte Datei.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Exportiere mindestens einmal pro Woche eine Sicherung, um deine Statistikhistorie zu schützen.</p></div>
+</section>
+
+<section id="designer-design">
+    <h2>✏️ Trinkgeldmenü-Designer — Design-Tab</h2>
+    <p class="section-intro">Der Designer ist eine dedizierte Seite, die über die obere Navigationsleiste erreichbar ist. Er bietet einen visuellen Arbeitsbereich zum Erstellen, Vorschauen und Speichern professioneller Trinkgeldmenüs.</p>
+    <p>Öffne den Designer durch Klicken auf <strong>🎨 Trinkgeldmenü-Designer</strong> in der oberen Navigation. Verwende die Tabs <strong>✏️ Design</strong> und <strong>🗓️ Zeitplan</strong>, um zwischen den Arbeitsbereichen zu wechseln.</p>
+</section>
+
+<section id="structural-presets">
+    <h2>📐 Strukturvorlagen</h2>
+    <p>Die fünf Strukturvorlagen definieren das allgemeine Layout der Menüzeilen.</p>
+    <ul>
+        <li><strong>📜 Klassische Liste:</strong> Ein Eintrag pro Zeile — übersichtlich und lesbar.</li>
+        <li><strong>📏 Vertikale Pipeline:</strong> Einträge durch senkrechte Striche getrennt.</li>
+        <li><strong>🏷️ Gekennzeichnete Klammern:</strong> Preise in eckigen Klammern vor jedem Eintrag.</li>
+        <li><strong>🎀 Horizontales Band:</strong> Alle Einträge in einer Zeile mit Trennzeichen.</li>
+        <li><strong>🔳 Intelligentes Raster:</strong> Einträge in einem 2-Spalten-Layout.</li>
+    </ul>
+</section>
+
+<section id="style-assets">
+    <h2>🎨 Style-Assets</h2>
+    <h4>Emojis</h4><p>Klicke auf ein Emoji, um es an der Cursorposition einzufügen. Speichere eigene Emojis über das Eingabefeld unten im Tab.</p>
+    <h4>Dekorationen</h4><p>Texttrennzeichen. Klicke zum Einfügen an der Cursorposition. Speichere eigene Dekorationen für die Wiederverwendung.</p>
+    <h4>Schriftarten</h4><p>Markiere Text in der Quellliste und klicke dann auf einen Schriftstil, um ihn in Unicode-Zeichen umzuwandeln.</p>
+    <h4>Meine Vorlagen</h4><p>Speichere eigene Zeilenformatierungsvorlagen mit den Platzhaltern <code>{icon}</code>, <code>{label}</code> und <code>{price}</code>.</p>
+</section>
+
+<section id="menu-templates">
+    <h2>📄 Menüvorlagen <span class="new-badge">Neu</span></h2>
+    <p>Der Tab <strong>Menüvorlagen</strong> bietet eine kuratierte Bibliothek mit fertigen Startpunkten und ermöglicht das Speichern eigener Vorlagen zur Wiederverwendung.</p>
+    <h4>Eingebaute Vorlage verwenden</h4>
+    <ol class="step-list">
+        <li>Klicke auf den Tab <strong>Menüvorlagen</strong> im Style-Assets-Panel.</li>
+        <li>Filtere nach Kategorie mit den Pill-Buttons oder durchsuche alle Vorlagen.</li>
+        <li>Klicke <strong>▶ Anwenden</strong> bei einer Vorlage. Falls die Quellliste bereits Inhalt hat, erscheint eine Bestätigungsaufforderung.</li>
+        <li>Der Vorlageninhalt wird mit <code>$XX</code>-Preisplatzhaltern in die Quellliste geladen — ersetze <code>XX</code> durch deine tatsächlichen Preise.</li>
+    </ol>
+    <h4>Eigene Vorlagen speichern</h4>
+    <ol class="step-list">
+        <li>Erstelle dein Menü in der Quellliste.</li>
+        <li>Scrolle zum Formular <strong>Neue Vorlage</strong> unten im Menüvorlagen-Tab.</li>
+        <li>Gib einen Namen, eine optionale Kategorie und eine Beschreibung ein.</li>
+        <li>Klicke <strong>💾 Vorlage speichern</strong>.</li>
+    </ol>
+</section>
+
+<section id="live-preview">
+    <h2>👁️ Live-Fansly-Vorschau</h2>
+    <p>Die Vorschau in Spalte 3 aktualisiert sich in Echtzeit und zeigt genau, wie der Beitrag im Fansly-Chat aussehen wird — einschließlich Zeilenumbrüchen entsprechend Fanslys Zeichenlimit.</p>
+    <ul>
+        <li>Verwende den <strong>📋</strong>-Button neben der Beschriftung „Quellliste", um den rohen Inhalt in die Zwischenablage zu kopieren.</li>
+    </ul>
+</section>
+
+<section id="saving-menus">
+    <h2>💾 Menüs speichern und verwalten</h2>
+    <ol class="step-list">
+        <li>Gib einen <strong>Menünamen</strong> in Spalte 1 ein.</li>
+        <li>Wähle eine <strong>Menüfarbe</strong> mit den Farbmustern — diese Farbe wird in der Zeitplan-Zeitleiste verwendet.</li>
+        <li>Aktiviere optional den Schalter <strong>Standardmenü</strong>.</li>
+        <li>Klicke <strong>✨ Auf Menüliste anwenden ✨</strong>, um zu speichern.</li>
+    </ol>
+    <p>Um ein gespeichertes Menü zu <strong>löschen</strong>, wähle es aus der Dropdown-Liste und klicke auf den <strong>🗑</strong>-Button rechts davon.</p>
+    <div class="danger-box"><p>⚠️ Das Löschen eines Menüs ist dauerhaft. Exportiere zuerst eine Sicherung.</p></div>
+</section>
+
+<section id="designer-schedule">
+    <h2>🗓️ Trinkgeldmenü-Designer — Zeitplan-Tab <span class="new-badge">Neu</span></h2>
+    <p class="section-intro">Der Zeitplan-Tab ermöglicht die Automatisierung der Menürotation während deines Streams. Statt Menüs manuell zu wechseln, definierst du Zeitfenster und Fluxee erledigt den Rest.</p>
+</section>
+
+<section id="schedule-slots">
+    <h2>🗓️ Zeitplanslots</h2>
+    <p>Es sind bis zu <strong>8 Zeitplanslots</strong> verfügbar. Jeder Slot definiert ein Zeitfenster, in dem ein bestimmtes Menü aktiv ist.</p>
+    <h4>Slot konfigurieren</h4>
+    <ol class="step-list">
+        <li>Klicke auf den Slot-Header, um ihn <strong>aufzuklappen</strong>.</li>
+        <li>Aktiviere den Slot mit dem Schalter rechts im Header.</li>
+        <li>Wähle ein <strong>Menü</strong> aus der Dropdown-Liste.</li>
+        <li>Stelle die <strong>Start</strong>- und <strong>Endzeit</strong> mit den Zeitauswahlfeldern ein.</li>
+        <li>Stelle das Intervall <strong>Posten alle</strong> ein (Minuten oder Nachrichten).</li>
+        <li>Wähle die <strong>Wochentage</strong>, an denen dieser Slot gelten soll.</li>
+    </ol>
+    <h4>Überlappungsverhinderung</h4>
+    <p>Fluxee verhindert, dass zwei aktivierte Slots an demselben Tag überlappende Zeiten haben. Eine Änderung wird automatisch rückgängig gemacht, wenn sie eine Überlappung verursachen würde.</p>
+    <h4>Fallback-Verhalten</h4>
+    <ul>
+        <li><strong>Standardmenü und manuelles Intervall verwenden:</strong> Der Bot postet weiter mit den Einstellungen der Seitenleiste.</li>
+        <li><strong>Auto-Post pausieren:</strong> Der Bot stoppt das Posten, bis der nächste Slot aktiv wird.</li>
+    </ul>
+    <div class="tip-box"><p>💡 Der Zeitplan verwendet automatisch deine Systemuhr und Zeitzone.</p></div>
+</section>
+
+<section id="timeline">
+    <h2>📅 Wochenzeitplan</h2>
+    <p>Der Wochenzeitplan in der rechten Spalte visualisiert alle konfigurierten Slots für einen ausgewählten Tag.</p>
+    <ul>
+        <li>Klicke auf einen <strong>Tages-Button</strong> (Mo–So), um den Zeitplan für diesen Tag anzuzeigen.</li>
+        <li>Jeder Slot erscheint als farbiger Block. <strong>Aktivierte</strong> Slots sind voll opak; <strong>deaktivierte</strong> sind abgedunkelt.</li>
+        <li>Eine <strong>weiße Nadel</strong> zeigt die aktuelle Uhrzeit am aktuellen Tag an.</li>
+    </ul>
+</section>
+
+<section id="revenue-tab">
+    <h2>💰 Statistiken — Einnahmen-Tab</h2>
+    <p class="section-intro">Die Statistikseite ist über die obere Navigationsleiste erreichbar. Verwende die Tabs <strong>Einnahmen</strong>, <strong>Ziele</strong> und <strong>Zuschauer</strong>, um zwischen Ansichten zu wechseln.</p>
+    <p>Das Banner <strong>Einnahmenstatistiken</strong> oben im Einnahmen-Tab zeigt vier Schlüsselkennzahlen: <strong>Gesamte Trinkgelder</strong>, <strong>Bruttoeinnahmen</strong>, <strong>Durchschnittliches Trinkgeld</strong> und <strong>Nach Fansly-Abzug</strong>.</p>
+    <p>Verwende die Zeitraum-Buttons — <strong>24h / 7 Tage / 30 Tage / Gesamte Zeit</strong> — um alle Daten im Einnahmen-Tab zu filtern.</p>
+</section>
+
+<section id="tips-overview">
+    <h2>📊 Trinkgeld-Übersicht</h2>
+    <p>Die Trinkgeld-Übersichtstabelle zeigt jeden Menüpunkt, der ein Trinkgeld erhalten hat, mit vier sortierbaren Spalten:</p>
+    <ul>
+        <li><strong>Artikel:</strong> Name des Menüpunkts.</li>
+        <li><strong>Anzahl:</strong> Wie oft dieser Punkt ein Trinkgeld erhielt.</li>
+        <li><strong>Einnahmen:</strong> Gesamte Bruttoeinnahmen aus diesem Punkt.</li>
+        <li><strong>Anteil <span class="new-badge">Neu</span>:</strong> Einnahmen dieses Punkts als Prozentsatz der Gesamteinnahmen.</li>
+    </ul>
+    <p>Klicke auf einen Spaltenheader zum Sortieren. Standard-Sortierung nach Einnahmen absteigend.</p>
+</section>
+
+<section id="rot">
+    <h2>📈 Einnahmen im Zeitverlauf</h2>
+    <ul>
+        <li><strong>Nach Stunde:</strong> Balkendiagramm mit Bruttoeinnahmen nach Tageszeit.</li>
+        <li><strong>Nach Wochentag:</strong> Einnahmen nach Tag — nützlich zur Identifikation ertragreichster Streaming-Tage.</li>
+    </ul>
+</section>
+
+<section id="heatmap">
+    <h2>🌡️ Trinkgeld-Heatmap</h2>
+    <p>Die Heatmap zeigt die Trinkgeldintensität über alle 24 Stunden und 7 Wochentage gleichzeitig. Dunklere Zellen zeigen höhere Trinkgeldaktivität an.</p>
+    <p>Fahre mit der Maus über eine Zelle, um Detailinformationen zu sehen: Gesamteinnahmen, Anzahl der Trinkgelder und Durchschnittsbeleg.</p>
+</section>
+
+<section id="target-calculator">
+    <h2>🎯 Zielrechner <span class="new-badge">Neu</span></h2>
+    <p>Der Zielrechner hilft dir, einen Stream zu planen, indem er schätzt, wie lange du streamen musst, um ein Einnahmenziel basierend auf deiner historischen Performance zu erreichen.</p>
+    <ol class="step-list">
+        <li>Gib deinen Zieleinnahmebetrag in das <strong>$</strong>-Eingabefeld ein.</li>
+        <li>Der Rechner zeigt sofort: geschätzte benötigte Stunden, wahrscheinlichen Bereich, geschätzte Anzahl an Trinkgeldern und deinen durchschnittlichen Stundensatz.</li>
+    </ol>
+</section>
+
+<section id="private-goal">
+    <h2>🏆 Privates Ziel und Speichernutzung</h2>
+    <p>Die Karte <strong>Privates Ziel</strong> verfolgt einen persönlichen Einnahmen-Meilenstein, der vom Fansly-Zielsystem unabhängig ist.</p>
+    <p>Die Karte <strong>Speichernutzung</strong> zeigt, wie viel lokalen Chrome-Speicher Fluxee für deine Analysedaten verwendet. Verwende den Button <strong>Jetzt kürzen</strong>, um ältere Daten zu entfernen.</p>
+</section>
+
+<section id="export-csv">
+    <h2>⬇️ CSV-Export <span class="new-badge">Neu</span></h2>
+    <p>Exportiere deine vollständige Trinkgeldhistorie als CSV-Datei zur externen Analyse.</p>
+    <p>Klicke auf den Button <strong>⬇ CSV exportieren</strong> rechts in der Zeitraum-Symbolleiste. Die Datei wird im Downloads-Ordner als <code>fluxee_tips_YYYY-MM-DD.csv</code> gespeichert.</p>
+</section>
+
+<section id="goals-tab">
+    <h2>🎯 Statistiken — Ziele-Tab</h2>
+    <p class="section-intro">Der Ziele-Tab verwaltet die Integration mit Fanslys Live-Zielsystem — Synchronisation, Verfolgung, Archivierung und Warteschlangenverwaltung von Zielen.</p>
+</section>
+
+<section id="live-goal-sync">
+    <h2>🔄 Live-Zielsynchronisation</h2>
+    <p>Fluxee verbindet sich direkt mit der Fansly-API, um deine aktiven Ziele in Echtzeit zu verfolgen.</p>
+    <ul>
+        <li>Fansly unterstützt <strong>3 Ziel-Slots</strong> (Oben, Mitte, Unten). Alle drei werden gleichzeitig verfolgt.</li>
+        <li>Wenn alle 3 Slots belegt sind, kannst du weitere Ziele in die Warteschlange stellen. Wenn ein Slot frei wird, synchronisiert Fluxee automatisch das nächste Ziel.</li>
+    </ul>
+</section>
+
+<section id="goals-bank">
+    <h2>🏦 Gespeicherte Zielbank</h2>
+    <ol class="step-list">
+        <li>Gib einen <strong>Namen</strong>, einen <strong>Zielbetrag</strong> (in Dollar) und eine optionale <strong>Beschreibung</strong> ein.</li>
+        <li>Klicke <strong>💾 Ziel speichern</strong>.</li>
+        <li>Klicke das <strong>☆</strong>-Symbol, um ein Ziel als <strong>Beliebt</strong> zu markieren — es wird an den Anfang der Liste verschoben.</li>
+        <li>Klicke auf ein Ziel, um es aufzuklappen und die <strong>Slot</strong>-Buttons zu verwenden.</li>
+    </ol>
+</section>
+
+<section id="goals-archive">
+    <h2>📜 Zielarchiv</h2>
+    <p>Abgeschlossene und abgelaufene Ziele werden automatisch ins Zielarchiv verschoben. Die letzten 50 Ziele werden gespeichert.</p>
+    <ul>
+        <li>Als <strong>Erreicht</strong> (Cyan) markierte Ziele haben ihr Ziel erfüllt. Als <strong>Gescheitert</strong> (Rot) markierte wurden vorzeitig gestoppt.</li>
+        <li>Verwende das <strong>Tag</strong>-System, um Ziele zur Performance-Analyse zu kategorisieren.</li>
+    </ul>
+</section>
+
+<section id="viewers-tab">
+    <h2>👥 Statistiken — Zuschauer-Tab</h2>
+    <p class="section-intro">Der Zuschauer-Tab liefert Einblicke in dein Publikum — wer deine Tipper sind, wie loyal sie sind und wie sie sich im Laufe der Zeit engagieren.</p>
+    <p>Verwende die Zeitraum-Buttons — <strong>Heute / Diese Woche / Dieser Monat / Gesamte Zeit</strong>.</p>
+    <h4>Zeile 1 — Zusammenfassungskarten</h4>
+    <ul>
+        <li><strong>Trinkgeldhäufigkeit:</strong> Wie viele Fans einmal, ein paar Mal oder regelmäßig getippt haben.</li>
+        <li><strong>Neu vs. Wiederkehrend:</strong> Donut-Diagramm mit Ersttippern vs. Fans, die zuvor getippt haben.</li>
+        <li><strong>Durchschnittliches Trinkgeld pro Zuschauer:</strong> Gesamteinnahmen geteilt durch einzigartige Tipper.</li>
+    </ul>
+</section>
+
+<section id="viewer-retention">
+    <h2>🔄 Zuschauerbindung <span class="new-badge">Neu</span></h2>
+    <p>Die Karte Zuschauerbindung zeigt Loyalitätskennzahlen des Publikums basierend auf deiner Trinkgeldhistorie.</p>
+    <ul>
+        <li><strong>Rückkehrquote:</strong> Prozentsatz der Tipper, die für mindestens eine zweite Sitzung zurückgekehrt sind.</li>
+        <li><strong>Durchschn. Sitzungen:</strong> Durchschnittliche Anzahl unterschiedlicher Streaming-Tage pro Tipper.</li>
+        <li><strong>Aufteilungsbalken:</strong> Visuelle Aufschlüsselung von Einmaligen vs. Wiederkehrenden.</li>
+        <li><strong>Top wiederkehrende Tipper:</strong> Die 5 treuesten Fans nach Sitzungsanzahl.</li>
+    </ul>
+</section>
+
+<section id="top-tippers">
+    <h2>🏆 Top-Tipper und Größtes Einzeltrinkgeld</h2>
+    <p>Die <strong>Top-Tipper</strong>-Bestenliste ordnet alle Tipper nach Gesamteinnahmen im ausgewählten Zeitraum. Jede Zeile zeigt Anzahl der Trinkgelder, Gesamtbetrag, größtes Einzeltrinkgeld und ⭐ für Abonnenten.</p>
+    <p>Die Karte <strong>Größtes Einzeltrinkgeld</strong> hebt das Rekordtrinkgeld mit Fanname, Artikel und Datum hervor.</p>
+</section>
+
+<section id="triggers-tab">
+    <h2>🎬 Trigger & Overlays — Trigger-Tab</h2>
+    <p class="section-intro">Die Seite Trigger & Overlays ist über die obere Navigationsleiste erreichbar. Sie hat drei Tabs: Trigger, Uploads und Overlays.</p>
+    <p>Trigger ermöglichen das automatische Auslösen von Overlay-Animationen und optionalen Chat-Nachrichten, wenn bestimmte Ereignisse in deinem Stream auftreten.</p>
+</section>
+
+<section id="trigger-rules">
+    <h2>📋 Trigger-Regeltypen</h2>
+    <h4>Textübereinstimmung</h4><p>Wird ausgelöst, wenn der Menüpunkt eines Trinkgelds ein bestimmtes Schlüsselwort enthält.</p>
+    <h4>Kombination</h4><p>Wird ausgelöst, wenn Trinkgelder in einer bestimmten Betragsfolge innerhalb eines Zeitfensters eintreffen.</p>
+    <h4>Schnellfeuer</h4><p>Wird ausgelöst, wenn eine bestimmte Anzahl von Trinkgeldern innerhalb eines kurzen Zeitfensters eintrifft.</p>
+    <h4>Ziel-Ereignisse</h4><p>Wird bei <strong>Zielstart</strong> oder <strong>Zielabschluss</strong> ausgelöst.</p>
+    <h4>Hype Train-Ereignisse</h4><p>Wird bei folgenden Ereignissen ausgelöst: <strong>Zugstart</strong>, <strong>Level-Up</strong>, <strong>Gefahrenzone</strong> und <strong>Zugende</strong>.</p>
+</section>
+
+<section id="trigger-options">
+    <h2>⏱️ Cooldown und Einmalig-Auslösung <span class="new-badge">Neu</span></h2>
+    <ul>
+        <li><strong>Cooldown (Sekunden):</strong> Mindestzeit, die vergehen muss, bevor dieselbe Regel erneut ausgelöst werden kann. Setze auf 0 für keinen Cooldown.</li>
+        <li><strong>Einmal pro Sitzung auslösen:</strong> Wenn aktiviert, wird die Regel genau einmal pro Sitzung ausgelöst. Ideal für Meilenstein-Ereignisse.</li>
+    </ul>
+</section>
+
+<section id="hype-train">
+    <h2>🚂 Hype Train-Konfiguration</h2>
+    <p class="section-intro">Der Hype Train ist ein animiertes OBS-Overlay, das mehrere Trinkgelder in kurzer Zeit mit einem visuellen Zug feiert, der an Intensität zunimmt.</p>
+</section>
+
+<section id="ht-settings">
+    <h2>⚙️ Hype Train — Einstellungen</h2>
+    <ul>
+        <li><strong>Modus:</strong> <em>Mehrstufig</em> oder <em>Einzelziel</em>.</li>
+        <li><strong>Dauer:</strong> Wie lange der Hype Train nach dem letzten Trinkgeld läuft.</li>
+        <li><strong>Auto-Start-Schwelle:</strong> Mindestbetrag eines Einzeltrinkgelds, das den Hype Train automatisch startet.</li>
+        <li><strong>Aktiviert:</strong> Der Hype Train ist standardmäßig deaktiviert. Umschalten zum Aktivieren.</li>
+    </ul>
+</section>
+
+<section id="ht-visuals">
+    <h2>🎨 Hype Train — Design und Themes</h2>
+    <ul>
+        <li><strong>Schriftart, Primär- und Sekundärfarben:</strong> Text- und Akzentfarben.</li>
+        <li><strong>Hintergrund:</strong> Transparent, Preset, Einfarbig oder Benutzerdefiniertes Bild.</li>
+        <li><strong>Balkenfarbe und Balkenrahmen:</strong> Füllfarbe des Fortschrittsbalkens und dekorativer Rahmenstil.</li>
+        <li><strong>Zugsymbol:</strong> Keins, Standardsymbol oder benutzerdefiniertes Bild.</li>
+        <li><strong>Animationen:</strong> Animationseffekte für Hype Train-Ereignisse zuweisen.</li>
+    </ul>
+    <h4>Meine Themes</h4>
+    <p>Speichere deine visuelle Konfiguration als benanntes Theme mit dem Button <strong>💾 Theme speichern</strong>.</p>
+</section>
+
+<section id="overlays-tab">
+    <h2>📺 Overlays-Tab</h2>
+    <h4>Bestenlisten-Overlay</h4><p>Zeigt eine Live-Bestenliste der Tipper, die sich in Echtzeit aktualisiert.</p>
+    <h4>Stream-Ziel-Overlay</h4><p>Zeigt einen Fortschrittsbalken, der kumulative Sitzungstrinkgelder in Richtung eines Ziels verfolgt.</p>
+    <h4>Endkarten-Overlay</h4><p>Erscheint am Ende deines Streams mit einer Sitzungszusammenfassung.</p>
+</section>
+
+<section id="obs-setup">
+    <h2>📺 OBS-Einrichtung</h2>
+    <ol class="step-list">
+        <li>Stelle sicher, dass <strong>FluxeeBridge.exe</strong> läuft.</li>
+        <li>Füge in OBS eine neue <strong>Browser-Quelle</strong> hinzu.</li>
+        <li>Füge die Overlay-URL (z.B. <code>http://localhost:3745/leaderboard</code>) in das URL-Feld ein.</li>
+        <li>Stelle die Breite auf <strong>1920</strong> und die Höhe auf <strong>1080</strong>.</li>
+        <li>Aktiviere <strong>„Quelle deaktivieren wenn nicht sichtbar"</strong>.</li>
+    </ol>
+    <div class="danger-box"><p>⚠️ FluxeeBridge.exe muss den gesamten Stream über laufen, damit Overlays Live-Daten empfangen.</p></div>
+</section>
+
+<section id="automod-filters">
+    <h2>🛡️ Auto-Moderator — Filter</h2>
+    <p class="section-intro">Der Auto-Moderator wird im Tab <strong>Auto-Mod</strong> konfiguriert. Jeder Filter arbeitet unabhängig.</p>
+    <h4>1. Großbuchstaben-Filter</h4><p>Verhindert übermäßige Verwendung von Großbuchstaben. Konfiguriere eine Mindestlänge und einen Schwellenwertprozentsatz.</p>
+    <h4>2. Link-Filter</h4><p>Warnt automatisch Benutzer, die nicht autorisierte Links posten. Füge vertrauenswürdige Domains zur Whitelist hinzu.</p>
+    <h4>3. Wort-Filter</h4><p>Blockiert bestimmte verbotene Wörter oder Phrasen.</p>
+    <h4>4. Absatz-Filter</h4><p>Begrenzt die Nachrichtendichte durch Festlegung einer maximalen Zeichenanzahl und Zeilenumbrüche.</p>
+    <h4>5. Symbol-Filter</h4><p>Erkennt Spam-Muster mithilfe Unicode-bewusster Symboldichteanalyse.</p>
+    <div class="highlight-box"><p>💡 Jeder Filter hat eine vollständig anpassbare Warnmeldung. Verwende <code>{user}</code>, um den Benutzer beim Namen anzusprechen.</p></div>
+</section>
+
+<section id="automod-exclusions">
+    <h2>🛡️ Ausnahmegruppen</h2>
+    <ul>
+        <li><strong>Streamer:</strong> Immer ausgenommen (kann nicht geändert werden).</li>
+        <li><strong>Moderatoren:</strong> Immer ausgenommen (kann nicht geändert werden).</li>
+        <li><strong>Abonnenten:</strong> Optional ausgenommen.</li>
+        <li><strong>Andere Creator:</strong> Optional ausgenommen.</li>
+    </ul>
+    <p>Jeder Benutzer, der eine Warnung erhält, unterliegt einem <strong>30-Sekunden-Cooldown pro Benutzer</strong> — derselbe Benutzer erhält innerhalb von 30 Sekunden keine zweite Warnung.</p>
+</section>
+
+<section id="archive">
+    <h2>📜 Änderungsprotokoll</h2>
+    <div class="archive-item">
+        <h3>Version 5.1</h3>
+        <ul>
+            <li><strong>Menü-Zeitplan:</strong> Zeitbasierte Menürotation mit bis zu 8 Slots und visueller Zeitleiste.</li>
+            <li><strong>Stream-Overlays:</strong> Drei OBS-Overlays — Live-Bestenliste, Stream-Ziel und Endkarte.</li>
+            <li><strong>Hype Train:</strong> Animiertes OBS-Overlay mit Mehrstufenunterstützung und Theme-Bibliothek.</li>
+            <li><strong>Trigger-Engine:</strong> Regelbasierte Automatisierung mit Cooldown und Einmalig-Option.</li>
+            <li><strong>Erweiterte Statistiken:</strong> Zuschauerbindung, Einnahmenanteil, Zielrechner und CSV-Export.</li>
+            <li><strong>Menüvorlagen:</strong> Kuratierte Bibliothek mit 8 integrierten Vorlagen plus Benutzervorlagen.</li>
+            <li><strong>Auswahl senden:</strong> Beliebigen Text im Menüinhalt markieren und direkt in den Chat senden.</li>
+            <li><strong>Gespeicherte Nachrichten:</strong> Wiederverwendbare Bibliothek für Auto-Dankeschön-Vorlagen.</li>
+            <li><strong>Sicherheit und Zuverlässigkeit:</strong> Umfassende Verbesserungen unter der Haube.</li>
+        </ul>
+    </div>
+    <div class="archive-item">
+        <h3>Version 5.0</h3>
+        <ul>
+            <li><strong>Projekt-Rebranding:</strong> Offizieller Übergang zu <strong>Fluxee</strong>.</li>
+            <li><strong>3-Spalten-Layout:</strong> Neuer optimierter Arbeitsbereich für Panorama-Monitore.</li>
+            <li><strong>Visueller Trinkgeldmenü-Designer:</strong> Echtzeit-Vorschau und kuratierte Asset-Bibliothek.</li>
+            <li><strong>Auto-Moderator-Suite:</strong> 5 intelligente Filter mit Ausnahmegruppen.</li>
+        </ul>
+    </div>
+    <div class="archive-item">
+        <h3>Version 4.7</h3>
+        <ul>
+            <li><strong>Live-Zielsynchronisation:</strong> Automatische Verfolgung aller 3 Fansly-Ziel-Slots.</li>
+            <li><strong>Beliebte Ziele:</strong> Ein-Klick-Markierung für vorrangige Bankeinträge.</li>
+            <li><strong>Multi-Tag-Statistiken:</strong> Ziele kategorisieren, um Erfolgsquoten nach Inhaltstyp zu analysieren.</li>
+        </ul>
+    </div>
+</section>
+
+<div class="disclaimer">
+    <p><strong>Haftungsausschluss:</strong> Fluxee ist ein unabhängiges Drittanbieter-Tool und steht in keiner Verbindung zu Fansly oder dessen Muttergesellschaft, wird von diesen nicht unterstützt und ist in keiner Weise offiziell mit ihnen verbunden. Alle Produktnamen, Markenzeichen und Markennamen sind Eigentum ihrer jeweiligen Inhaber. Die Nutzung von Fluxee erfolgt nach eigenem Ermessen und auf eigenes Risiko.</p>
+</div>
+
+</div>
+</main>
+<script src="guide.js"></script>
+</body>
+</html>
