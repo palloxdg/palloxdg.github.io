@@ -704,7 +704,8 @@
 <!-- ── Hero ── -->
 <section class="hero">
     <div>
-        <img src="icon_grey.png" alt="Fluxee" style="width:128px; height:128px; display:block; margin:0 auto 28px; opacity:0.9;">
+        <img src="icon_grey.png" alt="Fluxee" style="width:128px; height:128px; display:block; margin:0 auto 12px; opacity:0.9;">
+        <div style="font-size:3.5rem; font-weight:800; letter-spacing:-1px; color:#ffffff; margin:0 0 20px; text-shadow: 0 3px 12px rgba(0,0,0,0.5);">Fluxee</div>
         <div class="hero-badge">Chrome Extension · Stream Management Software</div>
         <h1>Your stream,<br>running on <em>autopilot</em></h1>
         <p>Fluxee handles tip menus, thank-yous, moderation, and OBS overlays — posting everything as <strong>you</strong>, not a bot.</p>
@@ -886,7 +887,7 @@
             <!-- Suite -->
             <div class="pricing-card fade-up">
                 <div class="pricing-tier">Suite</div>
-                <div class="pricing-price"><sup>$</sup>89<span class="period">.99</span></div>
+                <div class="pricing-price"><sup>$</sup>894<span class="period">.99</span></div>
                 <p class="pricing-note">One-time · Lifetime updates</p>
                 <div class="pricing-divider"></div>
                 <ul class="pricing-features">
@@ -969,6 +970,22 @@
                 <div class="faq-answer">Yes. Each license key supports activation on up to 3 devices. If you need more, contact us and we'll sort it out.</div>
             </div>
 
+            <div class="faq-item">
+                <button class="faq-question">
+                    What happens if I reinstall the extension?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer">Your settings and tip history are stored locally in Chrome — they are wiped when you uninstall. Your license key will need to be re-entered after reinstalling. You can find it in your original confirmation email or in your Whop account under Orders.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    I've used up my 3 activations — do I need to buy again?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="faq-answer">No. You can reset your device activations from your Whop account under Orders, which frees up a slot. Alternatively contact us at support@fluxee.app and we'll reset it for you.</div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -981,10 +998,10 @@
         <p class="section-sub">We're a small team — response times vary but we read everything. Check the guide first for quick answers.</p>
 
         <div class="contact-grid">
-            <a href="mailto:support@fluxee.app" class="contact-card fade-up">
+            <a href="/cdn-cgi/l/email-protection#added8ddddc2dfd9edcbc1d8d5c8c883ccdddd" class="contact-card fade-up">
                 <span class="contact-icon">✉️</span>
                 <h3>Email</h3>
-                <p>support@fluxee.app<br>For billing, licensing, and bugs</p>
+                <p><span class="__cf_email__" data-cfemail="572422272738252317313b222f323279362727">[email&#160;protected]</span><br>For billing, licensing, and bugs</p>
             </a>
             <a href="https://chrome.google.com/webstore" class="contact-card fade-up" target="_blank">
                 <span class="contact-icon">🧩</span>
@@ -1009,11 +1026,11 @@
     <p>
         Fluxee is an independent third-party tool and is not affiliated with, endorsed by, or in any way officially connected to Fansly or its parent company.<br>
         All product names and trademarks are the property of their respective owners.<br><br>
-        <a href="mailto:hello@fluxee.app">hello@fluxee.app</a> &nbsp;·&nbsp; by Pallox &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="terms.html">Terms & Conditions</a>
+        <a href="/cdn-cgi/l/email-protection#a2cac7cececde2c4ced7dac7c78cc3d2d2"><span class="__cf_email__" data-cfemail="58303d343437183e342d203d3d76392828">[email&#160;protected]</span></a> &nbsp;·&nbsp; by Pallox &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="terms.html">Terms & Conditions</a>
     </p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── Slideshow ──
     (function() {
         const slides    = document.querySelectorAll('.slide');
@@ -1177,9 +1194,4 @@
         }
         if (window.LemonSqueezy) {
             window.LemonSqueezy.Setup({
-                eventHandler: (event) => {
-                    if (event.event === 'Checkout.Success') {
-                        window.LemonSqueezy.Url.Close();
-                        // Determine tier from product name in order data
-                        const productName = (event.data?.attributes?.first_order_item?.product_name || '').toLowerCase();
-                        const isSuite = product
+                eventHandler: (even
