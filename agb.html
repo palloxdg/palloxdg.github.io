@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGB — Fluxee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #111116; --surface: #18181f; --card: #1e1e27;
+            --border: rgba(255,255,255,0.07); --accent: #00d4e8;
+            --text: #e0e0e8; --muted: #6a6a7c; --soft: #a0a0b4;
+        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 1rem; line-height: 1.8; -webkit-font-smoothing: antialiased; }
+        nav { position: sticky; top: 0; background: rgba(17,17,22,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; z-index: 100; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; font-size: 0.95rem; }
+        .nav-brand img { width: 26px; height: 26px; }
+        nav a.back { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.15s; }
+        nav a.back:hover { color: var(--text); }
+        .page { max-width: 720px; margin: 0 auto; padding: 64px 24px 120px; }
+        .doc-header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+        .doc-label { display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent); margin-bottom: 16px; }
+        .doc-header h1 { font-size: 2rem; font-weight: 700; color: #fff; letter-spacing: -0.3px; margin-bottom: 12px; }
+        .doc-meta { font-size: 0.85rem; color: var(--muted); }
+        h2 { font-size: 1.1rem; font-weight: 700; color: #fff; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+        h3 { font-size: 0.95rem; font-weight: 600; color: var(--soft); margin: 24px 0 8px; }
+        p { color: var(--soft); margin-bottom: 16px; font-size: 0.95rem; }
+        ul { margin: 8px 0 16px 20px; color: var(--soft); font-size: 0.95rem; }
+        ul li { margin-bottom: 6px; }
+        strong { color: var(--text); font-weight: 600; }
+        a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(0,212,232,0.3); transition: border-color 0.15s; }
+        a:hover { border-bottom-color: var(--accent); }
+        .highlight-box { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 16px 20px; margin: 20px 0; font-size: 0.9rem; color: var(--soft); }
+        .highlight-box.warn { border-left-color: #f59e0b; }
+        footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: 0.8rem; color: var(--muted); max-width: 720px; margin: 0 auto; }
+        footer a { color: var(--muted); border-bottom: none; }
+        footer a:hover { color: var(--text); }
+        .footer-de { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-brand"><img src="icon_grey.png" alt="Fluxee">Fluxee</a>
+    <a href="index.html" class="back">&#8592; Zur&uuml;ck zur Startseite</a>
+</nav>
+<div class="page">
+    <div class="doc-header">
+        <div class="doc-label">Rechtliches</div>
+        <h1>Allgemeine Gesch&auml;ftsbedingungen (AGB)</h1>
+        <p class="doc-meta">Stand: M&auml;rz 2026 &nbsp;&middot;&nbsp; G&uuml;ltig ab sofort</p>
+    </div>
+
+    <div class="highlight-box">
+        Bitte lesen Sie diese AGB sorgf&auml;ltig, bevor Sie Fluxee erwerben oder nutzen. Mit der Installation der Erweiterung oder dem Abschluss eines Kaufs erkl&auml;ren Sie sich mit diesen Bedingungen einverstanden.
+    </div>
+
+    <h2>1. Anbieter</h2>
+    <p>Fluxee wird entwickelt und vertrieben von Dimitrios Georgakopoulos, Lipowskystr. 18a, 81373 M&uuml;nchen, Deutschland. E-Mail: <a href="mailto:hello&#64;fluxee&#46;app">hello&#64;fluxee&#46;app</a></p>
+    <p>Fluxee ist nicht mit Fansly oder dessen Muttergesellschaft verbunden.</p>
+
+    <h2>2. Lizenztarife und Leistungsumfang</h2>
+    <p>Fluxee ist in drei Tarifen erh&auml;ltlich:</p>
+    <ul>
+        <li><strong>Lite</strong> &mdash; Kostenlos. Enth&auml;lt Kernfunktionen: Tip-Men&uuml;-Posting, Auto-Dank, Auto-Post, G&auml;steliste.</li>
+        <li><strong>Pro</strong> &mdash; Einmalig 44,99&nbsp;$. Enth&auml;lt Lite-Funktionen sowie Analysen, Tip-Men&uuml;-Designer und Auto-Moderator.</li>
+        <li><strong>Suite</strong> &mdash; Einmalig 89,99&nbsp;$. Enth&auml;lt alle Pro-Funktionen sowie OBS-Overlays, Hype Train, Triggers und FluxeeBridge.</li>
+    </ul>
+    <p>Die Zahlungsabwicklung erfolgt durch Whop als Merchant of Record.</p>
+
+    <h2>3. Lizenzgew&auml;hrung</h2>
+    <p>Mit dem Kauf erhalten Sie eine pers&ouml;nliche, nicht ausschlie&szlig;liche, nicht &uuml;bertragbare Lizenz zur Nutzung von Fluxee auf bis zu drei Ger&auml;ten f&uuml;r eigene Streaming-Aktivit&auml;ten. Es ist nicht gestattet:</p>
+    <ul>
+        <li>Den Lizenzschl&uuml;ssel weiterzuverkaufen, unterzulizenzieren oder zu &uuml;bertragen</li>
+        <li>Eine einzige Lizenz f&uuml;r Fansly-Konten verschiedener Personen zu verwenden</li>
+        <li>Die Erweiterung oder ihre Komponenten zu dekompilieren oder zu modifizieren</li>
+        <li>Fluxee f&uuml;r rechtswidrige Zwecke oder entgegen Fansly&rsquo;s Nutzungsbedingungen einzusetzen</li>
+    </ul>
+
+    <h2>4. Updates und zuk&uuml;nftige Versionen</h2>
+    <p>Alle Updates und Verbesserungen der Funktionen Ihres erworbenen Tarifs sind f&uuml;r die Laufzeit dieses Tarifs kostenlos enthalten. Vollst&auml;ndig neue Produkttarife k&ouml;nnen als separate K&auml;ufe angeboten werden, was jedoch nicht unserer Standardpraxis entspricht.</p>
+
+    <h2>5. Widerrufsrecht und R&uuml;ckgabe</h2>
+    <p>Verbrauchern steht grunds&auml;tzlich ein gesetzliches Widerrufsrecht zu. Da es sich bei Fluxee um digitale Inhalte handelt, die sofort per Lizenzschl&uuml;ssel bereitgestellt werden, erlischt das Widerrufsrecht gem&auml;&szlig; &sect; 356 Abs. 5 BGB nach ausdr&uuml;cklicher Zustimmung des Verbrauchers vor Beginn der Erf&uuml;llung.</p>
+    <p>Unbeschadet des gesetzlichen Widerrufsrechts gew&auml;hren wir eine <strong>freiwillige 30-Tage-Geld-zur&uuml;ck-Garantie</strong> auf alle kostenpflichtigen K&auml;ufe. R&uuml;ckerstattungsanfragen richten Sie bitte an <a href="mailto:support&#64;fluxee&#46;app">support&#64;fluxee&#46;app</a> oder &uuml;ber das Whop-Resolution-Center. Eine Begr&uuml;ndung ist nicht erforderlich. Nach der R&uuml;ckerstattung wird Ihr Lizenzschl&uuml;ssel deaktiviert.</p>
+    <p>N&auml;here Informationen zum Widerrufsrecht finden Sie in der <a href="widerruf.html">Widerrufsbelehrung</a>.</p>
+
+    <h2>6. Zul&auml;ssige Nutzung</h2>
+    <p>Sie verpflichten sich, Fluxee ausschlie&szlig;lich f&uuml;r seinen bestimmungsgem&auml;&szlig;en Zweck zu verwenden. Verboten ist insbesondere:</p>
+    <ul>
+        <li>Spam, Bel&auml;stigung oder Missbrauch anderer Fansly-Nutzer</li>
+        <li>Umgehung der Plattformregeln oder Nutzungsbedingungen von Fansly</li>
+        <li>Automatisierung von Aktivit&auml;ten, die gegen geltendes Recht versto&szlig;en</li>
+    </ul>
+    <p>Wir behalten uns vor, Ihre Lizenz ohne R&uuml;ckerstattung zu widerrufen, wenn Sie gegen diese Bedingungen versto&szlig;en.</p>
+
+    <h2>7. Haftungsausschluss</h2>
+    <p>Fluxee wird &bdquo;wie besehen&ldquo; ohne jegliche ausdr&uuml;ckliche oder stillschweigende Gew&auml;hrleistung bereitgestellt. Wir &uuml;bernehmen keine Gew&auml;hr daf&uuml;r, dass Fluxee fehlerfrei, unterbrechungsfrei oder mit allen zuk&uuml;nftigen Versionen von Fansly oder Chrome kompatibel ist. Fansly kann seine Plattform jederzeit &auml;ndern.</p>
+
+    <h2>8. Haftungsbeschr&auml;nkung</h2>
+    <p>Die Haftung des Anbieters f&uuml;r mittelbare Sch&auml;den, entgangenen Gewinn oder Datenverlust ist &mdash; soweit gesetzlich zul&auml;ssig &mdash; ausgeschlossen. Die Gesamthaftung ist auf den Betrag begrenzt, den Sie in den zw&ouml;lf Monaten vor dem Anspruch f&uuml;r Ihre Fluxee-Lizenz gezahlt haben.</p>
+
+    <h2>9. Anwendbares Recht</h2>
+    <p>Es gilt das Recht der Bundesrepublik Deutschland. F&uuml;r Verbraucher mit Wohnsitz in der EU gelten zus&auml;tzlich die zwingenden Verbraucherschutzbestimmungen ihres Wohnsitzlandes.</p>
+
+    <h2>10. &Auml;nderungen der AGB</h2>
+    <p>Wir behalten uns das Recht vor, diese AGB jederzeit zu &auml;ndern. Wesentliche &Auml;nderungen werden &uuml;ber das Fluxee-Statusbenachrichtigungssystem mitgeteilt. Die fortgesetzte Nutzung von Fluxee nach &Auml;nderungen gilt als Zustimmung zu den aktualisierten Bedingungen.</p>
+
+    <h2>11. Kontakt</h2>
+    <p>Bei Fragen zu diesen AGB, R&uuml;ckerstattungsanfragen oder Lizenzproblemen wenden Sie sich bitte an <a href="mailto:support&#64;fluxee&#46;app">support&#64;fluxee&#46;app</a>.</p>
+</div>
+<footer>
+    <a href="mailto:hello&#64;fluxee&#46;app">hello&#64;fluxee&#46;app</a> &nbsp;&middot;&nbsp; by Pallox &nbsp;&middot;&nbsp;
+    <a href="privacy.html">Privacy Policy</a> &nbsp;&middot;&nbsp;
+    <a href="terms.html">Terms &amp; Conditions</a> &nbsp;&middot;&nbsp;
+    <a href="impressum.html">Impressum</a>
+    <div class="footer-de">
+        Deutschland: <a href="datenschutz.html">Datenschutzerkl&auml;rung</a> &nbsp;&middot;&nbsp;
+        <a href="agb.html">AGB</a> &nbsp;&middot;&nbsp;
+        <a href="widerruf.html">Widerrufsbelehrung</a> &nbsp;&middot;&nbsp;
+        <a href="impressum.html">Impressum</a>
+    </div>
+    <br>&copy; 2026 Pallox &middot; Deutschland
+</footer>
+</body>
+</html>
