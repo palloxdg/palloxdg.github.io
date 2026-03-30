@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="icon_grey.ico">
     <title>Fluxee v5.1 by Pallox — Guide</title>
     <style>
         ::-webkit-scrollbar { width:12px; height:12px; }
@@ -69,10 +68,6 @@
         .archive-item { background:#2a2a35; border:1px solid #333; border-radius:8px; padding:18px 20px; margin-bottom:16px; }
         .archive-item h3 { margin:0 0 12px; color:#f5a623; font-size:1em; }
 
-        .lang-selector { margin-top:24px; padding-top:16px; border-top:1px solid #444; display:flex; justify-content:center; gap:14px; }
-        .lang-flag { width:30px; height:30px; border-radius:50%; cursor:pointer; transition:transform 0.2s,filter 0.2s; border:2px solid transparent; object-fit:cover; }
-        .lang-flag:hover { transform:scale(1.1); filter:brightness(1.2); }
-        .lang-flag.active { border-color:#00e5ff; }
         .link-icon { width:16px; height:16px; vertical-align:middle; margin-left:5px; opacity:0.8; filter:grayscale(1) brightness(1.5); }
 
         @media(max-width:900px) { .feature-grid { grid-template-columns:1fr; } }
@@ -95,11 +90,6 @@
 <nav>
     <h3><img src="icon_grey.png" style="width:20px;height:20px;vertical-align:middle;margin-right:7px;opacity:0.85;">Fluxee v5.1</h3>
 
-    <div class="lang-selector" style="margin-top:0;padding-top:0;border-top:none;margin-bottom:16px;">
-        <a href="guide.html" title="English"><img src="https://flagcdn.com/w80/gb.png" class="lang-flag active" alt="EN"></a>
-        <a href="guidePL.html" title="Polski"><img src="https://flagcdn.com/w80/pl.png" class="lang-flag" alt="PL"></a>
-        <a href="guideDE.html" title="Deutsch"><img src="https://flagcdn.com/w80/de.png" class="lang-flag" alt="DE"></a>
-    </div>
 
     <div class="nav-group">
         <span class="nav-group-label">Getting Started</span>
@@ -164,6 +154,10 @@
         <a href="#ht-visuals" id="nav-ht-visuals" class="sub">↳ Visuals & Themes</a>
         <a href="#overlays-tab" id="nav-overlays-tab">📺 Overlays Tab</a>
         <a href="#obs-setup" id="nav-obs-setup" class="sub">↳ OBS Setup</a>
+        <a href="#chat-overlay" id="nav-chat-overlay">💬 Chat Overlay <span class="new-badge">New</span></a>
+        <a href="#chat-overlay-settings" id="nav-chat-overlay-settings" class="sub">↳ Settings</a>
+        <a href="#chat-overlay-visuals" id="nav-chat-overlay-visuals" class="sub">↳ Visuals & Borders</a>
+        <a href="#chat-overlay-images" id="nav-chat-overlay-images" class="sub">↳ Background Images</a>
     </div>
 
     <div class="nav-group">
@@ -197,6 +191,7 @@
         <div class="feature-card"><h4>🎬 Trigger Engine</h4><p>Fire custom overlay animations and chat messages automatically based on tips, goals, and rapid events.</p></div>
         <div class="feature-card"><h4>📈 Expanded Analytics</h4><p>Viewer Retention, Target Calculator, Revenue Share per item, Tip Heatmap tooltips, and CSV export.</p></div>
         <div class="feature-card"><h4>🎨 Enhanced Designer</h4><p>Menu Templates library, color tagging, default menu, schedule integration, and delete/copy tools.</p></div>
+        <div class="feature-card"><h4>💬 Chat Overlay</h4><p>OBS browser source showing live Fansly chat on stream. Configurable fonts, colours, borders, glow effects, and background image packs.</p></div>
     </div>
 </section>
 
@@ -655,7 +650,7 @@
 
 <section id="overlays-tab">
     <h2>📺 Overlays Tab</h2>
-    <p>The Overlays tab configures three OBS browser source overlays. Each overlay has a <strong>Settings</strong> tab and a <strong>Visuals</strong> tab.</p>
+    <p>The Overlays tab configures OBS browser source overlays for your stream. Inside <strong>Triggers & Overlays</strong> there are four sub-tabs: <strong>Triggers</strong>, <strong>Uploads</strong>, <strong>Overlays</strong>, and <strong>Chat Overlay</strong>. Each overlay card has a <strong>Settings</strong> tab and a <strong>Visuals</strong> tab.</p>
     <h4>Leaderboard Overlay</h4>
     <p>Displays a live top-tipper leaderboard that updates in real time as tips arrive. Configure the number of entries, title, reset behaviour, and whether to show dollar amounts.</p>
     <h4>Stream Goal Overlay</h4>
@@ -676,6 +671,70 @@
     </ol>
     <div class="highlight-box"><p>💡 Position and scale each overlay using the Settings tab in Fluxee — no need to manually resize in OBS.</p></div>
     <div class="danger-box"><p>⚠️ FluxeeBridge.exe must be running for all overlays to receive live data. Keep it open throughout your stream.</p></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ CHAT OVERLAY -->
+
+<section id="chat-overlay">
+    <h2>💬 Chat Overlay <span class="new-badge">New</span></h2>
+    <p class="section-intro">The Chat Overlay is an OBS browser source that displays your Fansly live chat messages directly on your stream — styled, animated, and fully customisable. It is configured in the <strong>Chat Overlay</strong> tab inside Triggers & Overlays.</p>
+    <p>Unlike the other overlays, the Chat Overlay intercepts messages at the browser level — it works as <strong>you</strong>, so it sees the same chat you see, with no bot account or third-party login required.</p>
+    <div class="highlight-box"><p>💡 The Chat Overlay requires FluxeeBridge to be running. Messages are forwarded from the extension to FluxeeRelay, which broadcasts them to the OBS browser source.</p></div>
+</section>
+
+<section id="chat-overlay-settings">
+    <h2>⚙️ Chat Overlay — Settings</h2>
+    <p>Open the <strong>Chat Overlay</strong> tab in Triggers & Overlays and go to the <strong>Settings</strong> sub-tab.</p>
+    <ul>
+        <li><strong>Enable Chat Overlay:</strong> Master toggle. When off, no messages are forwarded to the relay even if FluxeeBridge is running.</li>
+        <li><strong>Show messages from:</strong> <em>Everyone</em> (all visible chat messages) or <em>Subscribers only</em> (filters non-subscribers out of the overlay).</li>
+        <li><strong>Max messages shown:</strong> The maximum number of messages visible at once on the overlay (5 / 10 / 15 / 20). Older messages are removed as new ones arrive.</li>
+        <li><strong>Message fade after (seconds):</strong> How long before a message fades out automatically. Set to <em>Never</em> to keep all messages until pushed out by newer ones.</li>
+    </ul>
+    <p>Click <strong>💾 Save</strong> to apply. Settings take effect immediately — a live OBS browser source will update without a page reload.</p>
+    <div class="tip-box"><p>💡 For busy streams, set a short fade time (10–20s) and a max of 10 messages so the overlay stays readable without flooding the screen.</p></div>
+</section>
+
+<section id="chat-overlay-visuals">
+    <h2>🎨 Chat Overlay — Visuals & Borders</h2>
+    <p>Switch to the <strong>Visuals</strong> sub-tab to customise the appearance of each message box.</p>
+    <ul>
+        <li><strong>Font:</strong> Choose from Inter, Orbitron, Rajdhani, Audiowide, or Roboto.</li>
+        <li><strong>Username Color:</strong> The colour of the username label above each message. Subscribers show a small <code>★ sub</code> badge in this colour.</li>
+        <li><strong>Message Color:</strong> The colour of the message text body.</li>
+        <li><strong>Background:</strong> <em>Transparent</em> (no background), <em>Dark</em> (semi-transparent black), <em>Solid Color</em> (a flat colour of your choice), or <em>Image</em> (a background image from your chatThemes folder — see below).</li>
+        <li><strong>Border Style:</strong> None, Solid, Dashed, Dotted, Double, or <em>Glow</em> (adds a soft outer glow effect).</li>
+        <li><strong>Border Color:</strong> Shown when any border style other than None is selected.</li>
+        <li><strong>Position:</strong> 6-position grid (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right). Determines where on the 1920×1080 canvas the message stack appears.</li>
+        <li><strong>Size:</strong> Scale slider (50–200%) to scale the entire overlay up or down.</li>
+    </ul>
+    <p>Click <strong>👁 Preview</strong> at any time to see a live preview of three demo messages using your current settings. The preview updates automatically after saving.</p>
+</section>
+
+<section id="chat-overlay-images">
+    <h2>🖼️ Background Images & Theme Packs</h2>
+    <p>The Chat Overlay supports per-message background images — ideal for seasonal themes, branded looks, or decorative packs.</p>
+    <h3>Adding Background Images</h3>
+    <ol class="step-list">
+        <li>Place your image files in the <code>FluxeeBridgessets\chatThemes\</code> folder. FluxeeBridge creates this folder automatically on first launch.</li>
+        <li>Supported formats: <strong>PNG</strong>, <strong>WebP</strong>, JPG, GIF.</li>
+        <li>Recommended size: <strong>600 × 80px</strong> (roughly the width of a message box at default scale). PNG with transparency works best for blending.</li>
+        <li>In the Chat Overlay Visuals tab, set <strong>Background</strong> to <em>Image</em>.</li>
+        <li>A dropdown appears listing all images found in the <code>chatThemes\</code> folder. Select your image.</li>
+        <li>Click <strong>💾 Save</strong>. The OBS overlay updates immediately.</li>
+    </ol>
+    <div class="tip-box"><p>💡 You can swap between images without restarting FluxeeBridge — just select a different image, save, and the live overlay updates within seconds.</p></div>
+    <div class="highlight-box"><p>💡 FluxeeRelay must be running for the image dropdown to populate. If you see "relay offline", start FluxeeBridge and try again.</p></div>
+
+    <h3>OBS Setup for Chat Overlay</h3>
+    <ol class="step-list">
+        <li>Make sure <strong>FluxeeBridge.exe</strong> is running.</li>
+        <li>In OBS, add a new <strong>Browser Source</strong>.</li>
+        <li>Set the URL to <code>http://localhost:3745/overlay/chat.html</code>.</li>
+        <li>Set width to <strong>1920</strong> and height to <strong>1080</strong>.</li>
+        <li>Enable <strong>transparent background</strong> in the browser source settings.</li>
+        <li>Place the source above your other scene elements so chat appears on top.</li>
+    </ol>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ AUTO-MODERATOR -->
@@ -734,6 +793,7 @@
             <li><strong>Saved Messages:</strong> Library of reusable Auto-Thank message templates with load and delete.</li>
             <li><strong>Menu Color & Default:</strong> Assign a colour to each menu for timeline display; mark one as the default fallback.</li>
             <li><strong>Safety & Reliability:</strong> Comprehensive under-the-hood improvements to anti-spam, ghost-reply prevention, race condition fixes, and connection stability.</li>
+            <li><strong>Chat Overlay:</strong> New OBS browser source showing live Fansly chat on stream. Configurable message filter (all / subscribers only), fade timer, max messages, fonts, colours, border styles, glow effect, position, scale, and per-message background images from the <code>chatThemes/</code> folder.</li>
         </ul>
     </div>
 
