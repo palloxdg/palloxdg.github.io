@@ -1,0 +1,1136 @@
+/* Fluxee v5.1 — Trigger Config UI Extra Styles */
+
+.grid-layout {
+    grid-template-columns: repeat(4, 1fr) !important;
+}
+
+@media (max-width: 1700px) {
+    .grid-layout {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .grid-layout {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.card {
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.relay-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.relay-status.online {
+    background: rgba(0, 200, 83, 0.15);
+    color: #00e676;
+    border: 1px solid rgba(0, 200, 83, 0.35);
+}
+
+.relay-status.offline {
+    background: rgba(255, 82, 82, 0.1);
+    color: #ff5252;
+    border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+/* Upload Drop Zone */
+.upload-drop-zone {
+    border: 2px dashed rgba(0, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+.upload-drop-zone:hover,
+.upload-drop-zone.dragover {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: var(--accent-cyan);
+    color: var(--text-bright);
+}
+
+.upload-drop-zone strong {
+    color: var(--accent-cyan);
+}
+
+.asset-list-mini {
+    flex: 1;
+    min-height: 200px;
+    max-height: 350px;
+    overflow-y: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+    margin-bottom: 5px;
+}
+
+.form-row label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.type-fields {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Combo step builder */
+.amount-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.step-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.step-arrow {
+    color: #f5a623;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Saved rule cards */
+.rule-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.rule-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.rule-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.rule-type-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.rule-type-badge.text {
+    background: rgba(0, 229, 255, 0.15);
+    color: #00e5ff;
+}
+
+.rule-type-badge.combo {
+    background: rgba(245, 166, 35, 0.15);
+    color: #f5a623;
+}
+
+.rule-type-badge.rapid {
+    background: rgba(171, 71, 188, 0.15);
+    color: #ce93d8;
+}
+
+.rule-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.rule-name {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.rule-summary {
+    font-size: 11px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rule-anim {
+    font-size: 10px;
+    font-family: monospace;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #aaa;
+}
+
+/* Toggle switch */
+.toggle-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-track {
+    width: 30px;
+    height: 16px;
+    background: #444;
+    border-radius: 8px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.toggle-track::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: left 0.2s;
+}
+
+.toggle-label input:checked+.toggle-track {
+    background: #00c853;
+}
+
+.toggle-label input:checked+.toggle-track::after {
+    left: 16px;
+}
+
+/* Setup card */
+.setup-steps {
+    padding-left: 20px;
+    color: #ccc;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.setup-steps code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #00e5ff;
+    font-size: 12px;
+}
+
+.narrow {
+    max-width: 100px !important;
+}
+
+/* Advanced Hype Train UI */
+.ht-tabs {
+    display: flex;
+    gap: 0;
+    /* space above from card title, space below before content */
+    margin: 16px 0 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.ht-tab {
+    padding: 8px 18px;
+    background: none !important;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    margin-bottom: -1px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.ht-tab:hover {
+    color: #aaa;
+    background: none !important;
+}
+
+.ht-tab.active {
+    color: #00e5ff;
+    border-bottom-color: #00e5ff;
+    background: none !important;
+}
+
+.ht-tab-content {
+    display: none;
+}
+
+.ht-tab-content.active {
+    display: block;
+}
+
+/* Level Preview */
+.level-preview-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 15px;
+}
+
+.level-preview-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.level-preview-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.level-preview-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+}
+
+.level-preview-item .lvl-num {
+    color: var(--accent-cyan);
+    font-weight: 600;
+}
+
+.level-preview-item .lvl-goal {
+    color: #ccc;
+}
+
+/* Visuals Overrides Group */
+.visuals-group {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.visuals-group-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Preview Box Styles */
+.preview-card {
+    border-top: 4px solid #ff00ff !important;
+}
+
+.preview-container {
+    background: radial-gradient(circle at 50% 50%, #1a1a20 0%, #0f0f14 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+}
+
+#mini-hype-train {
+    width: 100%;
+    max-width: 300px;
+    background: var(--ht-bg, rgba(15, 15, 20, 0.95));
+    background-size: cover;
+    background-position: center;
+    border: 2px solid var(--ht-secondary, #5b3fd1);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: var(--ht-glow, 0 0 15px rgba(91, 63, 209, 0.3));
+    font-family: var(--ht-font, 'Inter', sans-serif);
+    color: var(--ht-text, #fff);
+    transition: all 0.3s ease;
+}
+
+.mini-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.mini-icon {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mini-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mini-title {
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: var(--ht-secondary, #bb86fc);
+}
+
+.mini-level {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--ht-secondary, #bb86fc);
+    background: none;
+    padding: 0;
+}
+
+.mini-progress-track {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    position: relative;
+    /* overflow is handled by JS dynamically */
+}
+
+.mini-progress-bar {
+    height: 100%;
+    background: var(--ht-bar, linear-gradient(90deg, #5b3fd1, #bb86fc));
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    transition: width 0.3s ease;
+}
+
+.mini-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--ht-secondary, #888);
+}
+
+.preview-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.preview-actions .btn {
+    flex: 1;
+}
+
+/* ── Preset Loader ─────────────────────────────────────────── */
+.preset-load-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.preset-hint {
+    font-size: 10px;
+    color: #555;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+/* ── My Themes Panel ───────────────────────────────────────── */
+.theme-mgmt-group {
+    margin-top: 12px;
+}
+
+.save-theme-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.save-theme-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    white-space: nowrap;
+    min-width: 60px;
+}
+
+.save-theme-input {
+    flex: 1;
+    min-width: 80px;
+}
+
+/* Theme list */
+.my-themes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 160px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.my-themes-empty {
+    font-size: 11px;
+    color: #444;
+    text-align: center;
+    padding: 12px 0;
+}
+
+.my-theme-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.my-theme-row:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.my-theme-row.active {
+    border-color: #00e5ff;
+    background: rgba(0, 229, 255, 0.06);
+}
+
+.my-theme-name {
+    flex: 1;
+    font-size: 12px;
+    color: #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.my-theme-row.active .my-theme-name {
+    color: #00e5ff;
+    font-weight: 600;
+}
+
+.my-theme-actions {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+}
+
+.my-theme-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: #888;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px 6px;
+    line-height: 1.4;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.my-theme-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.my-theme-btn.load:hover {
+    color: #00e5ff;
+    border-color: #00e5ff;
+}
+
+.my-theme-btn.export:hover {
+    color: #ffe066;
+    border-color: #ffe066;
+}
+
+.my-theme-btn.del:hover {
+    color: #ff4466;
+    border-color: #ff4466;
+}
+
+.theme-mgmt-footer {
+    display: flex;
+    gap: 6px;
+}
+
+.theme-mgmt-footer .btn {
+    flex: 1;
+}
+
+/* ── Stream Action Buttons ─────────────────────────────────── */
+.stream-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Full-width, inherits gradient from .primary / .danger / .secondary */
+.stream-btn {
+    flex: none;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* ── Overlays Tab ──────────────────────────────────────────── */
+.obs-url-badge {
+    display: inline-block;
+    background: rgba(0, 229, 255, 0.07);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: #00e5ff;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.obs-setup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.obs-setup-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 8px;
+}
+
+.obs-setup-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ccc;
+    white-space: nowrap;
+}
+
+.obs-setup-url {
+    font-size: 10px;
+    color: #00e5ff;
+    background: rgba(0, 229, 255, 0.06);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    /* allow flex shrink */
+    flex: 1;
+    /* take remaining row space, never clips the copy icon */
+}
+
+.section-desc strong {
+    color: #ccc;
+}
+
+/* ── 4-column grid override (Overlays tab) ─────────────────── */
+.grid-layout--4col {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1600px) {
+    .grid-layout--4col {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 1100px) {
+    .grid-layout--4col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Overlays tab — spacing + typography matching Triggers section ── */
+#overlaysTabContent .card,
+#chatTabContent .card {
+    padding: 28px 28px 40px;
+}
+
+#overlaysTabContent .section-title,
+#chatTabContent .section-title {
+    /* Inherits .card h2 from analytics.css: cyan, 18px, bold */
+    margin-bottom: 10px;
+}
+
+#overlaysTabContent .section-desc,
+#chatTabContent .section-desc {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+#overlaysTabContent .obs-url-badge,
+#chatTabContent .obs-url-badge {
+    margin-bottom: 22px;
+}
+
+#overlaysTabContent .form-group,
+#chatTabContent .form-group {
+    margin-bottom: 16px;
+}
+
+/* Match .form-row label exactly */
+#overlaysTabContent .form-group label,
+#chatTabContent .form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#overlaysTabContent .btn-row,
+#chatTabContent .btn-row {
+    margin-top: 20px;
+    gap: 10px;
+}
+
+#overlaysTabContent .obs-setup-list {
+    margin-top: 16px;
+    gap: 10px;
+}
+
+#overlaysTabContent .obs-setup-row {
+    padding: 9px 12px;
+}
+
+#overlaysTabContent .obs-setup-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── Copy-to-clipboard URL elements ────────────────────────── */
+.obs-copyable {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, border-color 0.15s;
+    user-select: none;
+}
+
+.obs-copyable:hover {
+    background: rgba(0, 229, 255, 0.13);
+    border-color: rgba(0, 229, 255, 0.45);
+}
+
+.obs-copyable.copied {
+    background: rgba(0, 200, 83, 0.12);
+    border-color: rgba(0, 200, 83, 0.4);
+}
+
+.obs-copy-icon {
+    font-size: 13px;
+    color: #555;
+    flex-shrink: 0;
+    transition: color 0.15s;
+    line-height: 1;
+}
+
+.obs-copyable:hover .obs-copy-icon {
+    color: #00e5ff;
+}
+
+.obs-copyable.copied .obs-copy-icon {
+    color: #00c853;
+}
+
+/* obs-setup-url needs flex display override since it's now a span */
+.obs-setup-url.obs-copyable {
+    display: inline-flex;
+    border-radius: 4px;
+    padding: 2px 6px;
+    background: rgba(0, 229, 255, 0.06);
+    border: 1px solid transparent;
+}
+
+/* ── Position grid + scale slider ──────────────────────────── */
+.pos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 36px);
+    grid-template-rows: repeat(2, 36px);
+    gap: 5px;
+}
+
+.pos-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #888;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pos-btn:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: rgba(0, 229, 255, 0.35);
+    color: #00e5ff;
+}
+
+.pos-btn.active {
+    background: rgba(0, 229, 255, 0.18);
+    border-color: #00e5ff;
+    color: #00e5ff;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+}
+
+.scale-slider {
+    width: 100%;
+    accent-color: #00e5ff;
+    cursor: pointer;
+    height: 4px;
+    margin-top: 4px;
+}
+
+
+
+/* ── HT scale slider — form-group label inside ht-visuals ──── */
+#ht-visuals .form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── Toggle text label ─────────────────────────────────────── */
+.toggle-text {
+    margin-left: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    user-select: none;
+}
+
+/* ── Color info tooltip ─────────────────────────────────────── */
+.color-info-tip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #555;
+    color: #777;
+    font-size: 9px;
+    font-style: normal;
+    cursor: help;
+    position: relative;
+    top: -1px;
+    margin-left: 3px;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.color-info-tip:hover {
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+
+/* ── Overlay card inner tabs ────────────────────────────────── */
+.overlay-tabs {
+    display: flex;
+    gap: 0;
+    margin: 12px 0 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.overlay-tab {
+    padding: 7px 16px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    margin-bottom: -1px;
+}
+
+.overlay-tab:hover {
+    color: #aaa;
+}
+
+.overlay-tab.active {
+    color: #00e5ff;
+    border-bottom-color: #00e5ff;
+}
+
+.overlay-tab-content {
+    display: none;
+    padding-top: 12px;
+}
+
+.overlay-tab-content.active {
+    display: block;
+}
+
+/* ── Overlay toggle rows ────────────────────────────────────── */
+.overlay-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.overlay-toggle-row:last-child {
+    border-bottom: none;
+}
+
+.overlay-toggle-text {
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/* Prevent form-group label rule from affecting toggle-label inside toggle rows */
+.overlay-toggle-row .toggle-label {
+    display: flex !important;
+    margin-bottom: 0 !important;
+}
+
+/* ── Preview column ─────────────────────────────────────────── */
+.overlay-preview-selector {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+}
+
+.overlay-preview-btn {
+    flex: auto;
+    padding: 5px 6px;
+    text-align: center;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.overlay-preview-btn:hover {
+    color: #ccc;
+    border-color: rgba(0, 229, 255, 0.3);
+}
+
+.overlay-preview-btn.active {
+    background: rgba(0, 229, 255, 0.15);
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+
+.overlay-preview-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+    background: radial-gradient(circle at 50% 50%, #1a1a20 0%, #0f0f14 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.overlay-preview-inner {
+    width: 100%;
+}
+
+.overlay-preview-label {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+}
+
+/* ── HT Visuals — wider label column so ⓘ stays inline ─────── */
+#ht-visuals .form-row {
+    grid-template-columns: 140px 1fr;
+}
+
+#ht-visuals .form-row label {
+    white-space: nowrap;
+}
+
+/* ── Start Card / End Card outer tabs (Column 3) ────────────── */
+.sc-ec-outer-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 12px 0 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sc-ec-outer-tab {
+    flex: 1;
+    padding: 7px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 7px;
+    color: #666;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.sc-ec-outer-tab:hover {
+    background: rgba(0, 229, 255, 0.06);
+    border-color: rgba(0, 229, 255, 0.2);
+    color: #aaa;
+}
+
+.sc-ec-outer-tab.active {
+    background: rgba(0, 229, 255, 0.12);
+    border-color: rgba(0, 229, 255, 0.35);
+    color: #00e5ff;
+}
+
+.sc-ec-outer-panel {
+    display: none;
+}
+
+.sc-ec-outer-panel.active {
+    display: block;
+}
+/* ── Chat tab preview card — cyan accent to match other overlays ─────────── */
+#chatTabContent .preview-card {
+    border-top-color: #00e5ff !important;
+}
+
+/* ── Color picker inputs ─────────────────────────────────────────────────── */
+input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 36px;
+    padding: 2px 3px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 4px;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}

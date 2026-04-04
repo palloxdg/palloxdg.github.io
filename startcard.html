@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fluxee – Start Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            width: 1920px;
+            height: 1080px;
+            position: relative;
+        }
+
+        #sc-wrap {
+            position: absolute;
+            width: 480px;
+            transform-origin: top left;
+            padding: 24px 28px 26px;
+            background: rgba(0, 0, 0, 0.82);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+        }
+
+        #sc-inner {
+            animation: scIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes scIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        #sc-live-dot {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #00e5ff;
+            margin-bottom: 16px;
+        }
+
+        #sc-live-dot.visible {
+            display: flex;
+        }
+
+        #sc-live-dot .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00e5ff;
+            box-shadow: 0 0 8px #00e5ff;
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(0.8);
+            }
+        }
+
+        #sc-headline {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        #sc-subtitle {
+            font-size: 14px;
+            font-weight: 500;
+            color: #aaa;
+            text-align: center;
+            line-height: 1.5;
+            display: none;
+        }
+
+        #sc-subtitle.visible {
+            display: block;
+        }
+
+        #sc-footer {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 11px;
+            color: #444;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sc-wrap">
+    <div id="sc-inner">
+        <div id="sc-live-dot"><span class="dot"></span> LIVE SOON</div>
+        <div id="sc-headline">🎬 Starting Soon…</div>
+        <div id="sc-subtitle"></div>
+        <div id="sc-footer">fluxee.stream</div>
+    </div>
+    </div>
+
+    <script>
+        const WS_URL = `ws://${location.host}?sid=sc-${Math.random().toString(36).slice(2)}`;
+        const API_URL = `http://${location.host}/state/startcard`;
+
+        async function fetchState() {
+            try {
+                const r = await fetch(API_URL);
+                const s = await r.json();
+                applyLayout(s.config);
+                applyVisuals(s.config);
+                showCard(s.config);
+            } catch (e) { }
+        }
+
+        function showCard(config) {
+            const wrap = document.getElementById('sc-wrap');
+
+            const headline = config?.headline || '🎬 Starting Soon…';
+            const subtitle = config?.subtitle || '';
+
+            document.getElementById('sc-headline').textContent = headline;
+
+            const subEl = document.getElementById('sc-subtitle');
+            if (subtitle) {
+                subEl.textContent = subtitle;
+                subEl.classList.add('visible');
+            } else {
+                subEl.textContent = '';
+                subEl.classList.remove('visible');
+            }
+
+            const dotEl = document.getElementById('sc-live-dot');
+            if (config?.showLiveDot !== false) {
+                dotEl.classList.add('visible');
+            } else {
+                dotEl.classList.remove('visible');
+            }
+
+
+        }
+
+        function applyVisuals(cfg) {
+            const wrap = document.getElementById('sc-wrap');
+            if (!wrap) return;
+            if (cfg.font) wrap.style.fontFamily = `'${cfg.font}', sans-serif`;
+            // Apply fontColor explicitly to all text elements — child elements have
+            // hardcoded CSS colors that override an inherited color on the wrap.
+            if (cfg.fontColor) {
+                wrap.style.color = cfg.fontColor;
+                document.getElementById('sc-headline').style.color = cfg.fontColor;
+                const sub = document.getElementById('sc-subtitle');
+                if (sub) sub.style.color = cfg.fontColor;
+            }
+            if (cfg.borderColor) wrap.style.borderColor = cfg.borderColor;
+            if (cfg.accentColor) {
+                const dot = wrap.querySelector('#sc-live-dot .dot');
+                const liveDot = document.getElementById('sc-live-dot');
+                if (dot) {
+                    dot.style.background = cfg.accentColor;
+                    dot.style.boxShadow = `0 0 8px ${cfg.accentColor}`;
+                }
+                if (liveDot) liveDot.style.color = cfg.accentColor;
+            }
+            if (cfg.background === 'transparent') {
+                wrap.style.background = 'transparent';
+                wrap.style.backdropFilter = 'none';
+                wrap.style.border = 'none';
+            } else if (cfg.background === 'solid' && cfg.bgColor) {
+                wrap.style.background = cfg.bgColor;
+            } else {
+                wrap.style.background = 'rgba(0,0,0,0.82)';
+                wrap.style.backdropFilter = 'blur(12px)';
+            }
+        }
+
+        function applyLayout(cfg) {
+            const el = document.getElementById('sc-wrap');
+            if (!el) return;
+            const pos = cfg?.position || 'bottom-center';
+            const scale = (cfg?.scale || 100) / 100;
+            const pad = 20;
+
+            const positions = {
+                'top-left': { top: pad, left: pad, bottom: 'auto', right: 'auto' },
+                'top-center': { top: pad, left: '50%', bottom: 'auto', right: 'auto', translateX: '-50%' },
+                'top-right': { top: pad, right: pad, bottom: 'auto', left: 'auto' },
+                'bottom-left': { bottom: pad, left: pad, top: 'auto', right: 'auto' },
+                'bottom-center': { bottom: pad, left: '50%', top: 'auto', right: 'auto', translateX: '-50%' },
+                'bottom-right': { bottom: pad, right: pad, top: 'auto', left: 'auto' },
+            };
+            const p = positions[pos] || positions['bottom-center'];
+
+            el.style.top = p.top !== undefined ? (typeof p.top === 'number' ? p.top + 'px' : p.top) : '';
+            el.style.bottom = p.bottom !== undefined ? (typeof p.bottom === 'number' ? p.bottom + 'px' : p.bottom) : '';
+            el.style.left = p.left !== undefined ? (typeof p.left === 'number' ? p.left + 'px' : p.left) : '';
+            el.style.right = p.right !== undefined ? (typeof p.right === 'number' ? p.right + 'px' : p.right) : '';
+
+            const tx = p.translateX || '0';
+            const origin = pos.includes('bottom') ? 'bottom' : 'top';
+            const oX = p.translateX ? 'center' : (pos.includes('right') ? 'right' : 'left');
+            el.style.transformOrigin = `${oX} ${origin}`;
+            el.style.transform = `translateX(${tx}) scale(${scale})`;
+        }
+
+        // --- WebSocket ---
+        let wsReconnectAttempts = 0;
+        let heartbeatInterval = null;
+        const WS_RECONNECT_BASE = 1000;
+        const WS_RECONNECT_MAX = 30000;
+
+        function wsReconnectDelay() {
+            const delay = Math.min(WS_RECONNECT_BASE * Math.pow(2, wsReconnectAttempts), WS_RECONNECT_MAX);
+            wsReconnectAttempts++;
+            return delay;
+        }
+
+        function connectWS() {
+            const ws = new WebSocket(WS_URL);
+            ws.onmessage = (e) => {
+                try {
+                    const ev = JSON.parse(e.data);
+                    if (ev.type === 'start_card_config_updated') {
+                        applyLayout(ev);
+                        applyVisuals(ev);
+                        showCard(ev);
+                    }
+                } catch (err) { }
+            };
+            ws.onopen = () => {
+                wsReconnectAttempts = 0;
+                clearInterval(heartbeatInterval);
+                heartbeatInterval = setInterval(() => {
+                    if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'ping' }));
+                }, 12000);
+            };
+            ws.onclose = () => {
+                clearInterval(heartbeatInterval);
+                const d = wsReconnectDelay();
+                setTimeout(connectWS, d);
+            };
+        }
+
+        // Preview mode — open startcard.html?preview=1 to test without relay
+        if (new URLSearchParams(location.search).get('preview') === '1') {
+            const previewConfig = {
+                duration: 0, showLiveDot: true,
+                headline: '🎬 Starting Soon…',
+                subtitle: 'Be right back, the stream starts in a moment!',
+                position: 'bottom-center', scale: 100
+            };
+            applyLayout(previewConfig);
+            applyVisuals(previewConfig);
+            showCard(previewConfig);
+        } else {
+            fetchState();
+            connectWS();
+        }
+    </script>
+</body>
+
+</html>
