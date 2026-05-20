@@ -1,7 +1,7 @@
 {
   "overall": "ok",
-  "checkedAt": "2026-05-19T21:26:52Z",
-  "checkedAtHuman": "2026-05-19 21:26 UTC",
+  "checkedAt": "2026-05-20T10:57:02Z",
+  "checkedAtHuman": "2026-05-20 10:57 UTC",
   "fluxeeVersion": "5.1.0",
   "fluxeeStatus": "ok",
   "checks": [
@@ -9,19 +9,19 @@
       "name": "Fansly Website",
       "status": "ok",
       "code": 200,
-      "ms": 140
+      "ms": 152
     },
     {
       "name": "Fansly API",
       "status": "ok",
       "code": 404,
-      "ms": 269
+      "ms": 287
     },
     {
       "name": "GitHub Status",
       "status": "ok",
       "code": 200,
-      "ms": 339
+      "ms": 210
     }
   ]
 }
